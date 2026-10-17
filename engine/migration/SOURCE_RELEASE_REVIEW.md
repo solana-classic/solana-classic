@@ -7,9 +7,9 @@ requirements are not transferred to this candidate.
 
 The separate [current review inventory](../../evidence/agave-source-acceptance-gates.json)
 binds the exact source candidate, freeze, unchanged checklist and checksum-bound
-individual proofs. It currently records 28 of 75 requirements reviewed:
-G1.01, G1.02, G1.04, G1.07, G2.02, G2.03, G2.04, G2.07, G2.08, G3.01, G4.03, G4.04, G4.05, G4.06, G5.01, G5.05,
-G5.08, G5.09, G5.12, G6.01 through G6.05, G6.07, G6.11, G7.03 and G7.04. The other 47 remain
+individual proofs. It currently records 29 of 75 requirements reviewed:
+G1.01, G1.02, G1.04, G1.07, G2.02, G2.03, G2.04, G2.07, G2.08, G3.01, G3.07, G4.03, G4.04, G4.05, G4.06, G5.01, G5.05,
+G5.08, G5.09, G5.12, G6.01 through G6.05, G6.07, G6.11, G7.03 and G7.04. The other 46 remain
 unreviewed in this inventory, including the derived whole-release check. Missing
 attestations do not necessarily mean functionality failed; they mean the
 requirement has not been individually accepted for this candidate.
@@ -27,6 +27,20 @@ ownership and anonymous HTTPS frontend/deep-link/metadata access. Supply,
 balance and authority conclusions rely on the retained successful driver
 assertions: these reports do not contain full raw RPC replies or supply an
 independent transaction replay. Failed attempts remain failed and retained.
+
+The [API and asset origin review](../../evidence/agave-source-origin-individual-review.json)
+adds G3.07 for the exact production build. Five deployed files match the freeze;
+the compiled API helper and wallet SDK connection use the explicit canonical
+Linux API origin. Separate retained desktop/mobile request observations confirm
+that destination. Current redirect-refusing reads verify four metadata/artwork
+pairs from the completed original-origin journeys, including embedded file URLs
+and retained image hashes. Frozen API source constructs these URLs from its
+configured persistent origin, independently of browser Origin or Host.
+The older journey request guard permitted both frontend and API origins, so its
+success alone does not establish this requirement. This review combines the
+compiled binding, frozen source and actual request destinations. It accepts the
+selected configuration, not arbitrary future environment overrides or every
+stored asset; no new browser journey or transaction was performed.
 
 The [operations individual review](../../evidence/agave-source-operations-individual-review.json)
 adds eight requirements from the exact selected load, restart and negative-control

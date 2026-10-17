@@ -1,0 +1,234 @@
+{
+  "schemaVersion": 1,
+  "at": "2026-10-17T22:07:22.318556+00:00",
+  "scope": "remote exact-candidate API and immutable asset origin review using retained browser observations, frozen source and current anonymous HTTP reads",
+  "passed": true,
+  "genesis": "7TAUSfTzQeocodtVee2qsftsCYnJu2eCM1ALdADbHNon",
+  "candidate": {
+    "apiOrigin": "https://network-release-production.up.railway.app",
+    "frontendOrigin": "https://solana-classic-soc.vercel.app",
+    "frontendDeploymentId": "dpl_3aWWzKDohr4SrgijgrB8dWgHHS5r",
+    "frontendCommit": "35f0eaf1dede45452c9cdf9e6403669e966c427d",
+    "apiCommit": "119f25e225540be78b64b19bdb6cb300a1f47c10",
+    "networkConfigSha256": "0eea489e8cf0753b2b0cf0b91b6949566044e50c20bd4d02eea814490f64fe0e",
+    "dependencyManifestSha256": "e6da27717e6a84ca7b29d707ff63591b2ff0cfc38892d3b4667f8615bdf7bbc0"
+  },
+  "freezeSha256": "55b668e56a946ec94f0195b03530aba23593bd71d7fd52493d5403b21882757f",
+  "checklistSha256": "e2fb4b2f53e9aa10f21ec5ffcf708cc2749b456a39703c9228a7fce7fc574f73",
+  "proofs": [
+    {
+      "path": "evidence/agave-source-candidate-freeze.json",
+      "sha256": "55b668e56a946ec94f0195b03530aba23593bd71d7fd52493d5403b21882757f"
+    },
+    {
+      "path": "evidence/agave-source-final-browser-review.json",
+      "sha256": "51bff09bfdedcbb736132d87f8cf7c5d20fa684bb2e4d8ea595273b838f76b07"
+    },
+    {
+      "path": "evidence/agave-source-browser-individual-review.json",
+      "sha256": "a272d491aa100407bbf51325ad0f14c6b1a90bbc8dea8df505858e6c02911019"
+    },
+    {
+      "path": "evidence/agave-source-network-outage-individual-review.json",
+      "sha256": "05f2b9e90bd78a145577179f17f5aa4f6a7d4fb48f7eca46d298c44df2516569"
+    }
+  ],
+  "requirements": {
+    "G3.07": {
+      "claim": "The selected production browser uses the explicit Linux API base; its app-created immutable metadata and artwork URLs use the canonical persistent origin, not a preview, frontend or localhost origin.",
+      "basis": "All five current frontend files match the freeze. The actual compiled API helper concatenates the canonical HTTPS API constant with its request path, and the wallet SDK Connection uses that same constant plus /api/rpc. Frozen source routes asset creation through this helper; the API constructs metadata and artwork URLs from its configured asset origin rather than the request Origin. Retained desktop/mobile observations show actual canonical API requests. The two completed original-origin browser journeys retain four canonical metadata/artwork pairs; current redirect-refusing reads verify all four pairs, their embedded image/file URLs and previously recorded image hashes.",
+      "scopeLimit": "Current selected production build and its app-created assets. No historical H48 timing claim, arbitrary environment override validation, preview-origin survey, branded-frontend acceptance or new transaction replay."
+    }
+  },
+  "reviewMethod": {
+    "newBrowserContexts": 0,
+    "newChainReads": 0,
+    "newChainTransactions": 0,
+    "newStabilityRuns": 0,
+    "currentReadReportSHA256": "e470db059bc47cb0ca82f87f39ff77dbab3eb3b5220e08116939fc050a698913",
+    "readDriverSHA256": "5016803d0eb9f815c190abb972621a6fc3ec0a3fc34b3fd94c2226b4cd731999",
+    "httpMethod": "GET",
+    "redirectsAllowed": false,
+    "responseSizeLimitBytes": 1048576,
+    "requestTimeoutSeconds": 20,
+    "frozenSourceReviewed": [
+      {
+        "path": "apps/web/src/api.ts",
+        "sha256": "9457c6d73b56c8f7a771b2c99a91592f2796dfc1e6a40f9b8d0381bc89b9830b"
+      },
+      {
+        "path": "apps/web/src/Playground.tsx",
+        "sha256": "cd7a96fd8589dc8468936a624d5a8bc4a082b1eb612f23375c4ec2e66ffac229"
+      },
+      {
+        "path": "apps/api/src/app.ts",
+        "sha256": "545c78e932e12f889417a078050fff118f173cc55627e4826c733abc690542a0"
+      },
+      {
+        "path": "apps/api/src/store.ts",
+        "sha256": "9ed76044cf292cc20022fac2d17e19baa1c3a2826a8aeab43125a50ddc1457f7"
+      },
+      {
+        "path": "apps/api/src/settings.ts",
+        "sha256": "6cab157d2dce520049d8fca4ab1014452d53ac2f22cc74fc1b3ec6df42782af9"
+      }
+    ],
+    "compiledFrontend": {
+      "path": "/assets/index-Dpv-W791.js",
+      "sha256": "6c42fffa784f160ed324ac16585e557828aca12f2d53ee1a6ee9d2c0f840f1aa",
+      "binding": "Ec = canonical HTTPS API origin; Oc uses fetch(Ec + path); SDK Connection uses Ec + /api/rpc",
+      "meaning": "Offsets are Unicode character positions in the reviewed pinned bundle; unrelated module-preload and immutable-file fetches are not API calls.",
+      "apiConstantCharacterOffset": 335424,
+      "apiFetchCharacterOffset": 335680,
+      "sdkRpcPathCharacterOffset": 340549
+    },
+    "frontendFiles": [
+      {
+        "path": "/",
+        "sha256": "448312a1f5170de0767b742309fad4861cc0e0a80e15d0a39d839fd1f2de2454",
+        "bytes": 517
+      },
+      {
+        "path": "/assets/index-Dpv-W791.js",
+        "sha256": "6c42fffa784f160ed324ac16585e557828aca12f2d53ee1a6ee9d2c0f840f1aa",
+        "bytes": 362256
+      },
+      {
+        "path": "/assets/index-DXgWf3wS.css",
+        "sha256": "854b48b0499bd0f863296e157914bfd43b334ae7e82c4dfc7883d129442feca0",
+        "bytes": 15901
+      },
+      {
+        "path": "/assets/index.browser.esm-BKUeZO4T.js",
+        "sha256": "7c038d6f6a4b6b70762f8f685e278524630993ed2d2aa946b70d58a578119002",
+        "bytes": 284264
+      },
+      {
+        "path": "/assets/src-DkgziyfX.js",
+        "sha256": "701b0cb796501ced6fa2caef2081d4d0618818d6859711dcb6ce09c33a57b8ad",
+        "bytes": 30694
+      }
+    ],
+    "retainedRequestReportSHA256": "a01357a800fb74f35cdb1da6ed53f9a6f9621be0ed428fe51269d34535f53ef7",
+    "retainedBrowserRequests": [
+      {
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        },
+        "count": 6,
+        "uniqueDestinations": [
+          "https://network-release-production.up.railway.app/api/network",
+          "https://network-release-production.up.railway.app/api/status"
+        ]
+      },
+      {
+        "viewport": {
+          "width": 360,
+          "height": 800
+        },
+        "count": 6,
+        "uniqueDestinations": [
+          "https://network-release-production.up.railway.app/api/network",
+          "https://network-release-production.up.railway.app/api/status"
+        ]
+      }
+    ],
+    "retainedBrowserRequestObservation": "These twelve GET observations come from the separately recorded Network review, including four deliberate client-side aborts. They prove requested destinations, not twelve successful responses. Each profile also recorded healthy real responses before the abort and after recovery.",
+    "retainedJourneyProfiles": [
+      {
+        "profile": "desktop",
+        "sourceReportSHA256": "0a8b2775b9c655104c0881a4fcf6b1032cab2ef6d605273006785116be95d7d9",
+        "completedAt": "2026-10-17T01:38:42.837Z",
+        "assetCount": 2
+      },
+      {
+        "profile": "mobile",
+        "sourceReportSHA256": "a1b6155bfaae4aebf6844be12dcd1e15280297f6b2179f17a2abd7069100a4f2",
+        "completedAt": "2026-10-17T01:40:42.978Z",
+        "assetCount": 2
+      }
+    ],
+    "journeyGuardLimitation": "The old unexpectedAPIDestination assertion allowed either frontend or API origin. Its false value alone is not used as proof of an explicit Linux base. The pinned compiled helper, SDK connection, frozen source and separate recorded request URLs supply that attribution.",
+    "sourceOriginConstruction": "The asset handler passes settings.assetOrigin into Store.createAsset. The store constructs metadata URI, image and properties.files URI from that origin and the generated content path; it does not derive asset origin from browser Origin or Host.",
+    "currentAssets": [
+      {
+        "profile": "desktop",
+        "kind": "meme",
+        "mint": "3xFQiKzXCAu6hmRjpr1gNHqVYzPNzhXwDU9kRbAU8UE7",
+        "metadataURI": "https://network-release-production.up.railway.app/assets/8e419e405a2c5ac02a71eb12fb37399897153b67a5956f76d3edcd40b7668021/metadata.json",
+        "metadataSHA256": "ffa1533b8eadb7a50a3a95681142626a8e3fc1a8ee5fd9b016e81899c36347cb",
+        "metadataBytes": 617,
+        "imageURI": "https://network-release-production.up.railway.app/assets/8e419e405a2c5ac02a71eb12fb37399897153b67a5956f76d3edcd40b7668021/image.svg",
+        "imageSHA256": "1d1246c86c4dc5a546e99f121bb7835990ff9f8bd22f23576c20a83be5c9ab5a",
+        "imageBytes": 319,
+        "metadataCacheControl": "public, max-age=31536000, immutable",
+        "imageCacheControl": "public, max-age=31536000, immutable"
+      },
+      {
+        "profile": "desktop",
+        "kind": "nft",
+        "mint": "CxAyP1bKwGmmZUYvipZLZUGiX4rrbzBNpbRzUhLnHBtc",
+        "metadataURI": "https://network-release-production.up.railway.app/assets/a592caa753f724c1d0753c9cd3f501805b1717a8cc0e618927dddf71e6d6b847/metadata.json",
+        "metadataSHA256": "ff865487b03efcbb70ddd02317810a5de8a0294b91a6d780c1499a51b494a94d",
+        "metadataBytes": 616,
+        "imageURI": "https://network-release-production.up.railway.app/assets/a592caa753f724c1d0753c9cd3f501805b1717a8cc0e618927dddf71e6d6b847/image.svg",
+        "imageSHA256": "1d1246c86c4dc5a546e99f121bb7835990ff9f8bd22f23576c20a83be5c9ab5a",
+        "imageBytes": 319,
+        "metadataCacheControl": "public, max-age=31536000, immutable",
+        "imageCacheControl": "public, max-age=31536000, immutable"
+      },
+      {
+        "profile": "mobile",
+        "kind": "meme",
+        "mint": "BeJ2EavWvxoBLp5JTPJe8Lizh99EEaw8Z58EHc981WW4",
+        "metadataURI": "https://network-release-production.up.railway.app/assets/5b1322620274b7b7a5019cea8a76420a2e38d51940e13177a6d62eb5ff5f9642/metadata.json",
+        "metadataSHA256": "2678ccff9ba7f419a72dbe7282daacbee6c64d2061ca89f1dd4d6d843bd7aa80",
+        "metadataBytes": 617,
+        "imageURI": "https://network-release-production.up.railway.app/assets/5b1322620274b7b7a5019cea8a76420a2e38d51940e13177a6d62eb5ff5f9642/image.svg",
+        "imageSHA256": "1d1246c86c4dc5a546e99f121bb7835990ff9f8bd22f23576c20a83be5c9ab5a",
+        "imageBytes": 319,
+        "metadataCacheControl": "public, max-age=31536000, immutable",
+        "imageCacheControl": "public, max-age=31536000, immutable"
+      },
+      {
+        "profile": "mobile",
+        "kind": "nft",
+        "mint": "B526LPUSzwttbTE9tVssRU2FwRv2DvhGyLzarVnK67bj",
+        "metadataURI": "https://network-release-production.up.railway.app/assets/f18d8552fb5f1667dfb63ca0063a41ff04f0a0978df667c6b180052a5958f465/metadata.json",
+        "metadataSHA256": "3924d08281efce1af79a04655428e61cea0e9153918859f3d1237b5fad410946",
+        "metadataBytes": 616,
+        "imageURI": "https://network-release-production.up.railway.app/assets/f18d8552fb5f1667dfb63ca0063a41ff04f0a0978df667c6b180052a5958f465/image.svg",
+        "imageSHA256": "1d1246c86c4dc5a546e99f121bb7835990ff9f8bd22f23576c20a83be5c9ab5a",
+        "imageBytes": 319,
+        "metadataCacheControl": "public, max-age=31536000, immutable",
+        "imageCacheControl": "public, max-age=31536000, immutable"
+      }
+    ],
+    "embeddedImageAndFileURLsMatchRecordedArtwork": true,
+    "metadataDigestScope": "Metadata hashes are current observations, not a claim that a prior metadata byte hash was retained. Image hashes are compared with the exact completed browser reports."
+  },
+  "continuity": {
+    "frozenFilesBefore": 45,
+    "frozenFilesAfter": 45,
+    "runtimeMatchesFreezeBefore": true,
+    "runtimeMatchesFreezeAfter": true,
+    "qa": {
+      "state": "completed",
+      "soakAccepted": true,
+      "exitCode": 0,
+      "issues": []
+    }
+  },
+  "limitations": [
+    "No asset was recreated, faucet claimed, wallet created, issuance or transfer repeated, runtime restarted or deployment changed.",
+    "The four asset checks sample the two original-origin final journeys; this is not an exhaustive audit of every stored asset or external metadata URL.",
+    "Frozen remote settings enforce HTTPS, not a universal rejection of every possible frontend or preview hostname. This accepts the exact reviewed deployment configuration, not arbitrary future configuration changes.",
+    "Retained browser mint/authority observations rely on the previously reviewed driver assertions. No fresh on-chain metadata read or independent history replay was performed.",
+    "Completed stability evidence remains separate; these reads do not start or extend a stability attempt."
+  ],
+  "canonicalNetworkChanged": false,
+  "releaseAccepted": false,
+  "mainnetAccepted": false,
+  "bridgeAccepted": false
+}

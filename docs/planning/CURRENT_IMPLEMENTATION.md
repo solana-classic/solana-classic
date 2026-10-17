@@ -1,6 +1,6 @@
 # Current implementation handoff
 
-## Current checkpoint — 17 October 2026, 20:08 UTC
+## Current checkpoint — 17 October 2026, 22:07 UTC
 
 This checkpoint supersedes the historical hold, branch names, pending-run
 statements and next-action instructions below. The founder resumed development.
@@ -28,8 +28,8 @@ At this checkpoint, the complete live runtime matches the
 source and executable identities, deployment and boot IDs, and genesis. All
 45 retained execution-context files match. Preserve this runtime and its ledger.
 The [individual release review](../../engine/migration/SOURCE_RELEASE_REVIEW.md)
-and [inventory](../../evidence/agave-source-acceptance-gates.json) record **28 of
-75 requirements accepted, with 47 unreviewed**. Overall devnet release, mainnet
+and [inventory](../../evidence/agave-source-acceptance-gates.json) record **29 of
+75 requirements accepted, with 46 unreviewed**. Overall devnet release, mainnet
 and bridge acceptance remain false; historical requirement passes do not carry
 over automatically.
 
