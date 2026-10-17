@@ -7,9 +7,9 @@ requirements are not transferred to this candidate.
 
 The separate [current review inventory](../../evidence/agave-source-acceptance-gates.json)
 binds the exact source candidate, freeze, unchanged checklist and checksum-bound
-individual proofs. It currently records 27 of 75 requirements reviewed:
-G1.01, G1.02, G1.04, G1.07, G2.02, G2.03, G2.04, G2.07, G2.08, G3.01, G4.03, G4.04, G4.06, G5.01, G5.05,
-G5.08, G5.09, G5.12, G6.01 through G6.05, G6.07, G6.11, G7.03 and G7.04. The other 48 remain
+individual proofs. It currently records 28 of 75 requirements reviewed:
+G1.01, G1.02, G1.04, G1.07, G2.02, G2.03, G2.04, G2.07, G2.08, G3.01, G4.03, G4.04, G4.05, G4.06, G5.01, G5.05,
+G5.08, G5.09, G5.12, G6.01 through G6.05, G6.07, G6.11, G7.03 and G7.04. The other 47 remain
 unreviewed in this inventory, including the derived whole-release check. Missing
 attestations do not necessarily mean functionality failed; they mean the
 requirement has not been individually accepted for this candidate.
@@ -249,3 +249,15 @@ identity match the freeze. Four screenshots were visually reviewed.
 This accepts disclosure only: no wallet, grant, issuance, transfer, actual lookup
 or stability workload was started. Mobile navigation extends beyond the initial
 visible row and its scrolling was not assessed; this is not G7.02 acceptance.
+
+The [network outage display review](../../evidence/agave-source-network-outage-individual-review.json)
+adds G4.05 using the exact deployed frontend in fresh desktop and mobile
+browsers. Browser-local transport rejection on the ordinary network/status poll
+replaced healthy indicators with unavailable/preparation messages and cleared
+the prior slot; the following real API poll recovered current data. Six screenshots
+were inspected. The four expected resource-loading errors match the four
+deliberately aborted requests. All five frontend hashes, 45 retained source files
+and complete runtime identity still match. No backend fault, transaction, restart
+or new stability run occurred. Stalled-fetch timeouts, transaction-error handling,
+monitor alert delivery and complete mobile/accessibility coverage remain outside
+this scoped acceptance.

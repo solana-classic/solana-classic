@@ -1,0 +1,218 @@
+{
+  "schemaVersion": 1,
+  "genesis": "7TAUSfTzQeocodtVee2qsftsCYnJu2eCM1ALdADbHNon",
+  "candidate": {
+    "apiOrigin": "https://network-release-production.up.railway.app",
+    "frontendOrigin": "https://solana-classic-soc.vercel.app",
+    "frontendDeploymentId": "dpl_3aWWzKDohr4SrgijgrB8dWgHHS5r",
+    "frontendCommit": "35f0eaf1dede45452c9cdf9e6403669e966c427d",
+    "apiCommit": "119f25e225540be78b64b19bdb6cb300a1f47c10",
+    "networkConfigSha256": "0eea489e8cf0753b2b0cf0b91b6949566044e50c20bd4d02eea814490f64fe0e",
+    "dependencyManifestSha256": "e6da27717e6a84ca7b29d707ff63591b2ff0cfc38892d3b4667f8615bdf7bbc0"
+  },
+  "freezeSha256": "55b668e56a946ec94f0195b03530aba23593bd71d7fd52493d5403b21882757f",
+  "checklistSha256": "e2fb4b2f53e9aa10f21ec5ffcf708cc2749b456a39703c9228a7fce7fc574f73",
+  "proofs": [
+    {
+      "path": "evidence/agave-source-candidate-freeze.json",
+      "sha256": "55b668e56a946ec94f0195b03530aba23593bd71d7fd52493d5403b21882757f"
+    }
+  ],
+  "at": "2026-10-17T20:08:04.498518+00:00",
+  "scope": "remote deployed frontend review with browser-local transport failure and real API recovery",
+  "passed": true,
+  "requirements": {
+    "G4.05": {
+      "claim": "Network outage displays degraded status instead of stale online/success indicators.",
+      "basis": "Two fresh anonymous desktop/mobile contexts traversed the deployed explorer-to-Network navigation. Aborting the next ordinary network/status fetches locally replaced the healthy header and release status with unavailable/preparation messages and cleared the prior slot. Restoring transport recovered real API data on the next poll. All five selected frontend files and all 45 retained source files match the freeze; complete runtime identity matches before and after.",
+      "scopeLimit": "Global header and Network-page response to browser-local transport loss only. This is not a canonical service outage, stalled-fetch timeout, transaction-error review or monitor alert-delivery test."
+    }
+  },
+  "reviewMethod": {
+    "flow": "Production explorer -> Network navigation -> healthy -> client-side transport failure -> degraded -> transport restored -> healthy",
+    "browserAvailability": "Browser plugin not available; existing Playwright installation",
+    "browserVersion": "156.0.8078.4",
+    "anonymousContexts": true,
+    "newBrowserContexts": 2,
+    "faultMethod": "Abort GET /api/network and /api/status in each browser context during the next ordinary poll; restore transport for the following real API poll. No synthetic HTTP response or server fault.",
+    "profiles": [
+      {
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        },
+        "url": "https://solana-classic-soc.vercel.app/network",
+        "title": "Solana Classic \u2014 Memes & NFTs",
+        "initialSlot": "934267",
+        "recoveredSlot": "934339",
+        "degradedAfterMs": 13939,
+        "recoveryAfterMs": 15947,
+        "oldSlotCleared": true,
+        "staleOnlineLabelAbsent": true,
+        "degradedMessageVisible": true,
+        "recoveryMessageCleared": true,
+        "clientTransportFailures": [
+          {
+            "at": "2026-10-17T20:03:20.578Z",
+            "path": "/api/network"
+          },
+          {
+            "at": "2026-10-17T20:03:20.579Z",
+            "path": "/api/status"
+          }
+        ],
+        "expectedConsoleFailures": [
+          {
+            "text": "Failed to load resource: net::ERR_FAILED",
+            "url": "https://network-release-production.up.railway.app/api/network"
+          },
+          {
+            "text": "Failed to load resource: net::ERR_FAILED",
+            "url": "https://network-release-production.up.railway.app/api/status"
+          }
+        ],
+        "pageErrors": [],
+        "consoleWarnings": [],
+        "frameworkOverlay": false,
+        "screenshots": [
+          {
+            "file": "network-1440-online.png",
+            "sha256": "8b33f6a3247de6ca22e3dd7df4d150543be715e423f3985c9aee983f735c7e30"
+          },
+          {
+            "file": "network-1440-degraded.png",
+            "sha256": "291ce3d4c909e50d123984687e5efdf20301c239b8e46209342d3df3a72b3a6d"
+          },
+          {
+            "file": "network-1440-recovered.png",
+            "sha256": "86b8ba1f2e165cc096e5df3152e03caf8004b84afa3c8b981c0edaa0ee869bf0"
+          }
+        ],
+        "requestOrigins": [
+          "https://network-release-production.up.railway.app",
+          "https://solana-classic-soc.vercel.app"
+        ],
+        "requestsWereReadOnly": true
+      },
+      {
+        "viewport": {
+          "width": 360,
+          "height": 800
+        },
+        "url": "https://solana-classic-soc.vercel.app/network",
+        "title": "Solana Classic \u2014 Memes & NFTs",
+        "initialSlot": "934346",
+        "recoveredSlot": "934417",
+        "degradedAfterMs": 13940,
+        "recoveryAfterMs": 15451,
+        "oldSlotCleared": true,
+        "staleOnlineLabelAbsent": true,
+        "degradedMessageVisible": true,
+        "recoveryMessageCleared": true,
+        "clientTransportFailures": [
+          {
+            "at": "2026-10-17T20:03:52.964Z",
+            "path": "/api/network"
+          },
+          {
+            "at": "2026-10-17T20:03:52.965Z",
+            "path": "/api/status"
+          }
+        ],
+        "expectedConsoleFailures": [
+          {
+            "text": "Failed to load resource: net::ERR_FAILED",
+            "url": "https://network-release-production.up.railway.app/api/network"
+          },
+          {
+            "text": "Failed to load resource: net::ERR_FAILED",
+            "url": "https://network-release-production.up.railway.app/api/status"
+          }
+        ],
+        "pageErrors": [],
+        "consoleWarnings": [],
+        "frameworkOverlay": false,
+        "screenshots": [
+          {
+            "file": "network-360-online.png",
+            "sha256": "bae967a4e2db7ea4b5f958b8663115f340ee15556f65577ca1baa5e89f068fb4"
+          },
+          {
+            "file": "network-360-degraded.png",
+            "sha256": "da21ab04c55b41601d947084d1adc43fe7dcfca0c476f58468356e66ae400a30"
+          },
+          {
+            "file": "network-360-recovered.png",
+            "sha256": "bae967a4e2db7ea4b5f958b8663115f340ee15556f65577ca1baa5e89f068fb4"
+          }
+        ],
+        "requestOrigins": [
+          "https://network-release-production.up.railway.app",
+          "https://solana-classic-soc.vercel.app"
+        ],
+        "requestsWereReadOnly": true
+      }
+    ],
+    "frontendFiles": [
+      {
+        "path": "/",
+        "sha256": "448312a1f5170de0767b742309fad4861cc0e0a80e15d0a39d839fd1f2de2454",
+        "bytes": 517
+      },
+      {
+        "path": "/assets/index-Dpv-W791.js",
+        "sha256": "6c42fffa784f160ed324ac16585e557828aca12f2d53ee1a6ee9d2c0f840f1aa",
+        "bytes": 362256
+      },
+      {
+        "path": "/assets/index-DXgWf3wS.css",
+        "sha256": "854b48b0499bd0f863296e157914bfd43b334ae7e82c4dfc7883d129442feca0",
+        "bytes": 15901
+      },
+      {
+        "path": "/assets/index.browser.esm-BKUeZO4T.js",
+        "sha256": "7c038d6f6a4b6b70762f8f685e278524630993ed2d2aa946b70d58a578119002",
+        "bytes": 284264
+      },
+      {
+        "path": "/assets/src-DkgziyfX.js",
+        "sha256": "701b0cb796501ced6fa2caef2081d4d0618818d6859711dcb6ce09c33a57b8ad",
+        "bytes": 30694
+      }
+    ],
+    "rawReportSHA256": "a01357a800fb74f35cdb1da6ed53f9a6f9621be0ed428fe51269d34535f53ef7",
+    "executedDriverSHA256": "47306f6a777343075e3f0c9f703607ac4e166ae1f21cffb9a54a1ce7ce0fc3cf",
+    "mutationRequestsAttempted": 0,
+    "browserNonGETRequestsBlockedByGuard": true,
+    "thirdPartyOriginsBlockedByGuard": true,
+    "unexpectedRequestsBlocked": [],
+    "screenshotsVisuallyReviewed": 6,
+    "expectedConsoleFailures": 4
+  },
+  "continuity": {
+    "frozenFilesBefore": 45,
+    "frozenFilesAfter": 45,
+    "runtimeMatchesFreezeBefore": true,
+    "runtimeMatchesFreezeAfter": true,
+    "qa": {
+      "state": "completed",
+      "soakAccepted": true,
+      "exitCode": 0,
+      "issues": []
+    }
+  },
+  "limitations": [
+    "The induced network failures were confined to the browser; the canonical service and validator remained unchanged. No actual host outage or alert delivery is claimed.",
+    "Immediate fetch rejection was exercised; a transport that remains pending without rejecting was not exercised.",
+    "This scoped result does not accept G3.04 transaction errors, G5.07 monitoring delivery or G7.02 complete mobile/accessibility coverage. The mobile navigation row extends beyond the initial width; scrolling was not assessed.",
+    "Four resource-loading console errors were expected and matched the four deliberately aborted API requests. No page errors or console warnings were observed.",
+    "No wallet was created, faucet claimed, issuance/transfer repeated, transaction looked up or chain request submitted. The completed full-day run was not repeated.",
+    "Screenshots and detailed request observations remain in retained local context; public evidence includes their hashes and selected results."
+  ],
+  "canonicalNetworkChanged": false,
+  "chainTransactionsSubmitted": 0,
+  "newStabilityRuns": 0,
+  "releaseAccepted": false,
+  "mainnetAccepted": false,
+  "bridgeAccepted": false
+}
