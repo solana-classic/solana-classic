@@ -261,3 +261,14 @@ and complete runtime identity still match. No backend fault, transaction, restar
 or new stability run occurred. Stalled-fetch timeouts, transaction-error handling,
 monitor alert delivery and complete mobile/accessibility coverage remain outside
 this scoped acceptance.
+
+The [retained transaction lookup review](../../evidence/agave-source-explorer-history-review.json)
+leaves G4.01 unreviewed. A previously finalized native-transfer receipt now
+returns a successful RPC response with a null transaction. Fresh desktop/mobile
+lookups show the selected signature and existing not-found warning, with no
+fabricated status, slot or fee. Both screenshots were inspected, all five
+frontend hashes and 45 retained source files match, and complete runtime identity
+is unchanged. A null lookup does not overturn the historical finalization or
+establish a pruning cause. Available-transaction and failed-transaction display
+coverage, and durable history availability, remain separate gaps. No transaction
+was repeated; the inventory stays at 28 of 75 with 47 unreviewed.
