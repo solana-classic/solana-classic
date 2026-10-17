@@ -544,3 +544,38 @@ This resolves the transport size mismatch for callers that explicitly select
 The padded fixtures establish byte transport, not maximum account-count support
 or host memory capacity. Runtime pins, caller policy, reserve wiring and fresh
 compiler/replay validation remain open. See [the input-bound review](../evidence/mainnet-offline-input-bound-local.json).
+
+
+## Invoke explicitly selected reserve artifacts
+
+`reserve_adapter_process.py` provides the fixed prepare/review invocation for
+caller-selected runtime and bundle files. It requires exact lengths and SHA-256
+values, canonical absolute regular files owned by the current user or root,
+and no multiple hard links or group/other write access. The runtime must be executable.
+Each bounded artifact read checks descriptor and pathname identity; both files
+are checked again after the process exits. Changed artifacts withhold stdout,
+even if the process reported success. The canonical service identifier refuses
+before any artifact read.
+
+The child receives an empty environment, at most 32 MiB of nonempty immutable
+input, 1 MiB stdout, 64 KiB private stderr and a 30-second lifetime. Only prepare
+and review arguments are exposed. The existing process helper owns cleanup;
+input is not placed in arguments or logs. Fixed failure codes avoid returning
+raw path or dependency diagnostics. Successful stdout remains raw bytes for the
+integrating caller to parse and bind to its selected plan and decoder reports.
+
+Ten new test groups cover fixed invocation, malformed selections, canonical
+service refusal, aliases, special files, permissions, descriptor/path changes,
+after-execution replacement, sanitized errors and actual process transport.
+The full local Python suite passes 189 of 190 tests with its existing Linux-only
+skip and resource warnings treated as errors. Three actual invocations of the
+retained Node and bundle establish both synthetic success modes and malformed
+input refusal. Unselected parent preload variables are absent from those child
+environments.
+
+Exact byte selection is not trusted provenance or runtime admission. Before
+integration, select reviewed runtime pins and validate the complete output
+schema, plan/report selectors and compiler input. Rechecks are not an atomic
+execution guarantee or a network/filesystem sandbox; host integrity and loaded
+runtime dependencies remain separate. The preparer is unchanged and still does
+not invoke this adapter. See [the selected-process review](../evidence/mainnet-reserve-selected-process-local.json).

@@ -1,0 +1,88 @@
+{
+  "schemaVersion": 1,
+  "at": "2026-10-17T23:06:17.948619+00:00",
+  "scope": "local caller-selected reserve artifact invocation, file identity controls and bounded pipe compatibility; no trusted runtime or host admission",
+  "passed": true,
+  "sourceFiles": {
+    "mainnet/reserve_adapter_process.py": "6e267cadc4ab0431fd2b10d5552b6404d4bf2af88ddd47841e5b990da175b0be",
+    "mainnet/reserve_adapter_process_test.py": "33d8899a0ec4ef825e8e37c628685fdaa9a384c0fa40a6d9fd859bd0a6fe2f7f",
+    "mainnet/offline_process.py": "6e17a75e1269e9a7cd89ad351f9946c386af5f0df345b9891712020b774988ed"
+  },
+  "validation": {
+    "pythonTests": 190,
+    "pythonPassed": 189,
+    "pythonSkipped": 1,
+    "skipScope": "Existing Linux-only check on the local non-Linux host",
+    "newSelectedCallerTestGroups": 10,
+    "resourceWarningsAreErrors": true,
+    "pythonTestLogSHA256": "813e941312320efc4a4a1e0b3f70200110c10a99aafaf7d4951adc113f65dd13",
+    "controlReportSHA256": "fcdd354f22a7c108a8287f41bb45afbde7f2555e7caf63daccdb1601641c1244",
+    "controlDriverSHA256": "63e853aa2b93a3bca95b4c339c70ae53ff9c50dbea14821ad0e568303843d356",
+    "fixtureInputSHA256": "2e9e7e0885778e627c16aadc3a4a0f9ac5b503dfbd9e2c471e3f91f714b21060",
+    "nodeExecutableSHA256": "d0c6c74401e6a544bb4d4b2a9ded9c43298d4e6dcd5ebac4dd010c4c81774105",
+    "nodeBytes": 121304480,
+    "retainedBundleSHA256": "9091ca58a4767e40678fd069ae76712ad7d5eb5c6f140d41feb882bbb0a565c3",
+    "bundleBytes": 688386,
+    "realNodeInvocations": 3,
+    "processControls": [
+      {
+        "mode": "prepare",
+        "passed": true,
+        "inputBytes": 3173,
+        "outputSHA256": "4c858b63c00ba394d11a6006996a1bba770752b8d26da9ad760ef9c82836a389",
+        "stderrBytes": 0,
+        "unselectedPreloadInherited": false,
+        "syntheticResultMatches": true
+      },
+      {
+        "mode": "review",
+        "passed": true,
+        "inputBytes": 4887,
+        "outputSHA256": "972c82ecd97fb903d5d3cea37376d9709d7cc803e3b280362df9bf7f99697747",
+        "stderrBytes": 0,
+        "unselectedPreloadInherited": false,
+        "syntheticResultMatches": true
+      },
+      {
+        "mode": "prepare",
+        "case": "invalid-input",
+        "passed": true,
+        "callerFailureCode": "SELECTED_RESERVE_PROCESS_REFUSED",
+        "privateDiagnostic": "RESERVE_ADAPTER_INPUT_REFUSED",
+        "partialStdoutReturned": false
+      }
+    ]
+  },
+  "invocationContract": {
+    "modes": [
+      "prepare",
+      "review"
+    ],
+    "environment": {},
+    "maximumInputBytes": 33554432,
+    "maximumOutputBytes": 1048576,
+    "maximumPrivateStderrBytes": 65536,
+    "lifetimeSeconds": 30,
+    "maximumRuntimeArtifactBytes": 268435456,
+    "maximumBundleArtifactBytes": 4194304,
+    "artifactSelection": "Caller supplies exact SHA-256 and length for canonical absolute regular files. Refuse links, multiple hard links, group/other write permission, foreign non-root ownership and a non-executable runtime. Descriptor and pathname identities must match across each bounded read. Recheck both artifacts after execution and withhold stdout if either changed.",
+    "inputSelection": "Only nonempty immutable bytes within the fixed maximum; report/schema selection remains the caller and adapter responsibility.",
+    "failureHandling": "Fixed refusal codes; stderr stays in the caller-provided private sink. Nonzero exit or artifact mismatch returns no partial stdout. Cancellation propagates through existing owned-process cleanup.",
+    "canonicalGuard": "Refuses the canonical Railway service identifier before artifact reads."
+  },
+  "limitations": [
+    "Caller-supplied digests identify bytes; they are not a trusted allowlist, official provenance, Node-version verification or Linux admission. A separate review must establish the acceptable artifacts and platform.",
+    "Rechecks detect the exercised read and replacement changes but are not atomic execution pinning. This wrapper does not sandbox networking, filesystem access, dynamic libraries or other runtime capabilities; it relies on a separately trusted host and artifacts.",
+    "The wrapper returns raw bounded nonempty stdout. It does not accept a JSON schema, compiler input, plan hash, decoder selector or resulting genesis; the integrating caller must validate all of them.",
+    "The local Node checks use retained synthetic two-account prepare/review inputs with all execution/activation flags disabled. A malformed input causes the real adapter to exit unsuccessfully with its fixed diagnostic. No compiler, decoder, key generator, validator or chain operation was run.",
+    "The Python real-process transport test uses the current Python executable as a stand-in runtime. Other groups exercise actual temporary files or supplied process outcomes; these are not a Linux runtime certification.",
+    "The existing preparer is unchanged and does not call this module. Fresh compilation, replay, reserve integration, independent backing/custody and host admission remain separate blockers."
+  ],
+  "preparerIntegrated": false,
+  "hostAdmitted": false,
+  "runtimeAdmitted": false,
+  "canonicalNetworkChanged": false,
+  "chainTransactionsSubmitted": 0,
+  "mainnetActivated": false,
+  "productionReady": false
+}
