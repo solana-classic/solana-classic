@@ -1,4 +1,5 @@
 import test,{before,after} from 'node:test';
+import {reviewReserveBundleSyntax} from './reserve-bundle-syntax.mjs';
 import assert from 'node:assert/strict';
 import {mkdtempSync,readFileSync,writeFileSync,rmSync,readdirSync,existsSync} from 'node:fs';
 import {tmpdir} from 'node:os';
@@ -32,6 +33,9 @@ test('built adapter runs all selected transport fixtures outside the checkout',(
  assert.equal(manifest.toolchain.bundler.package,`@esbuild/${process.platform}-${process.arch}`);assert.equal(manifest.toolchain.bundler.version,'0.28.2');
  assert.equal(manifest.build.localRebuildIdentical,true);assert.equal(manifest.nativeAddonLoadersExcluded,true);
  assert.equal(manifest.commonJSImportsRestrictedToBuiltins,true);
+ assert.equal(manifest.syntaxReview.noImportExpressions,true);assert.equal(manifest.syntaxReview.parserVersion,'5.9.3');
+ const parserPath=ownRequire.resolve('typescript');assert.equal(manifest.syntaxReview.parserModuleSHA256,hash(readFileSync(parserPath)));
+ assert.deepEqual(manifest.syntaxReview.staticModuleSpecifiers,reviewReserveBundleSyntax(bytes).staticModuleSpecifiers);
  for(const key of ['artifactAdmitted','preparerIntegrated','canSign','canBroadcast','mainnetActivated','productionReady'])assert.equal(manifest[key],false);
  assert(!Object.keys(manifest.inputs).some(p=>/node-gyp-build|\/bufferutil\/|\/utf-8-validate\//.test(p)));
  assert.deepEqual(readdirSync(output).sort(),['manifest.json','reserve-byte-stdio.mjs']);
@@ -69,4 +73,22 @@ test('builder refuses binary overrides before executing them or creating output'
   assert.equal(existsSync(marker),false,'unselected executable must not run');
   assert.equal(existsSync(destination),false,'refusal must precede output creation');
  }
+});
+
+test('syntax review rejects executable import expressions without evaluating fixture code',()=>{
+ for(const source of [
+  'import("node:fs")','import(packageName)','import(`./${name}.mjs`)',
+  'const lazy=()=>import("https://invalid.example/module.mjs")',
+  'if(false){import("./unused.mjs")}',
+  'import /* comment */ ("data:text/javascript,export default 1")',
+  'const lazy=()=>import(name,{with:{type:"json"}})',
+ ])assert.throws(()=>reviewReserveBundleSyntax(Buffer.from(source)),/Dynamic import syntax refused/);
+ for(const source of ['import x from "external-package"','export * from "./external.mjs"','export {x} from "external-package"'])assert.throws(()=>reviewReserveBundleSyntax(Buffer.from(source)),/Static external package refused/);
+});
+test('syntax review distinguishes inert text, checks syntax and bounds exact bytes',()=>{
+ const source='import fs from "node:fs"; export {createHash} from "node:crypto"; const text="import(packageName)"; const pattern=/import\\(.*\\)/; /* import("ignored") */';
+ assert.deepEqual(reviewReserveBundleSyntax(Buffer.from(source)).staticModuleSpecifiers,['node:crypto','node:fs']);
+ for(const bytes of [Buffer.alloc(0),Buffer.alloc(4*1024*1024+1),'import("x")'])assert.throws(()=>reviewReserveBundleSyntax(bytes),/Bounded bundle bytes required/);
+ assert.throws(()=>reviewReserveBundleSyntax(Buffer.from([0xff])),TypeError);
+ assert.throws(()=>reviewReserveBundleSyntax(Buffer.from('import(')),/Bundle syntax refused/);
 });

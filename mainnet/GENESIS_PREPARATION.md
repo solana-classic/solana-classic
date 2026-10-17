@@ -476,3 +476,25 @@ trusted release allowlists, origin attestations, continuous process measurements
 or runtime admission. Dynamic libraries, replacement races and host integrity
 remain separate concerns. Earlier manifests retain their original narrower
 provenance. See [the executable provenance evidence](../evidence/mainnet-reserve-toolchain-local.json).
+
+
+## Generated bundle import syntax
+
+Before writing a new artifact, the builder parses its exact nonempty UTF-8 bytes
+with the existing pinned TypeScript 5.9.3 parser, bounded to 4 MiB. Parse errors,
+any `import(...)` expression and external static import/re-export specifiers
+are refused. Variable or template imports can escape a bundler's external-import
+list, so that list alone is insufficient. The new manifest records the parser
+module hash, inspected byte count and actual builtin static specifiers; parser
+bytes are checked again after inspection.
+
+Six focused builder tests pass, including seven dynamic-import and three static
+external-module refusal cases, malformed/oversized input and inert import-like
+text. They also execute the existing 23 standalone adapter fixtures. The actual
+artifact remains byte-identical and has no import expressions.
+
+This closes a specific syntax-review gap, not all dependency or loader paths.
+Aliases, generated code, alternate loaders, builtin capabilities and host integrity
+remain outside this check. It supplies neither a network sandbox nor a trusted
+runtime allowlist. Preparer integration and real compiler/replay execution still
+require separate admission. See [the scoped syntax review](../evidence/mainnet-reserve-syntax-local.json).
