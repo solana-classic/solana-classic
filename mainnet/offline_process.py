@@ -5,21 +5,30 @@ STDIN_LIMIT=16*1024**2
 STDOUT_LIMIT=4*1024**2
 STDERR_LIMIT=8*1024**2
 
-def run_tool(args,log,timeout=180,stdout_limit=STDOUT_LIMIT,stderr_limit=STDERR_LIMIT,input_bytes=None):
+def run_tool(args,log,timeout=180,stdout_limit=STDOUT_LIMIT,stderr_limit=STDERR_LIMIT,input_bytes=None,environment=None):
  """Return bounded stdout. Retain stderr privately; never print raw failures.
 
  Optional immutable input bytes are bounded and streamed while both output
  pipes drain. No input inherits an interactive terminal. Input is never logged.
- The caller admits executable pins and private paths. This function cannot
+ An explicit environment replaces inheritance, including an empty mapping;
+ omission preserves the existing inherited environment. The caller selects
+ allowed variables and admits executable pins and private paths. This function cannot
  choose tools, start validators or approve preparation. Every exceptional exit,
  including cancellation, kills and reaps only the process group it started.
  """
  if type(timeout) not in [int,float] or not math.isfinite(timeout) or timeout<=0 or type(stdout_limit) is not int or type(stderr_limit) is not int or min(stdout_limit,stderr_limit)<=0:
   raise ValueError('BOUNDED_OFFLINE_PROCESS_REQUIRED')
  if input_bytes is not None and (type(input_bytes) is not bytes or len(input_bytes)>STDIN_LIMIT):raise ValueError('BOUNDED_OFFLINE_INPUT_REQUIRED')
+ if environment is not None:
+  try:
+   if type(environment) is not dict or len(environment)>64:raise ValueError()
+   environment=environment.copy()
+   if any(type(k) is not str or not k or '=' in k or '\0' in k or type(v) is not str or '\0' in v for k,v in environment.items()):raise ValueError()
+   if sum(len(k.encode('utf-8'))+len(v.encode('utf-8'))+2 for k,v in environment.items())>16384:raise ValueError()
+  except (ValueError,UnicodeError):raise ValueError('BOUNDED_OFFLINE_ENVIRONMENT_REQUIRED') from None
  process=None;streams=selectors.DefaultSelector();output=bytearray();stderr_bytes=0;input_offset=0
  try:
-  process=subprocess.Popen(args,stdin=subprocess.PIPE if input_bytes is not None else subprocess.DEVNULL,stdout=subprocess.PIPE,stderr=subprocess.PIPE,start_new_session=True)
+  process=subprocess.Popen(args,stdin=subprocess.PIPE if input_bytes is not None else subprocess.DEVNULL,stdout=subprocess.PIPE,stderr=subprocess.PIPE,start_new_session=True,env=environment)
   if process.stdin is not None:
    if input_bytes:
     os.set_blocking(process.stdin.fileno(),False);streams.register(process.stdin,selectors.EVENT_WRITE,'stdin')

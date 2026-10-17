@@ -1,0 +1,62 @@
+{
+  "schemaVersion": 1,
+  "at": "2026-10-17T21:34:27.732189+00:00",
+  "scope": "local bounded offline process environment selection and retained reserve bundle compatibility; no host or runtime admission",
+  "passed": true,
+  "sourceFiles": {
+    "mainnet/offline_process.py": "796a96f74dadf4e63a64d01b068dacf0799ce1092e84906d305e548466ab2a3f",
+    "mainnet/offline_process_test.py": "6140a01276e25bee81de3fe76791f2ddfaeb82d71e27ef00bcf45250ad1c0b4f"
+  },
+  "validation": {
+    "pythonTests": 177,
+    "pythonPassed": 176,
+    "pythonSkipped": 1,
+    "skipScope": "Existing Linux-only check on the local non-Linux host",
+    "newEnvironmentTests": 4,
+    "processControls": [
+      {
+        "case": "inherited-control",
+        "result": "inherited",
+        "passed": true
+      },
+      {
+        "case": "explicit-empty",
+        "result": "clean",
+        "passed": true
+      },
+      {
+        "case": "explicit-selected-environment-with-retained-bundle",
+        "passed": true,
+        "fixtureTests": 23,
+        "preloadInvoked": false
+      }
+    ],
+    "nodeExecutableSHA256": "d0c6c74401e6a544bb4d4b2a9ded9c43298d4e6dcd5ebac4dd010c4c81774105",
+    "retainedBundleSHA256": "9091ca58a4767e40678fd069ae76712ad7d5eb5c6f140d41feb882bbb0a565c3",
+    "pythonTestLogSHA256": "82573b0b3f336628abd153e8716eda779a9d762b2106d432dd73d9474ac662a5",
+    "executedControlDriverSHA256": "c41cb0925dbca14e3f36e3109472f70c6ea23ea3c849335fd588de926f5e42b4",
+    "controlReportSHA256": "c7b14e504774c6154d6335f08098bdc6062e997edb1b5bad626308ffd093a610",
+    "adapterFixtureLogSHA256": "2c9088aba181390e78641a0948aba34a48e307784fec37bbe0f3c2e62b601d03"
+  },
+  "environmentContract": {
+    "omitted": "Preserves existing environment inheritance",
+    "explicitEmpty": "Passes an empty mapping instead of inheriting parent variables",
+    "explicitMapping": "Copies and validates the entire selected replacement environment; no merge with parent",
+    "maximumEntries": 64,
+    "maximumEncodedBytes": 16384,
+    "invalidInput": "Fixed path-free refusal before process creation; supplied names and values are not echoed"
+  },
+  "limitations": [
+    "This is an optional process interface. Existing preparer calls retain their previous inherited environment until a separately reviewed integration selects a policy.",
+    "The caller remains responsible for the executable, absolute path, admitted hashes and allowed variable values. This helper does not admit tools, restrict builtin capabilities or provide network/filesystem isolation.",
+    "A harmless local NODE_OPTIONS preload wrote a retained marker in the inherited control. Empty and selected mappings prevented that preload; the retained reserve bundle passed 23 fixtures through the process helper. No real compiler, validator or chain operation was executed.",
+    "The Python suite uses local processes and supplied preparation responses. Its success does not replace real genesis compilation, Linux host admission or strict ledger replays.",
+    "The 16 MiB process stdin bound and 32 MiB adapter input bound remain distinct; end-to-end payload sizing still needs integration review."
+  ],
+  "preparerIntegrated": false,
+  "hostAdmitted": false,
+  "runtimeAdmitted": false,
+  "canonicalNetworkChanged": false,
+  "mainnetActivated": false,
+  "productionReady": false
+}

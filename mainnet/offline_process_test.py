@@ -102,4 +102,32 @@ class OfflineInput(unittest.TestCase):
   self.assertEqual(started[0].returncode,-signal.SIGKILL)
   with self.assertRaises(ChildProcessError):os.waitpid(started[0].pid,os.WNOHANG)
 
+class OfflineEnvironment(unittest.TestCase):
+ execute=OfflineProcess.execute
+ def test_explicit_environment_replaces_inherited_values(self):
+  code="import os;print(os.environ.get('PRIVATE_PARENT_MARKER','absent'));print(os.environ.get('SELECTED_TOOL_MODE','absent'))"
+  with patch.dict(os.environ,{'PRIVATE_PARENT_MARKER':'private-parent-value'}):
+   out,err=self.execute(code,environment={'SELECTED_TOOL_MODE':'selected'})
+   self.assertEqual(out,b'absent\nselected\n');self.assertEqual(err,b'')
+   out,err=self.execute(code,environment={})
+   self.assertEqual(out,b'absent\nabsent\n');self.assertEqual(err,b'')
+ def test_omitted_environment_preserves_existing_inheritance_contract(self):
+  with patch.dict(os.environ,{'SELECTED_TOOL_MODE':'inherited'}):
+   out,_=self.execute("import os;print(os.environ['SELECTED_TOOL_MODE'])")
+  self.assertEqual(out,b'inherited\n')
+ def test_invalid_environment_refuses_before_process_start_without_echoing_values(self):
+  class Derived(dict):pass
+  bad=[[],Derived(),{'':'value'},{'a=b':'value'},{'a\0b':'value'},{'name':'private\0value'},{'name':b'bytes'},{1:'value'},{'name':'\ud800'},dict.fromkeys([str(i) for i in range(65)],'x'),{'name':'x'*16384}]
+  for environment in bad:
+   with self.subTest(kind=type(environment).__name__),patch.object(m.subprocess,'Popen') as start,self.assertRaisesRegex(ValueError,'^BOUNDED_OFFLINE_ENVIRONMENT_REQUIRED$'):
+    self.execute('raise Exception()',environment=environment)
+   start.assert_not_called()
+ def test_environment_is_snapshotted_and_exact_byte_limit_is_allowed(self):
+  selected={'X':'x'*16381};real=m.subprocess.Popen
+  def start(*args,**kwargs):
+   self.assertIsNot(kwargs['env'],selected);selected.clear()
+   return real(*args,**kwargs)
+  with patch.object(m.subprocess,'Popen',side_effect=start):out,_=self.execute("import os;print(len(os.environ['X']))",environment=selected)
+  self.assertEqual(out,b'16381\n');self.assertEqual(selected,{})
+
 if __name__=='__main__':unittest.main()

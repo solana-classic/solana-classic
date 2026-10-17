@@ -498,3 +498,25 @@ Aliases, generated code, alternate loaders, builtin capabilities and host integr
 remain outside this check. It supplies neither a network sandbox nor a trusted
 runtime allowlist. Preparer integration and real compiler/replay execution still
 require separate admission. See [the scoped syntax review](../evidence/mainnet-reserve-syntax-local.json).
+
+
+## Explicit child environment selection
+
+The bounded process helper now accepts an optional `environment` mapping. An
+explicit mapping replaces inheritance, including an empty mapping; omission
+preserves existing behavior. It snapshots at most 64 string entries and 16 KiB
+of encoded names/values, rejecting malformed fields before starting a process.
+Refusal messages do not expose supplied variables. Tool admission and variable
+policy remain the caller's responsibility.
+
+Four new test groups cover replacement versus inheritance, empty environments,
+validation and snapshot/boundary handling. The local Python suite passes 176 of
+177 tests with its existing Linux-only skip. A harmless Node preload executes
+in the inherited control but is suppressed with explicit environments; the
+retained reserve bundle's 23 fixtures also pass through the process helper.
+
+This interface prepares for safe reserve-runtime invocation; it is not yet wired
+into the preparer and does not retroactively sanitize existing tool launches.
+It is not a sandbox or tool allowlist. Full integration must select the executable
+pins, environment and end-to-end input bounds before any fresh compilation. See
+[the environment selection evidence](../evidence/mainnet-offline-environment-local.json).
