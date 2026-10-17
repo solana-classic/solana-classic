@@ -1,0 +1,128 @@
+{
+  "schemaVersion": 1,
+  "at": "2026-10-17T02:33:45.651780+00:00",
+  "scope": "remote production-origin individual browser evidence review for the exact source-built candidate; recorded assertions, not a new browser run or independent transaction replay",
+  "passed": true,
+  "genesis": "7TAUSfTzQeocodtVee2qsftsCYnJu2eCM1ALdADbHNon",
+  "candidate": {
+    "apiOrigin": "https://network-release-production.up.railway.app",
+    "frontendOrigin": "https://solana-classic-soc.vercel.app",
+    "frontendDeploymentId": "dpl_3aWWzKDohr4SrgijgrB8dWgHHS5r",
+    "frontendCommit": "35f0eaf1dede45452c9cdf9e6403669e966c427d",
+    "apiCommit": "119f25e225540be78b64b19bdb6cb300a1f47c10",
+    "networkConfigSha256": "0eea489e8cf0753b2b0cf0b91b6949566044e50c20bd4d02eea814490f64fe0e",
+    "dependencyManifestSha256": "e6da27717e6a84ca7b29d707ff63591b2ff0cfc38892d3b4667f8615bdf7bbc0"
+  },
+  "freezeSha256": "55b668e56a946ec94f0195b03530aba23593bd71d7fd52493d5403b21882757f",
+  "checklistSha256": "e2fb4b2f53e9aa10f21ec5ffcf708cc2749b456a39703c9228a7fce7fc574f73",
+  "proofs": [
+    {
+      "path": "evidence/agave-source-final-browser-review.json",
+      "sha256": "51bff09bfdedcbb736132d87f8cf7c5d20fa684bb2e4d8ea595273b838f76b07"
+    },
+    {
+      "path": "evidence/agave-source-stability-replacement-completed.json",
+      "sha256": "f84bd7ffe13c946e8e772145893154af9da38df25ad331f9616a2de6bc4ea54c"
+    }
+  ],
+  "requirements": {
+    "G1.02": {
+      "claim": "Native TEST transfer has a successful receipt and observed balance change.",
+      "basis": "Each frozen-origin run finalized its distinct native-transfer receipt. The retained executed driver requires recipient balance 0 before and 10000000 native base units after transfer.",
+      "assertions": [
+        "finalized",
+        "initialNative !== 0 || finalNative !== 10000000"
+      ]
+    },
+    "G2.02": {
+      "claim": "Fungible demo supply is 1000000 display units at six decimals, with a successful transfer to a second wallet.",
+      "basis": "checkMint requires 1000000000000 base units and six decimals; recipient account checks require exactly 5000000 base units after a distinct finalized transfer.",
+      "assertions": [
+        "checkMint",
+        "Recipient finalized token balance mismatch"
+      ]
+    },
+    "G2.03": {
+      "claim": "NFT supply is one at zero decimals, with a successful transfer and verified second-wallet ownership.",
+      "basis": "checkMint requires supply 1 and decimals 0; finalized recipient token account must have amount 1, matching mint and recipient owner.",
+      "assertions": [
+        "checkMint",
+        "Recipient finalized token balance mismatch"
+      ]
+    },
+    "G2.04": {
+      "claim": "Mint, freeze, metadata pointer and metadata update authorities match the immutable issuance design.",
+      "basis": "Both asset kinds require null mint/freeze/pointer authorities, a pointer to their own mint, and absent or System-address metadata update authority.",
+      "assertions": [
+        "checkMint"
+      ]
+    },
+    "G2.08": {
+      "claim": "The remote browser journey contains actual finalized receipts and asset verification.",
+      "basis": "Each frozen profile completed six distinct finalized receipts and two assets with checked mint accounts, recipient token accounts, immutable metadata and artwork. No fixture response supplies these results.",
+      "assertions": [
+        "finalized",
+        "checkMint",
+        "holdings",
+        "checkArtwork"
+      ]
+    },
+    "G3.01": {
+      "claim": "A clean browser creates wallets, claims test funds, creates a token, mints an NFT and transfers assets over HTTPS.",
+      "basis": "Each run creates a new browser context and separate payer/recipient pages, then completes all six receipt actions on the fixed production origin. Frozen profiles supply candidate evidence; custom profiles are separately labelled supplemental evidence.",
+      "assertions": [
+        "browser.newContext",
+        "bounded faucet",
+        "native transfer",
+        "meme and nft issuance and transfer"
+      ]
+    },
+    "G4.03": {
+      "claim": "Current NFT ownership is checked against chain state rather than treating cached gallery ownership as proof.",
+      "basis": "The finalized recipient token-account read verifies the NFT mint, account owner, recipient owner, initialized state and amount 1 before the gallery currentOwner is compared with that recipient.",
+      "assertions": [
+        "holdings",
+        "gallery.currentOwner !== report.recipient"
+      ]
+    },
+    "G7.04": {
+      "claim": "Production frontend, transaction deep links and immutable metadata are anonymously reachable over HTTPS.",
+      "basis": "Clean contexts open the public production frontend and explorer transaction links at both widths; unauthenticated metadata/artwork and frontend entry fetches succeed. Frozen-origin entries match the selected freeze before and after each run.",
+      "assertions": [
+        "bundle",
+        "discovery.goto",
+        "json(metadata.uri)",
+        "checkArtwork"
+      ]
+    }
+  },
+  "reviewMethod": {
+    "rawReportsRehashed": 4,
+    "rawReportsMatchPublicSelectedFields": true,
+    "completeBeforeAndAfterRuntimeMatchesFreeze": true,
+    "frozenFrontendBeforeAndAfterMatchesSelectedEntries": true,
+    "retainedExecutedDriversReviewed": [
+      "0cd27bc0b2c58d56da75b082ca7c68a47f2a6149b378054ada7e644e526e28b5",
+      "431f761aeb365fe80d13c7cffc30c5cbe5e52e0124d9210d06abe0ea14b0caab"
+    ],
+    "frozenProfilesUsedForCandidateRequirements": [
+      "desktop",
+      "mobile"
+    ],
+    "customProfilesAreSupplemental": true,
+    "supplyBalanceAndAuthorityAssertionsReviewedFromExecutedDriver": true,
+    "newChainReads": false,
+    "newTransactions": false,
+    "newWorkloads": false
+  },
+  "limitations": [
+    "This review uses retained passed reports and their checksum-bound executed driver assertions; it does not independently replay chain history.",
+    "Raw RPC balance/mint/authority replies were not retained in these reports; numeric and authority conclusions depend on the reviewed driver assertions completing successfully.",
+    "The initial custom desktop storage-check failure remains failed and retained; only later fresh passed profiles supply custom evidence.",
+    "These eight requirement reviews do not certify complete privacy/log auditing, retry or duplicate-click behavior, restart/recovery, deadline-specific earlier milestones, exhaustive accessibility or physical-device coverage.",
+    "Operator access acknowledgment, other individual release requirements and independent mainnet/bridge readiness remain open."
+  ],
+  "releaseAccepted": false,
+  "mainnetAccepted": false,
+  "bridgeAccepted": false
+}

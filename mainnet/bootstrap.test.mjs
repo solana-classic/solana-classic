@@ -1,6 +1,10 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { readFileSync } from 'node:fs';
+import { readFileSync, mkdtempSync, writeFileSync, rmSync } from 'node:fs';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
+import { fileURLToPath } from 'node:url';
+import { spawnSync } from 'node:child_process';
 import { PublicKey } from '@solana/web3.js';
 import { auditBootstrap } from './bootstrap.mjs';
 const key=i=>new PublicKey(Uint8Array.from({length:32},(_,j)=>(i+j)%256)).toBase58();
@@ -60,4 +64,26 @@ test('V2 protected vault rent requires the larger exact bootstrap budget',()=>{
   const f=fixture();delete f.reserveDataBytes;f.protectedReserveNativeUnits='1002240';f.prelockedOriginUnits='101003';
   const r=auditBootstrap(f);assert.equal(r.reserveDataBytes,16);assert.equal(r.backing.minimumVaultRentNativeUnits,'1002240');assert.equal(r.backing.precisionOrExtraBackingNativeUnits,'760');
   f.protectedReserveNativeUnits='946560';assert.throws(()=>auditBootstrap(f));
+});
+
+
+test('reserve library import never enters the bootstrap file CLI on an entrypoint collision',()=>{
+  const cli=fileURLToPath(new URL('./bootstrap.mjs',import.meta.url));
+  const library=new URL('./reserve-prefund-plan.mjs',import.meta.url).href;
+  const source=`process.argv=[process.execPath,${JSON.stringify(cli)},'missing-bootstrap-input'];await import(${JSON.stringify(library)});process.stdout.write('imported');`;
+  const r=spawnSync(process.execPath,['--input-type=module','--eval',source],{encoding:'utf8',timeout:10000,maxBuffer:1024*1024});
+  assert.ifError(r.error);assert.equal(r.status,0);assert.equal(r.stdout,'imported');assert.equal(r.stderr,'');
+});
+
+test('bootstrap file CLI preserves the exact accounting report and rejects missing input',()=>{
+  const cli=fileURLToPath(new URL('./bootstrap.mjs',import.meta.url));
+  const directory=mkdtempSync(join(tmpdir(),'bootstrap-cli-'));
+  try {
+    const input=fixture(),file=join(directory,'input.json');writeFileSync(file,JSON.stringify(input));
+    const r=spawnSync(process.execPath,[cli,file],{encoding:'utf8',timeout:10000,maxBuffer:1024*1024});
+    assert.ifError(r.error);assert.equal(r.status,0);assert.equal(r.stderr,'');
+    assert.equal(r.stdout,JSON.stringify(auditBootstrap(input),null,2)+'\n');
+    const missing=spawnSync(process.execPath,[cli],{encoding:'utf8',timeout:10000,maxBuffer:1024*1024});
+    assert.ifError(missing.error);assert.notEqual(missing.status,0);assert.equal(missing.stdout,'');assert.match(missing.stderr,/Usage: node mainnet\/bootstrap.mjs/);
+  } finally {rmSync(directory,{recursive:true,force:true});}
 });

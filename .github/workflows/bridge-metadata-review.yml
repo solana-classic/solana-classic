@@ -1,0 +1,206 @@
+name: Bridge metadata review
+on:
+  pull_request:
+    paths:
+      - 'bridge/mint-metadata*'
+      - 'bridge/gated-native*'
+      - 'bridge/gated-message-review*'
+      - 'bridge/gated-claim-review-journal*'
+      - 'bridge/gated-claim-accounts*'
+      - 'bridge/rehearsal/drop-forwarded-submission*'
+      - 'engine/rehearsal/gated_operation_fault_agave*'
+      - 'bridge/GATED_CLAIM_FAULTS.md'
+      - 'evidence/bridge-gated-claim-faults.json'
+      - 'bridge/gated-claim-operation*'
+      - 'bridge/test-fixtures/gated-operation.mjs'
+      - 'bridge/rehearsal/gated-operation*'
+      - 'engine/rehearsal/gated_operation_agave*'
+      - 'bridge/GATED_CLAIM_OPERATION.md'
+      - 'evidence/bridge-gated-claim-operation.json'
+      - 'bridge/gated-claim-settlement*'
+      - 'bridge/test-fixtures/gated-settlement.mjs'
+      - 'bridge/rehearsal/gated-settlement-agave.mjs'
+      - 'engine/rehearsal/gated_settlement_agave*'
+      - 'bridge/GATED_CLAIM_SETTLEMENT.md'
+      - 'evidence/bridge-gated-claim-settlement.json'
+      - 'bridge/gated-claim-observer*'
+      - 'bridge/GATED_CLAIM_OBSERVATION.md'
+      - 'evidence/bridge-gated-destination-observer-local.json'
+      - 'bridge/GATED_CLAIM_RETENTION.md'
+      - 'evidence/bridge-gated-claim-retention-local.json'
+      - 'bridge/GATED_MESSAGE_REVIEW.md'
+      - 'evidence/bridge-gated-message-review-local.json'
+      - 'bridge/rehearsal/gated-native-wire.mjs'
+      - 'bridge/rehearsal/gated-destination-agave.mjs'
+      - 'engine/rehearsal/gated_destination_agave*'
+      - 'bridge/GATED_DESTINATION_AGAVE.md'
+      - 'evidence/bridge-gated-destination-agave.json'
+      - 'bridge/GATED_NATIVE_CLIENT.md'
+      - 'evidence/bridge-gated-native-client.json'
+      - 'bridge/reviewed-origin-mint*'
+      - 'bridge/pending-claim*'
+      - 'bridge/pending-inventory*'
+      - 'bridge/event-inventory*'
+      - 'bridge/program-account-collector*'
+      - 'bridge/event-collection-comparison*'
+      - 'bridge/source-economic*'
+      - 'bridge/INITIAL_SOURCE_CAPTURE_REHEARSAL.md'
+      - 'evidence/bridge-initial-source-capture-agave.json'
+      - 'bridge/rehearsal/initial-source-capture.mjs'
+      - 'engine/rehearsal/initial_source_capture*'
+      - 'bridge/committee-control*'
+      - 'bridge/rehearsal/committee-control.mjs'
+      - 'bridge/COMMITTEE_CONTROL.md'
+      - 'evidence/bridge-committee-control.json'
+      - 'bridge/retained-source-capture*'
+      - 'bridge/rehearsal/capture-archive.mjs'
+      - 'bridge/CAPTURE_ARCHIVE.md'
+      - 'engine/rehearsal/capture_archive*'
+      - 'evidence/bridge-capture-archive.json'
+      - 'bridge/source-confirmation-capture*'
+      - 'bridge/captured-source-claim.mjs'
+      - 'bridge/SOURCE_CONFIRMATION_CAPTURE.md'
+      - 'evidence/bridge-source-confirmation-capture-local.json'
+      - 'bridge/source-block-history*'
+      - 'bridge/SOURCE_BLOCK_HISTORY.md'
+      - 'bridge/rehearsal/source-block-history.mjs'
+      - 'evidence/bridge-source-block-history.json'
+      - 'bridge/SOURCE_ECONOMIC_REVIEW.md'
+      - 'bridge/rehearsal/source-economic-history.mjs'
+      - 'evidence/bridge-source-economic-history.json'
+      - 'evidence/bridge-source-response-retention-local.json'
+      - 'bridge/rehearsal/event-collection.mjs'
+      - 'engine/rehearsal/event_collection*'
+      - 'evidence/bridge-event-collection-agave.json'
+      - 'evidence/bridge-program-account-collector-local.json'
+      - 'bridge/EVENT_INVENTORY.md'
+      - 'evidence/bridge-returned-event-inventory-local.json'
+      - 'bridge/PENDING_INVENTORY.md'
+      - 'bridge/rehearsal/selected-inventory.mjs'
+      - 'evidence/bridge-selected-pending-inventory-retained.json'
+      - 'evidence/bridge-selected-pending-inventory-local.json'
+      - 'bridge/pinned-pending*'
+      - 'bridge/reviewed-pending*'
+      - 'bridge/claim-mint-policy.mjs'
+      - 'bridge/claim-pin-policy.mjs'
+      - 'bridge/test-fixtures/**'
+      - 'bridge/PENDING_CLAIMS.md'
+      - 'evidence/bridge-reviewed-journal-local.json'
+      - 'evidence/bridge-metadata-journal-agave.json'
+      - 'evidence/bridge-metadata-pending-crash-agave.json'
+      - 'evidence/bridge-metadata-redemption-crash-agave.json'
+      - 'bridge/REVIEWED_ORIGIN_MINT.md'
+      - 'bridge/rehearsal/*reviewed-metadata*'
+      - 'engine/rehearsal/reviewed_metadata_origin*'
+      - 'engine/rehearsal/cold_copy.py'
+      - 'bridge/origin-assets*'
+      - 'bridge/origin-token-code*'
+      - 'bridge/MINT_METADATA.md'
+      - 'bridge/ORIGIN_ASSETS.md'
+      - 'bridge/rehearsal/metadata-origin.mjs'
+      - 'bridge/rehearsal/metadata-journal.mjs'
+      - 'engine/rehearsal/metadata_journal*'
+      - 'bridge/rehearsal/metadata-pending-crash.mjs'
+      - 'engine/rehearsal/metadata_pending_crash*'
+      - 'bridge/METADATA_COLD_RESTORE.md'
+      - 'bridge/rehearsal/metadata-cold-restore.mjs'
+      - 'engine/rehearsal/metadata_cold_restore*'
+      - 'evidence/bridge-metadata-cold-restore-agave.json'
+      - 'bridge/rehearsal/metadata-redemption-crash.mjs'
+      - 'engine/rehearsal/metadata_redemption_crash*'
+      - 'bridge/rehearsal/metadata-unsubmitted-expiry.mjs'
+      - 'engine/rehearsal/metadata_unsubmitted_expiry*'
+      - 'bridge/rehearsal/metadata-redemption-expiry.mjs'
+      - 'bridge/rehearsal/metadata-dropped-redemption.mjs'
+      - 'bridge/rehearsal/drop-submission*'
+      - 'engine/rehearsal/metadata_dropped_redemption*'
+      - 'evidence/bridge-metadata-dropped-redemption-agave.json'
+      - 'engine/rehearsal/metadata_redemption_expiry*'
+      - 'bridge/rehearsal/metadata-origin-code.mjs'
+      - 'engine/rehearsal/metadata_origin_code*'
+      - 'bridge/upgrade-observation*'
+      - 'bridge/observer-reports*'
+      - 'bridge/expired-review*'
+      - 'bridge/EXPIRED_RECOVERY.md'
+      - 'bridge/CONNECTION_LOSS.md'
+      - 'bridge/FINALITY_RECOVERY.md'
+      - 'bridge/rehearsal/metadata-expiry-review.mjs'
+      - 'evidence/bridge-metadata-expiry-review-offline.json'
+      - 'evidence/bridge-metadata-origin-code-agave.json'
+      - 'evidence/bridge-metadata-redemption-expiry-agave.json'
+      - 'evidence/bridge-metadata-unsubmitted-expiry-agave.json'
+      - 'engine/rehearsal/cold_copy_test.py'
+      - 'engine/rehearsal/metadata_origin*'
+      - 'engine/rehearsal/bootstrap.py'
+      - 'evidence/bridge-metadata-observer-local.json'
+      - 'evidence/bridge-metadata-origin-agave.json'
+      - 'evidence/bridge-reviewed-metadata-origin-agave.json'
+      - '.github/workflows/bridge-metadata-review.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  offline-admission:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: '24.19.0'
+      - run: npm install --global pnpm@10.34.7
+      - run: pnpm install --frozen-lockfile --ignore-scripts
+      - name: Retained offline runner syntax
+        run: |
+          node --check bridge/rehearsal/gated-operation-fault-agave.mjs
+          node --check bridge/rehearsal/drop-forwarded-submission.mjs
+          node --check bridge/rehearsal/gated-operation-agave.mjs
+          node --check bridge/rehearsal/gated-operation-child.mjs
+          node --check bridge/rehearsal/committee-control.mjs
+          node --check bridge/rehearsal/capture-archive.mjs
+          node --check bridge/rehearsal/initial-source-capture.mjs
+          node --check bridge/rehearsal/source-block-history.mjs
+          node --check bridge/rehearsal/source-economic-history.mjs
+          node --check bridge/rehearsal/event-collection.mjs
+          node --check bridge/rehearsal/selected-inventory.mjs
+          node --check bridge/rehearsal/metadata-cold-restore.mjs
+      - name: Offline metadata and existing admission regressions
+        run: node --test bridge/rehearsal/drop-forwarded-submission.test.mjs bridge/gated-claim-operation.test.mjs bridge/gated-claim-settlement.test.mjs bridge/gated-claim-accounts.test.mjs bridge/gated-claim-observer.test.mjs bridge/gated-claim-review-journal.test.mjs bridge/gated-message-review.test.mjs bridge/gated-native.test.mjs bridge/committee-control.test.mjs bridge/retained-source-capture.test.mjs bridge/source-confirmation-capture.test.mjs bridge/source-block-history.test.mjs bridge/source-economic-evidence.test.mjs bridge/source-economic-review.test.mjs bridge/source-economic-observer.test.mjs bridge/event-collection-comparison.test.mjs bridge/program-account-collector.test.mjs bridge/event-inventory.test.mjs bridge/pending-inventory.test.mjs bridge/reviewed-pending.test.mjs bridge/pinned-pending.test.mjs bridge/reviewed-origin-mint.test.mjs bridge/mint-metadata.test.mjs bridge/origin-assets.test.mjs bridge/origin-token-code.test.mjs bridge/pending-claim.test.mjs bridge/pending-redemption.test.mjs bridge/pending-large-native.test.mjs bridge/lossless-native-rpc.test.mjs bridge/observer-reports.test.mjs bridge/expired-review.test.mjs bridge/program-pins.test.mjs bridge/upgrade-observation.test.mjs
+      - name: Private rehearsal admission guards
+        run: python3 engine/rehearsal/metadata_origin_test.py
+      - name: Read-only review copy guards
+        run: python3 engine/rehearsal/reviewed_metadata_origin_test.py
+      - name: Fresh metadata journal worker guards
+        run: python3 engine/rehearsal/metadata_journal_test.py
+      - name: Metadata pending-fault admission guards
+        run: python3 engine/rehearsal/metadata_pending_crash_test.py
+      - name: Stopped-ledger copy guards
+        run: python3 engine/rehearsal/cold_copy_test.py
+      - name: Metadata original-redemption pending-fault guards
+        run: python3 engine/rehearsal/metadata_redemption_crash_test.py
+      - name: Metadata actual-height unsubmitted-expiry guards
+        run: python3 engine/rehearsal/metadata_unsubmitted_expiry_test.py
+      - name: Metadata actual-height original-redemption expiry guards
+        run: python3 engine/rehearsal/metadata_redemption_expiry_test.py
+      - name: Metadata origin-code replacement guards
+        run: python3 engine/rehearsal/metadata_origin_code_test.py
+      - name: Controlled local submission transport checks
+        run: node --test bridge/rehearsal/drop-submission.test.mjs
+      - name: Metadata controlled-drop and expiry worker guards
+        run: python3 engine/rehearsal/metadata_dropped_redemption_test.py
+      - name: Metadata archive restore admission guards
+        run: python3 -B -W error::ResourceWarning engine/rehearsal/metadata_cold_restore_test.py
+      - name: Read-only current account collection worker guards
+        run: python3 -B -W error::ResourceWarning engine/rehearsal/event_collection_test.py
+      - name: Fresh source capture worker guards
+        run: python3 -B -W error::ResourceWarning engine/rehearsal/initial_source_capture_test.py
+      - name: Private capture archive guards
+        run: python3 -B -W error::ResourceWarning engine/rehearsal/capture_archive_test.py
+      - name: Fresh gated destination worker admission
+        run: python3 -B -W error::ResourceWarning engine/rehearsal/gated_destination_agave_test.py
+      - name: Fresh gated settlement worker admission
+        run: python3 -B -W error::ResourceWarning engine/rehearsal/gated_settlement_agave_test.py
+      - name: Fresh gated operation journal worker admission
+        run: python3 -B -W error::ResourceWarning engine/rehearsal/gated_operation_agave_test.py
+      - name: Fresh gated reply-loss and expiry worker admission
+        run: python3 -B -W error::ResourceWarning engine/rehearsal/gated_operation_fault_agave_test.py

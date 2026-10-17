@@ -1,0 +1,68 @@
+{
+  "schemaVersion": 1,
+  "at": "2026-10-16T09:47:28.530663+00:00",
+  "state": "offline-gated-claim-review-retention-verified",
+  "scope": "Private immutable review artifacts with synthetic signed claims; no operational journal handoff, live observations, SBF execution or chain requests",
+  "contract": "native-bootstrap-trailer-v3",
+  "checks": {
+    "focusedGroups": 15,
+    "fullBridgeClientRegressionGroups": 336,
+    "roadmapRegressionGroups": 30,
+    "failed": 0,
+    "skipped": 0
+  },
+  "actualLocalProcessChecks": [
+    "New process inspects exact retained bytes using external review selection",
+    "Two concurrent writer processes yield one successful retention and one refusal, with one complete record and no partial files"
+  ],
+  "injectedFailureStates": [
+    "Partial pending file blocks retain/inspect and remains unchanged",
+    "Complete record with leftover publication link stays blocked and preserved"
+  ],
+  "interruptedWritesAreInjectedNotActualKillOrPowerLoss": true,
+  "retentionControls": [
+    "Separate explicit fresh namespace; no legacy import",
+    "Receipt-derived identity prevents replacing a retained claim",
+    "Exact full review selection, signatures, canonical bounded record and raw bytes revalidated",
+    "Owned private directories/files, no symlinks or shared hard links",
+    "Exclusive write, file fsync, atomic no-replace link publication and directory fsync",
+    "No automatic cleanup or recovery mutation"
+  ],
+  "ephemeralSyntheticKeysAndSignaturesOnly": true,
+  "retainedPrivateKeysOrJournalsRead": 0,
+  "retainedLedgersCopied": 0,
+  "workerOrValidatorProcessesStarted": 0,
+  "chainRequests": 0,
+  "externalSubmissions": 0,
+  "existingSDKOrJournalsChanged": false,
+  "compiledProgrammeChanged": false,
+  "chainStateVerified": false,
+  "sourceFinalityVerified": false,
+  "expiryVerified": false,
+  "canPrepareSubmission": false,
+  "canSign": false,
+  "canBroadcast": false,
+  "canonicalNetworkChanged": false,
+  "productionReady": false,
+  "limitations": [
+    "No active lifecycle, exactly-once submission handoff or finalized reconciliation",
+    "No hostile same-user filesystem, power-loss, distributed-storage or production recovery claim",
+    "Selected declarations do not establish real backing, current chain state or independent verification"
+  ],
+  "sourceHashes": {
+    "bridge/gated-claim-review-journal.mjs": "960ad883b4b41177b642e677b4f6ac8d922d08f99b1b49a52aa56fe6da080b8c",
+    "bridge/gated-claim-review-journal.test.mjs": "85944e62eb885c7a57a017951d17bc7c7f35c97de5c32856eac896c4d117db4f",
+    "bridge/test-fixtures/gated-review.mjs": "3d61d4234265a743ada6138b67f6cebce1e16f9024a95ed555111478540e6b63",
+    "bridge/GATED_CLAIM_RETENTION.md": "db76d902ed4c922e2efa64dd8154dea47ed1ea404fd654912d0ad6c75560b39e",
+    ".github/workflows/bridge-metadata-review.yml": "b9e5eccd0086cb921eb9744583bdf622f0879f713d5e3d97e18b9ad71c38d259",
+    "bridge/gated-message-review.mjs": "bd2df470378ccde1c4429dfbc0df4bbabc45c6c86189a8405864cea5ef7ee1eb",
+    "bridge/gated-native.mjs": "5f76bd10a5b158126e2068b0b9eea4ca14bd3b172127781c657ea78ed3bddae5",
+    "bridge/sdk.mjs": "e603242692bedc2457ec9dd3cb144122ca1adb7341506d244ec864943bd8c988",
+    "bridge/program-pins.mjs": "1f72a2007be0d4ebd6b1a3080dc2ad93224177e49ae32e0513beb2e163256d42",
+    "bridge/bootstrap.mjs": "76303de82557f8ba2a88773ef55bbc5234a88164673f0afe2458f21e46c1d04e",
+    "bridge/pending-claim.mjs": "a06ef6539298f200194bd97dcaea92b9ac26b09c3c32c7cc750720ffd29b3d32",
+    "bridge/claim-pin-policy.mjs": "9ee31bcd58218860fcb5660624531e22c7038d29b34f8bd22590d72c70bb8893"
+  },
+  "callerBufferMutationDoesNotChangeRetainedRecord": true,
+  "storedWireSnapshotReverifiedBeforeWriting": true
+}

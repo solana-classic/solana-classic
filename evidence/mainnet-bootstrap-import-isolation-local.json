@@ -1,0 +1,49 @@
+{
+  "schemaVersion": 1,
+  "at": "2026-10-17T17:09:33.730225+00:00",
+  "scope": "local offline bootstrap accounting and reserve-adapter import isolation; no genesis preparation or deployment",
+  "passed": true,
+  "sourceFiles": {
+    "mainnet/bootstrap-core.mjs": "712041bc607b659e37e79fcd258a5c1e70072b74677dc4106c2462d3b1fb84a8",
+    "mainnet/bootstrap.mjs": "15b5919a108942f28d6f87757ee94a0c040014b39b0c9dab4a89c58b39717a6c",
+    "mainnet/bootstrap-fixture.mjs": "f70b210eecd12f1c7520fe94e81d2333c48325feaf0a1e7a6863e1eb71e34809",
+    "mainnet/bootstrap.test.mjs": "f1a1b294d9b2842fc3867967381af2ad371122c795771f3c7d3dbad2283202d4",
+    "mainnet/reserve-prefund-plan.mjs": "4d225d8d33f5837d1475c82e8eeee72467ca6c93eaf219672058e3841f3c8c77"
+  },
+  "validation": {
+    "relatedNodeTests": 75,
+    "relatedNodePassed": 75,
+    "preFixImportRegressionFailed": true,
+    "postFixImportRegressionPassed": true,
+    "accountingFunctionBodyUnchanged": true,
+    "accountingFunctionSHA256": "0864d09d815cc98206678a5ca732709d550cb559b41babeffa595fe265516ef5",
+    "fileCLIReportBytesUnchanged": true,
+    "missingCLIInputRefused": true
+  },
+  "packagingExploration": {
+    "artifactAdmitted": false,
+    "compiler": "esbuild 0.28.2",
+    "node": "v24.19.0",
+    "bootstrapFileCLIExcludedFromInputGraph": true,
+    "malformedInputExitCode": 78,
+    "malformedInputStdoutEmpty": true,
+    "strictDiagnosticCheckPassed": false,
+    "reason": "The prototype also emits a dependency deprecation warning. Its graph retains an optional non-builtin encoding import. This is not an admitted standalone artifact."
+  },
+  "limits": {
+    "preparerIntegrated": false,
+    "hostAdmitted": false,
+    "actualFreshGenesisCompiled": false,
+    "fullValidatorConsensusVerified": false,
+    "canSign": false,
+    "canBroadcast": false,
+    "mainnetActivated": false,
+    "productionReady": false
+  },
+  "limitations": [
+    "The accounting function was moved without changing its bytes. The compatibility file CLI still supports its existing input-file command; the reserve library imports only the pure core.",
+    "The negative import regression deliberately supplies an entrypoint collision in a child process. CLI success uses a disposable supplied accounting fixture.",
+    "Packaging, complete runtime/dependency admission, external planning selectors, compiler integration, fresh output comparison and strict slot-zero replays remain outstanding.",
+    "No frozen candidate source, validator, ledger, key, network configuration or retained test attempt was changed."
+  ]
+}

@@ -1,0 +1,84 @@
+{
+  "schemaVersion": 1,
+  "at": "2026-10-17T15:39:30.548455+00:00",
+  "scope": "local isolated Store reservations using separate child processes and real disposable SQLite; no API server or chain execution",
+  "passed": true,
+  "candidate": {
+    "apiOrigin": "https://network-release-production.up.railway.app",
+    "frontendOrigin": "https://solana-classic-soc.vercel.app",
+    "frontendDeploymentId": "dpl_3aWWzKDohr4SrgijgrB8dWgHHS5r",
+    "frontendCommit": "35f0eaf1dede45452c9cdf9e6403669e966c427d",
+    "apiCommit": "119f25e225540be78b64b19bdb6cb300a1f47c10",
+    "networkConfigSha256": "0eea489e8cf0753b2b0cf0b91b6949566044e50c20bd4d02eea814490f64fe0e",
+    "dependencyManifestSha256": "e6da27717e6a84ca7b29d707ff63591b2ff0cfc38892d3b4667f8615bdf7bbc0"
+  },
+  "genesis": "7TAUSfTzQeocodtVee2qsftsCYnJu2eCM1ALdADbHNon",
+  "freezeSha256": "55b668e56a946ec94f0195b03530aba23593bd71d7fd52493d5403b21882757f",
+  "proofs": [
+    {
+      "path": "evidence/agave-source-candidate-freeze.json",
+      "sha256": "55b668e56a946ec94f0195b03530aba23593bd71d7fd52493d5403b21882757f"
+    },
+    {
+      "path": "evidence/agave-source-faucet-isolated-review.json",
+      "sha256": "f6e1c07ea0dad9a11b232b3b0d667d84e1356ddca5bf472643d0aef229168ec8"
+    },
+    {
+      "path": "evidence/agave-source-faucet-transport-loss-review.json",
+      "sha256": "e5c4fb74d4e0dcc8fd077f90b6600cc457a210ea390737275c82ba90b45b82a3"
+    }
+  ],
+  "testSources": [
+    {
+      "path": "tests/fixtures/faucet-process-worker.ts",
+      "sha256": "9ede69d5fce17ebc448cf4c695fd45489eefb3e4a81ca73beb2824b279062294",
+      "candidateFixtureCopyMatches": true
+    },
+    {
+      "path": "tests/integration/faucet-process-limits.test.ts",
+      "sha256": "3419ad31869d5d864506bdef832ab4358f35893dadf3a2cf02cb201b522810d7",
+      "candidateFixtureCopyMatches": true
+    }
+  ],
+  "selectedSource": {
+    "apps/api/src/store.ts": "9ed76044cf292cc20022fac2d17e19baa1c3a2826a8aeab43125a50ddc1457f7",
+    "packages/config/src/index.ts": "6f2c81341cb7b9cea9cab806936b2a2e7e36c1eeedd958d7c3745ffa8e6ae545"
+  },
+  "validation": {
+    "candidateTests": 4,
+    "candidatePassed": 4,
+    "currentRepositoryTests": 4,
+    "currentRepositoryPassed": 4,
+    "typecheckPassed": true,
+    "targetedLintPassed": true,
+    "frozenFilesVerifiedBeforeAndAfter": 45,
+    "workerProcessesPerCase": 3,
+    "runtimeSourceMocked": false,
+    "syntheticReservationTime": true,
+    "checks": [
+      "Two independently running Store processes share one disposable SQLite database. Concurrent batches enforce the wallet cap of 3, IP cap of 10 and global cap of 1000, with four excess requests denied per case.",
+      "The global case seeds 995 pending reservations through the actual Store before racing nine additional requests. Only five succeed; rollback leaves no consumed counters for denied requests.",
+      "After both original processes exit cleanly, a replacement process opens the same database. A fresh excess request is denied, and replay of an accepted request returns the prior receipt. Full counter and receipt fingerprints remain unchanged.",
+      "Eight submissions of the same request across two processes create exactly one reservation and reuse it seven times. After process replacement, a conflicting wallet is denied with 409; the original request remains reusable. All three counters stay at one.",
+      "Each worker reports checksums of the actual Store and resolved configuration; the parent verifies those checksums before sending requests."
+    ]
+  },
+  "unacceptedRequirements": [
+    "G5.02",
+    "G5.03"
+  ],
+  "limitations": [
+    "These are pending database reservations, not faucet grants, RPC requests, signed transactions or proof of chain finality.",
+    "Clean child-process replacement is exercised. Abrupt process death, container reboot, host failure and a restarted API service are not exercised.",
+    "Simultaneous IPC dispatch permits contention across real SQLite connections but does not assert a particular operating-system scheduling order.",
+    "The reservation clock is a fixed synthetic day. No daily rollover or real clock behavior is claimed.",
+    "The four cases ran locally against both frozen candidate source and current source. Existing automatic workflows do not execute this fixture.",
+    "Full individual gate review, including API recovery and external acceptance requirements, remains outstanding."
+  ],
+  "canonicalNetworkChanged": false,
+  "chainTransactionsSubmitted": 0,
+  "newStabilityRuns": 0,
+  "releaseAccepted": false,
+  "mainnetAccepted": false,
+  "bridgeAccepted": false
+}

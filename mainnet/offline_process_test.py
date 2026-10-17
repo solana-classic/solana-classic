@@ -62,4 +62,44 @@ class OfflineProcess(unittest.TestCase):
   with self.assertRaisesRegex(ValueError,'STDERR_LIMIT'):
    m.run_tool([sys.executable,'-c',"import os;os.write(2,b'x'*2048)"],log,stderr_limit=1024)
   self.assertLessEqual(len(log.getvalue()),1024)
+
+class OfflineInput(unittest.TestCase):
+ execute=OfflineProcess.execute
+ def test_default_and_explicit_empty_input_both_deliver_eof(self):
+  for options in [{},{'input_bytes':b''}]:
+   with self.subTest(options=options):
+    out,err=self.execute("import sys;print(len(sys.stdin.buffer.read()))",timeout=2,**options)
+    self.assertEqual(out,b'0\n');self.assertEqual(err,b'')
+ def test_exact_maximum_binary_input_is_delivered_without_logging(self):
+  import hashlib
+  data=bytes(range(256))*(m.STDIN_LIMIT//256)
+  out,err=self.execute("import hashlib,sys;print(hashlib.sha256(sys.stdin.buffer.read()).hexdigest())",input_bytes=data,timeout=5)
+  self.assertEqual(out.decode().strip(),hashlib.sha256(data).hexdigest());self.assertEqual(err,b'')
+ def test_input_and_both_full_output_pipes_progress_without_deadlock(self):
+  data=b'i'*(1024*1024)
+  code="import os,sys\nfor _ in range(128):\n os.write(1,b'o'*4096);os.write(2,b'e'*4096)\ndata=sys.stdin.buffer.read()\nassert data==b'i'*(1024*1024)"
+  out,err=self.execute(code,input_bytes=data,timeout=5)
+  self.assertEqual(out,b'o'*(128*4096));self.assertEqual(err,b'e'*(128*4096))
+ def test_invalid_input_does_not_start_a_process(self):
+  for data in ['text',bytearray(b'x'),memoryview(b'x'),False,b'x'*(m.STDIN_LIMIT+1)]:
+   with self.subTest(kind=type(data).__name__),patch.object(m.subprocess,'Popen') as start,self.assertRaisesRegex(ValueError,'^BOUNDED_OFFLINE_INPUT_REQUIRED$'):
+    self.execute('raise Exception()',input_bytes=data)
+   start.assert_not_called()
+ def test_child_closing_stdin_is_reaped_without_input_in_error(self):
+  started=[];real=m.subprocess.Popen
+  def start(*args,**kwargs):
+   p=real(*args,**kwargs);started.append(p);return p
+  with patch.object(m.subprocess,'Popen',side_effect=start),self.assertRaisesRegex(ValueError,'^OFFLINE_TOOL_STDIN_CLOSED$'):
+   self.execute('import os,time;os.close(0);time.sleep(60)',input_bytes=b'PRIVATE INPUT'*(128*1024),timeout=2)
+  self.assertIsNotNone(started[0].returncode)
+  with self.assertRaises(ChildProcessError):os.waitpid(started[0].pid,os.WNOHANG)
+ def test_nonreading_child_times_out_and_is_reaped(self):
+  started=[];real=m.subprocess.Popen
+  def start(*args,**kwargs):
+   p=real(*args,**kwargs);started.append(p);return p
+  with patch.object(m.subprocess,'Popen',side_effect=start),self.assertRaisesRegex(ValueError,'^OFFLINE_TOOL_TIMEOUT$'):
+   self.execute('import time;time.sleep(60)',input_bytes=b'x'*(1024*1024),timeout=0.15)
+  self.assertEqual(started[0].returncode,-signal.SIGKILL)
+  with self.assertRaises(ChildProcessError):os.waitpid(started[0].pid,os.WNOHANG)
+
 if __name__=='__main__':unittest.main()

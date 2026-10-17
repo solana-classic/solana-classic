@@ -13,7 +13,7 @@ def fixture():
  freeze={'candidate':{'apiOrigin':'https://fixture.example'},'genesis':'fixture','runtime':runtime};raw=json.dumps(freeze,sort_keys=True).encode();pin=hashlib.sha256(raw).hexdigest()
  proofs={name:json.dumps({'passed':True,'genesis':'fixture','at':date(start-60000)}).encode() for name in m.PREREQUISITES}
  admission={'passed':True,'stabilityAccepted':False,'startedAt':m.START,'freezeSha256':pin,'genesis':'fixture','candidate':freeze['candidate'],'runnerDeploymentId':'f5a309fe-bfe6-4958-a4f5-a2e2129da629','namespace':'source-soak-20261015T0348Z-v2','at':date(start+1000),'expectedFinishAt':date(start+m.terminal.DURATION),'prerequisiteChecksums':{'candidate-freeze':pin,**{n:hashlib.sha256(b).hexdigest() for n,b in proofs.items()}}}
- result={'genesis':'fixture','candidate':freeze['candidate'],'runtime':runtime,'passed':True,'startedAt':m.START,'at':date(start+m.terminal.DURATION+300),'durationMs':m.terminal.DURATION+300,'smokeEveryMs':300000,'observationEveryMs':30000,'observations':2880,'completedJourneys':288,'faucetCalls':0,'lastSlot':1000,'payer':key(1000,32),'fundingSignature':key(1000,64),'prerequisites':[{'name':n,'at':date(start-60000)} for n in m.PREREQUISITES],'journeys':[{'at':date(start+i*300000),'durationMs':10000,'scheduleDelayMs':0,'mint':key(i+1,32),'recipient':key(999,32),'transferSignature':key(i+1,64)} for i in range(288)]}
+ result={'genesis':'fixture','candidate':freeze['candidate'],'runtime':runtime,'passed':True,'startedAt':m.START,'at':date(start+m.terminal.DURATION+300),'durationMs':m.terminal.DURATION+300,'smokeEveryMs':300000,'observationEveryMs':30000,'observations':2880,'completedJourneys':288,'faucetCalls':0,'lastSlot':1000,'payer':key(1000,32),'fundingSignature':key(1000,64),'prerequisites':[{'name':n,'at':date(start-60000)} for n in m.PREREQUISITES],'journeys':[{'at':date(start+i*300000),'durationMs':10000,'scheduleDelayMs':0,'mint':key(i+1,32),'recipient':key(4000+i,32),'transferSignature':key(i+1,64)} for i in range(288)]}
  observed=date(start+m.terminal.DURATION+1000)
  bundle={'soak':result,'runtime':copy.deepcopy(runtime),'status':{'fetchedAt':observed,'checkpoint':{'candidate':freeze['candidate'],'freezeSha256':pin},'network':{'state':'online','identityMatches':True,'genesisMatches':True},'soak':{'accepted':True,'state':'passed','startedAt':m.START}},'qa':{'inputChecksums':copy.deepcopy(admission['prerequisiteChecksums']),'state':'completed','soakAccepted':True,'exitCode':0,'signal':None,'issues':[],'freezeSha256':pin},'progress':{'result':{k:result[k] for k in ['genesis','candidate','passed','durationMs','startedAt','at','completedJourneys']},'progress':{'startedAt':m.START},'freezeSha256':pin},'monitor':{'genesis':'fixture','target':'https://fixture.example','overdue':False,'consecutiveFailures':0,'lastProbeAt':observed,'current':{'healthy':True,'finalizedSlot':1010}}}
  return bundle,raw,admission,proofs,datetime.datetime.fromisoformat(observed)
@@ -23,7 +23,7 @@ class SourceTerminal(unittest.TestCase):
   bundle,raw,admission,proofs,now=items
   with patch.object(m,'FREEZE_SHA',hashlib.sha256(raw).hexdigest()),patch.object(m,'ACTIVATION_SHA',hashlib.sha256(json.dumps(admission,sort_keys=True,separators=(',',':')).encode()).hexdigest()):return m.review(bundle,raw,admission,proofs,now)
  def test_complete_synthetic_terminal_is_receipt_review_only(self):
-  report=self.evaluate(fixture());self.assertTrue(report['passed']);self.assertEqual(report['uniqueTransferSignatures'],288);self.assertEqual(report['prerequisiteHashesVerified'],8);self.assertTrue(report['boundedReaderSummaryMatches'])
+  report=self.evaluate(fixture());self.assertTrue(report['passed']);self.assertEqual(report['uniqueTransferSignatures'],288);self.assertEqual(report['prerequisiteHashesVerified'],8);self.assertTrue(report['boundedReaderSummaryMatches']);self.assertEqual(report['uniqueRecipients'],288);self.assertTrue(report['distinctJourneyKeyRolesVerified']);self.assertTrue(report['workloadScalarTypesVerified'])
   for field in ['releaseAccepted','cutoverAccepted','mainnetAccepted','bridgeAccepted']:self.assertFalse(report[field])
  def test_default_pin_refuses_arbitrary_candidate_even_if_other_inputs_match(self):
   with self.assertRaisesRegex(ValueError,'EXACT_SOURCE_FREEZE'):m.review(*fixture())
@@ -96,6 +96,27 @@ class SourceTerminal(unittest.TestCase):
   items=fixture();journey=items[0]['soak']['journeys'][0];journey['scheduleDelayMs']=6000
   journey['at']=datetime.datetime.fromtimestamp((m.terminal.milliseconds(m.START)+6000)/1000,datetime.timezone.utc).isoformat()
   with self.assertRaisesRegex(ValueError,'FIVE_SECOND'):self.evaluate(items)
+ def test_ownership_journeys_cannot_credit_self_transfers_or_reused_recipients(self):
+  for mode in ['payer-recipient','mint-recipient','reused-recipient','payer-mint','cross-role']:
+   items=fixture();result=items[0]['soak'];journeys=result['journeys']
+   if mode=='payer-recipient':journeys[0]['recipient']=result['payer']
+   if mode=='mint-recipient':journeys[0]['recipient']=journeys[0]['mint']
+   if mode=='reused-recipient':journeys[1]['recipient']=journeys[0]['recipient']
+   if mode=='payer-mint':result['payer']=journeys[0]['mint']
+   if mode=='cross-role':journeys[1]['recipient']=journeys[0]['mint']
+   with self.subTest(mode=mode),self.assertRaisesRegex(ValueError,'JOURNEY_KEY_ROLES'):self.evaluate(items)
+
+ def test_workload_scalars_cannot_be_float_or_boolean_aliases(self):
+  for field,value in [('completedJourneys',288.0),('smokeEveryMs',300000.0),('observationEveryMs',30000.0),('faucetCalls',False)]:
+   items=fixture();items[0]['soak'][field]=value
+   if field=='completedJourneys':items[0]['progress']['result'][field]=value
+   with self.subTest(field=field),self.assertRaisesRegex(ValueError,'WORKLOAD_SCALAR_TYPES'):self.evaluate(items)
+
+ def test_runner_exit_code_requires_an_integer_zero(self):
+  for value in [False,0.0]:
+   items=fixture();items[0]['qa']['exitCode']=value
+   with self.subTest(value=value),self.assertRaisesRegex(ValueError,'RUNNER_EXIT_TYPE'):self.evaluate(items)
+
  def test_cli_pins_freeze_before_reading_any_supplied_context_or_proof(self):
   import argparse,contextlib,io
   args=argparse.Namespace(input_dir=Path('/not-read-inputs'),frozen_context=Path('/not-read-context'))

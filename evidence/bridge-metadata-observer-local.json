@@ -1,0 +1,47 @@
+{
+  "schemaVersion": 1,
+  "scope": "Local offline tests with synthetic private RPC responses; no actual metadata-bearing ledger observation or settlement",
+  "verifiedAt": "2026-10-15T11:07:01.795356+00:00",
+  "tests": {
+    "decoderChecks": 12,
+    "newObserverChecks": 7,
+    "totalPassed": 62,
+    "failed": 0
+  },
+  "mintPolicy": {
+    "default": "plain",
+    "explicitOption": "immutable-self-metadata-v1",
+    "allowedMintExtensions": [
+      "MetadataPointer",
+      "TokenMetadata"
+    ],
+    "maximumMintBytes": 4096,
+    "escrowBytes": 165,
+    "escrowExtensionsSupported": false
+  },
+  "verified": [
+    "Unchanged plain default and output",
+    "Explicit immutable metadata selection and exact supply/precision",
+    "Mutable, external, unsupported, duplicate and oversized layouts refused",
+    "Metadata mutation between snapshots refused",
+    "Public and canonical devnet chains refused",
+    "Caller policy captured before asynchronous reads",
+    "Complete token-code wrapper retains bridge and token bracketing"
+  ],
+  "actualMetadataLedgerVerified": false,
+  "claimJournalChanged": false,
+  "canSign": false,
+  "canBroadcast": false,
+  "productionReady": false,
+  "canonicalNetworkChanged": false,
+  "sourceHashes": {
+    "bridge/mint-metadata.mjs": "402fcf39f298a89d7682e4ab78de9bd2b2f1647f31e9f01dbff027e9fe80b64c",
+    "bridge/mint-metadata.test.mjs": "c80dad3d419aabc8bde7111f3107f25e92f1ec4df26191b1f198d143c61fd12a",
+    "bridge/origin-assets.mjs": "7237980f53573ef68587a3d55a81b202b2780f1d1d735aecf12413cb8f1a8e8a",
+    "bridge/origin-assets.test.mjs": "a313a0a62e32920158c51991e1b285637ea551f7a128379d0c3c0865af7fe828",
+    "bridge/origin-token-code.mjs": "52b1a0479a52e888ba7dfbe85818b82c780c392929bcffb85ff4500338a50738",
+    "bridge/origin-token-code.test.mjs": "4e70fe18816e534dcf93948d2a92d42a9c1e50691bcbab20ad3b134d09096094",
+    "bridge/pending-claim.mjs": "5a7ffcc1d0ce86ca7eddce9e0227f632e07f42f0f0d4a3d65b27cfc186ed4b26",
+    "bridge/pending-redemption.test.mjs": "1557f1ee6d2714cf66d12a8098bd926a5c289199426af879f3d6254bb96e7eae"
+  }
+}

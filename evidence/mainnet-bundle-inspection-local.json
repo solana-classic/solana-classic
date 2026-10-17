@@ -1,0 +1,49 @@
+{
+  "schemaVersion": 1,
+  "at": "2026-10-15T22:23:18.355824+00:00",
+  "state": "local-checks-passed",
+  "scope": "Offline bundle-inspection subprocess bounds and synthetic bundle admission; no actual Agave execution",
+  "localValidation": {
+    "testsDiscovered": 121,
+    "passed": 120,
+    "skipped": 1,
+    "skipReason": "Real Linux process-name fixture requires Linux",
+    "command": "python3 -W error::ResourceWarning -m unittest discover -s mainnet -p '*_test.py'",
+    "resourceWarningsObserved": false
+  },
+  "checks": [
+    "Live stdout and stderr bounds apply before returning inspection output",
+    "Executable bytes and size are rechecked before every auditor or public-key lookup",
+    "Changed or linked executables refuse before process creation",
+    "Nonzero tool exit exposes only a constant failure code",
+    "Complete synthetic bundle accepts three matching public-key lookups without creating logs",
+    "Auditor overflow, keygen timeout and wrong identity prevent bundle acceptance",
+    "Existing bounded-runner regressions cover timeout, cancellation and descendant cleanup"
+  ],
+  "limits": {
+    "auditorSeconds": 20,
+    "auditorStdoutBytes": 4194304,
+    "identityLookupSeconds": 10,
+    "identityStdoutBytes": 128,
+    "stderrBytesPerInvocation": 65536
+  },
+  "sourceHashes": {
+    "mainnet/consensus.py": "bcc3112beb9f358ad685d427198dfed2f53bf94c0c4f794a05f7079d5229a7cd",
+    "mainnet/offline_process.py": "bc7013b43537bf272b08e37122035f9e647f18496a01121424dd322dd1d06c7f",
+    "mainnet/bundle_inspection_test.py": "d1195623eed24e1dd8a4ef359080279b2da73053dbc481a55ab3dd99f2207ae8",
+    "mainnet/offline_process_test.py": "94c9f3d91c9a59a67e7814254d8c07b3e047b5477bf2ed7e4171974baf7ef6fe"
+  },
+  "actualValidatorsStarted": 0,
+  "actualKeysGenerated": false,
+  "actualGenesisCreated": false,
+  "actualChainRequests": 0,
+  "canonicalNetworkChanged": false,
+  "actualConsensusVerified": false,
+  "mainnetActivated": false,
+  "productionReady": false,
+  "remainingRequirements": [
+    "Capable Linux host, fresh hashing genesis and slot-zero replay",
+    "Actual full-validator consensus and recovery drills",
+    "Independent operators, backing, custody, bridge review and explicit release decision"
+  ]
+}

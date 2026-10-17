@@ -1,8 +1,69 @@
 # Current implementation handoff
 
+## Current checkpoint — 17 October 2026, 13:32 UTC
+
+This checkpoint supersedes the historical hold, branch names, pending-run
+statements and next-action instructions below. The founder resumed development.
+Work continues on the existing `bridge/metadata-mint-review` branch and open
+[PR 6](https://github.com/solana-classic/solana-classic/pull/6). Public `main`
+remains `b53b63d04774fa5246273f2ace508431c1d10509`; the reviewed preparation
+changes have not been merged or deployed.
+
+The exact source-built devnet completed its replacement full 24-hour stability
+run from **16 October 01:24:36.342 UTC to 17 October 01:24:36.808 UTC**:
+86,400,466 milliseconds, 288 scheduled journeys and 2,880 observations. The
+[terminal evidence](../../evidence/agave-source-stability-replacement-completed.json)
+binds that result to the final candidate; the earlier interrupted attempt stays
+failed. Do not start another run merely because an older checkpoint says it is
+pending, and never reuse a previous candidate's result.
+
+The [final browser review](../../evidence/agave-source-final-browser-review.json)
+records passed original-origin desktop/mobile checks and separate branded-site
+checks. Retained failures and finalized receipts must not be overwritten or
+repeated. These results establish their stated scopes, not complete release
+acceptance or independent history replay.
+
+At this checkpoint, the complete live runtime matches the
+[final freeze](../../evidence/agave-source-candidate-freeze.json), including
+source and executable identities, deployment and boot IDs, and genesis. All
+45 retained execution-context files match. Preserve this runtime and its ledger.
+The [individual release review](../../engine/migration/SOURCE_RELEASE_REVIEW.md)
+and [inventory](../../evidence/agave-source-acceptance-gates.json) record **25 of
+75 requirements accepted, with 50 unreviewed**. Overall devnet release, mainnet
+and bridge acceptance remain false; historical requirement passes do not carry
+over automatically.
+
+Current independent preparation work binds final genesis policy and audited
+metadata to its budget probe. The current allocation decoder is now integrated
+through bounded input, with complete account fingerprints and non-account
+parameter comparisons tested under supplied responses. See
+[genesis preparation](../../mainnet/GENESIS_PREPARATION.md) for the precise
+reserve-balance and creation-time exceptions and local/synthetic limits.
+Reserve-address adapter integration, fresh real genesis compilation, two strict
+slot-zero replays and the three-validator rehearsal remain open. No Linux host
+has passed rehearsal admission; preserve host and security checks.
+
+The separate native transaction-history case remains
+`UNKNOWN/EXPIRED_UNRESOLVED`. Do not retry, refund, reset or create a new nonce to
+resolve an unknown result. Independent custody, backing, operators, monitoring
+fault-delivery evidence and security review remain separate blockers. There is
+no authority here to purchase hosting or activate real SOC, mainnet or a
+real-value bridge. The separate capacity monitor owns live disk growth.
+
+The fixed deadline remains **19 October 2026 at 03:00:54 UTC**. Continue useful
+preparation and exact-candidate reviews, retain evidence and report material
+blockers without treating elapsed time as a pass.
+
+## Historical checkpoints — retained context only
+
+The sections below preserve earlier decisions and attempt records. Their hold,
+branch, migration and stability-status statements are historical; use the current
+checkpoint above for execution state. Preserve every referenced attempt.
+
+
 Work only this repository. User asked to continue roadmap/coding while asleep, finish actual custom-program developer access, and replace visible hosting links with our own domain. Half-hour thread follow-ups requested. No production money, mainnet activation, bridge activation, purchases or automatic validator cutover authorized by that continuation.
 
-## Founder coordination hold
+## Historical founder coordination hold
 
 The founder asked for the current work to be committed, then no further code changes or deployments until explicitly resumed because another coding session needs the checkout. Scheduled continuation is PAUSED. The already-started bounded load test ended with a failed balance-read transport request after measurement began. Its failed report and partial receipts are retained in `evidence/agave-source-load-attempt.json` and ignored `.tools/source-runtime-qa/evidence/load.json`; do not overwrite or rerun during this hold. No24h stability activation has occurred. Do not restart the validator or start more tests during this hold.
 
@@ -12,7 +73,7 @@ Controlled source-runtime restart passed. Final API boot `e6ec5d41-8238-48a0-b73
 
 The roadmap checkpoint-only correction for the post-restart IDs is deployed and verified: `dpl_Ch2iZcd7a2vFMVgCrxcUpcWqJKsQ`, `evidence/agave-roadmap-post-restart-publication.json`. Current identity matches, devnet is online, the new run is pending, and the old-freeze alarm is cleared. README's accepted network rationale now explains focused development without promising universal fraud prevention; unrelated changes from the other coding session were preserved.
 
-## Current source-runtime migration
+## Historical source-runtime migration
 
 The repository history rewrite is complete and the checkout is on `rewritten`, based on clean public main `7c4d0c89e63e52c61cc9af6bc10f32765f4570e3`. Never push the retired branch. Repository-scoped team identity and privacy hooks are installed; use `python3 scripts/install-git-privacy.py` on new checkouts.
 

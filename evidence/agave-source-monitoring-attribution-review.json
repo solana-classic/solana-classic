@@ -1,0 +1,226 @@
+{
+  "schemaVersion": 1,
+  "at": "2026-10-17T05:07:40.197445+00:00",
+  "scope": "read-only current monitor identity, saved thresholds, account routing and historical controlled-test provenance review",
+  "requirement": "G5.07",
+  "requirementAccepted": false,
+  "status": "partial; deployment-to-fixture source attribution remains unresolved",
+  "genesis": "7TAUSfTzQeocodtVee2qsftsCYnJu2eCM1ALdADbHNon",
+  "candidate": {
+    "apiOrigin": "https://network-release-production.up.railway.app",
+    "frontendOrigin": "https://solana-classic-soc.vercel.app",
+    "frontendDeploymentId": "dpl_3aWWzKDohr4SrgijgrB8dWgHHS5r",
+    "frontendCommit": "35f0eaf1dede45452c9cdf9e6403669e966c427d",
+    "apiCommit": "119f25e225540be78b64b19bdb6cb300a1f47c10",
+    "networkConfigSha256": "0eea489e8cf0753b2b0cf0b91b6949566044e50c20bd4d02eea814490f64fe0e",
+    "dependencyManifestSha256": "e6da27717e6a84ca7b29d707ff63591b2ff0cfc38892d3b4667f8615bdf7bbc0"
+  },
+  "freezeSha256": "55b668e56a946ec94f0195b03530aba23593bd71d7fd52493d5403b21882757f",
+  "checklistSha256": "e2fb4b2f53e9aa10f21ec5ffcf708cc2749b456a39703c9228a7fce7fc574f73",
+  "proofs": [
+    {
+      "path": "evidence/agave-source-monitoring-review.json",
+      "sha256": "b547b69d56f99f04cc81ddd4922bdc3641a5687001e8c477047df1bb23419cbf"
+    },
+    {
+      "path": "evidence/monitoring-config.json",
+      "sha256": "44a609a9998efd9f542ac5c02f44b2b352209ab0926e4d52e1f357c51779a308"
+    },
+    {
+      "path": "evidence/monitoring-hosted-fixture-long.json",
+      "sha256": "fef6f40297e37f138c7377af469e7bb02889e10e50d5222fc5985fe58ef74ffc"
+    },
+    {
+      "path": "evidence/monitoring-native-signal-observation.json",
+      "sha256": "8b06ef2674ae510acc632f037f4167c776f6c7fee16809a10899462b5a9451f4"
+    },
+    {
+      "path": "evidence/operator-alert-receipt.json",
+      "sha256": "199cf16d2dc986a6d805a29e76b5fea45ebf68d0c8aa6f8badd354df8fdee3fe"
+    }
+  ],
+  "sourceIdentity": {
+    "localAndCurrentDeployedMonitorSha256": "c0232f32d74e6e6c3ee4e1082b96149d452812426f7bd8093db35b3842069c57",
+    "dockerfileSha256": "7b1c502886f48a573f2b1309b947f3c1c9768f206a74fe0fe25998a59520311a",
+    "remoteHashMethod": "read-only authenticated SSH sha256sum of deployed monitor source with exact project/environment/service/deployment identity verification",
+    "currentDeploymentId": "22f46035-b3fc-4056-aa06-871b6d14869d",
+    "historicalControlledFixtureDeploymentId": "13a32eea-4388-4184-aa32-11a2f4d2426f",
+    "historicalFinalSteadyDeploymentMatchesCurrent": true,
+    "fixtureDeploymentSourceHashIndependentlyBound": false
+  },
+  "providerMonitorReadback": [
+    {
+      "config": {
+        "measurements": [
+          "DISK_USAGE_GB"
+        ],
+        "resourceIds": [
+          "080bf785-50e7-4dda-893b-4d613aa5e9a8"
+        ]
+      },
+      "id": "967def4d-53bf-4c73-85d9-d89bedf9c0e6",
+      "monitors": [
+        {
+          "alerts": [],
+          "config": {
+            "condition": "above",
+            "measurement": null,
+            "threshold": 35,
+            "type": "threshold"
+          },
+          "createdAt": "2026-10-15T01:21:45.067Z",
+          "id": "7fd7b933-2875-4978-93f8-7c900322ef1e",
+          "updatedAt": "2026-10-15T01:21:45.067Z"
+        }
+      ]
+    },
+    {
+      "config": {
+        "measurements": [
+          "MEMORY_USAGE_GB"
+        ],
+        "resourceIds": [
+          "ed491e1f-e40f-4050-bebe-113792bb4ae8"
+        ]
+      },
+      "id": "a9425da9-c96a-440b-94f7-6501cd927335",
+      "monitors": [
+        {
+          "alerts": [
+            {
+              "createdAt": "2026-10-13T07:44:28.707Z",
+              "id": "5b01f273-65c7-42f7-9604-32d07d3fc28a",
+              "resolvedAt": "2026-10-13T07:50:28.704Z",
+              "resourceId": "ed491e1f-e40f-4050-bebe-113792bb4ae8",
+              "resourceType": "SERVICE",
+              "status": "OK"
+            }
+          ],
+          "config": {
+            "condition": "above",
+            "measurement": null,
+            "threshold": 0.18,
+            "type": "threshold"
+          },
+          "createdAt": "2026-10-13T07:34:11.206Z",
+          "id": "b3a8659f-a760-4342-aa4c-e421d5888d7f",
+          "updatedAt": "2026-10-13T07:34:11.206Z"
+        }
+      ]
+    },
+    {
+      "config": {
+        "measurements": [
+          "MEMORY_USAGE_GB"
+        ],
+        "resourceIds": [
+          "d0a1de40-bd9c-47eb-a7fc-477f1c55b2d6"
+        ]
+      },
+      "id": "c7036d0d-d387-4ed2-a9fe-83ec72fff7c8",
+      "monitors": [
+        {
+          "alerts": [],
+          "config": {
+            "condition": "above",
+            "measurement": null,
+            "threshold": 12.8,
+            "type": "threshold"
+          },
+          "createdAt": "2026-10-13T07:06:15.577Z",
+          "id": "db502a97-4a80-4b52-915f-f145c015951c",
+          "updatedAt": "2026-10-13T07:06:15.577Z"
+        }
+      ]
+    }
+  ],
+  "historicalAlertWindow": {
+    "from": "2026-10-13T07:00:00Z",
+    "through": "2026-10-13T08:00:00Z",
+    "notAnAllTimeAlertInventory": true
+  },
+  "operatorRouting": {
+    "method": "read-only authenticated account notification preferences inspection",
+    "project": "solana-classic",
+    "deliveryMethod": "Email & In-App",
+    "events": [
+      "Deployment Crashed",
+      "Deployment Oom Killed",
+      "Deployment Failed",
+      "Volume Alert Triggered",
+      "Volume Alert Resolved",
+      "Monitor Triggered",
+      "Monitor Resolved"
+    ],
+    "savedRuleVisible": true,
+    "configurationChanged": false,
+    "recipientOmitted": true,
+    "workspaceNotificationRulesQueryReturnedEmpty": true,
+    "emptyWorkspaceQueryDoesNotDisprovePersonalAccountRule": true,
+    "newDeliveryReceipt": false,
+    "historicalReceiptMatchesProviderAlert": true
+  },
+  "currentObservation": {
+    "canonicalRuntimeMatchesFreeze": true,
+    "canonicalRuntimeObservedAt": "2026-10-17T05:06:21.741Z",
+    "frozenContextCoreFilesVerified": 45,
+    "monitor": {
+      "schemaVersion": 1,
+      "genesis": "7TAUSfTzQeocodtVee2qsftsCYnJu2eCM1ALdADbHNon",
+      "target": "https://network-release-production.up.railway.app",
+      "startedAt": "2026-10-13T07:46:16.126Z",
+      "pollEveryMs": 30000,
+      "stalledAfterMs": 60000,
+      "current": {
+        "at": "2026-10-17T05:06:21.401Z",
+        "healthy": true,
+        "code": "ONLINE",
+        "finalizedSlot": 804444,
+        "lastProgressAt": "2026-10-17T05:06:21.401Z"
+      },
+      "consecutiveFailures": 0,
+      "lastProbeAt": "2026-10-17T05:06:21.471Z",
+      "overdue": false,
+      "publicSignalConfigured": true,
+      "signalDispatch": {
+        "at": "2026-10-17T05:06:21.528Z",
+        "ok": true,
+        "status": 200
+      },
+      "fixture": {
+        "passed": false,
+        "steps": []
+      },
+      "fixtureEnabled": false,
+      "memoryHealthSignal": {
+        "active": false,
+        "bytes": 201326592,
+        "rssBytes": 92893184,
+        "thresholdGB": 0.18,
+        "scope": "derived network health; bounded monitor allocation, not resource pressure"
+      },
+      "deploymentId": "22f46035-b3fc-4056-aa06-871b6d14869d"
+    },
+    "qaState": "completed",
+    "soakAccepted": true
+  },
+  "established": [
+    "Current monitor source matches the source checksum retained in the historical final configuration review.",
+    "Saved derived-health, canonical memory and canonical disk thresholds match their selected records.",
+    "The provider still returns the exact historical trigger/recovery lifecycle acknowledged by the operator.",
+    "The historical controlled fixture exercised upstream failure and a real elapsed finalized-slot stall, then recovered. It ran on a different deployment from the final steady monitor."
+  ],
+  "remainingEvidence": [
+    "Bind the controlled fixture deployment to its exact deployed source/build and compare its probe and signal code with the current monitor before attributing its fault behavior to this candidate.",
+    "Complete the requirement-level review of resource probe behavior and current-candidate destination attribution; saved thresholds and healthy samples alone do not establish fault behavior."
+  ],
+  "limitations": [
+    "The retained source hash belongs to the final steady deployment; matching it today does not by itself prove the earlier fixture deployment used identical bytes.",
+    "Disk and canonical-memory pressure were not induced; this review does not require filling the volume or exhausting validator memory.",
+    "No new fault, restart, deployment, transaction, load test or alert delivery was initiated.",
+    "Historical operator acknowledgment is preserved with its original date and candidate, not represented as a fresh receipt."
+  ],
+  "releaseAccepted": false,
+  "mainnetAccepted": false,
+  "bridgeAccepted": false
+}

@@ -1,0 +1,48 @@
+{
+  "schemaVersion": 1,
+  "at": "2026-10-15T17:47:37.835453+00:00",
+  "state": "local-checks-passed",
+  "scope": "Actual local HTTP fixtures around the private rehearsal observer; no Agave validators, real chain requests, genesis creation or host admission",
+  "newTransportTests": 8,
+  "totalOfflinePackageTests": 68,
+  "preFixFailuresReproduced": [
+    "HTTP redirect followed to an unselected local listener",
+    "Environment proxy supplied a response instead of the selected local node"
+  ],
+  "checks": [
+    "Direct POST reads on all three selected ports and eight approved read methods",
+    "Redirect statuses 301, 302, 303, 307 and 308 rejected before the target is contacted",
+    "Environment proxies and a preinstalled global opener cannot substitute the node",
+    "Wrong HTTP status, boolean or mismatched RPC identifiers and malformed envelopes rejected",
+    "Exact 2 MiB response boundary accepted; one byte larger rejected",
+    "Noninteger or unselected ports and mutation methods refused before opening a connection",
+    "Rejected HTTP response resources closed"
+  ],
+  "validation": {
+    "command": "python3 -W error::ResourceWarning -m unittest discover -s mainnet -p '*_test.py'",
+    "tests": 68,
+    "exitCode": 0,
+    "fixtureHttpOnly": true
+  },
+  "sourceHashes": {
+    "mainnet/consensus.py": "fb33188be15b426caf6d4d88cb4120af00011a07d4bf200541b689f72ff470e4",
+    "mainnet/rpc_transport_test.py": "ddcb6aa2a8b0854b5d3273dad86821fc4687466a1d1910951488af16338ca57c",
+    "mainnet/consensus_test.py": "f6fc96aac5fc0e4d88d31cb1f50746538f90a7bcf78a2417464b83b1aaeb9030",
+    ".github/workflows/mainnet-preparation.yml": "e2e29d9beb6454f0b801b5b6a49cafbd87ecb8e95caf51679e4670ce58c15809"
+  },
+  "fullValidatorsStarted": 0,
+  "actualChainRequests": 0,
+  "createdKeys": false,
+  "createdGenesis": false,
+  "canonicalNetworkChanged": false,
+  "hostLimitsChanged": false,
+  "actualConsensusVerified": false,
+  "actualForkRecoveryVerified": false,
+  "independentOperatorsVerified": false,
+  "productionReady": false,
+  "remainingRequirements": [
+    "Capable authorized Linux host with unchanged resource requirements",
+    "Actual fresh hashing genesis, slot-zero replays and full-validator consensus/recovery",
+    "Independent operators, funded backing, reviewed custody and external security review"
+  ]
+}

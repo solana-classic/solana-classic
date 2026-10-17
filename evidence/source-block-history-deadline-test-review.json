@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 1,
+  "at": "2026-10-17T05:40:00.829140+00:00",
+  "scope": "local offline deadline test correction; synthetic transport and loopback coverage, no chain operations",
+  "passed": true,
+  "retainedFailure": {
+    "workflowRunId": 39006887549,
+    "commit": "14c33e37da2a6f4810b6e72a4383d991848e50fb",
+    "test": "one deadline covers ignored cancellation and slow streaming without a completed result",
+    "observedRequests": 0,
+    "incorrectExpectedRequests": 1,
+    "preserved": true
+  },
+  "cause": "The production single deadline includes evidence preparation before first RPC. The old test incorrectly required a request even when the deadline correctly expired before handoff.",
+  "checks": {
+    "focusedTests": 14,
+    "fullOfflineBridgeTests": 399,
+    "failures": 0,
+    "preRpcExpiryRequiresZeroRequests": true,
+    "ignoredCancellationRequiresOneStartedRequest": true,
+    "streamCancellationRequiresOneStartedRequestAndOneCancellation": true,
+    "noCompletedObservationOnTimeout": true,
+    "realTimerUsed": true,
+    "monotonicClockControlledPerCase": true,
+    "existingActualLoopbackAndRedirectChecksRetained": true
+  },
+  "sourceSha256": {
+    "bridge/source-block-history.mjs": "5017c20809befce586c990626bbffb47b56322b538497803f8e4b85c344bce54",
+    "bridge/source-block-history.test.mjs": "ab10658ba044b920088e618c78d9e477ae0fbf54d97a24c767d85129268f81c5"
+  },
+  "productionObserverUnchanged": true,
+  "productionDeadlineUnchanged": true,
+  "releaseAccepted": false,
+  "mainnetAccepted": false,
+  "bridgeAccepted": false
+}

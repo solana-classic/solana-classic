@@ -1,0 +1,74 @@
+{
+  "schemaVersion": 1,
+  "at": "2026-10-17T04:33:37.509766+00:00",
+  "scope": "remote exact source-candidate rollback, current production-only environment targeting and API freshness review",
+  "passed": true,
+  "genesis": "7TAUSfTzQeocodtVee2qsftsCYnJu2eCM1ALdADbHNon",
+  "candidate": {
+    "apiOrigin": "https://network-release-production.up.railway.app",
+    "frontendOrigin": "https://solana-classic-soc.vercel.app",
+    "frontendDeploymentId": "dpl_3aWWzKDohr4SrgijgrB8dWgHHS5r",
+    "frontendCommit": "35f0eaf1dede45452c9cdf9e6403669e966c427d",
+    "apiCommit": "119f25e225540be78b64b19bdb6cb300a1f47c10",
+    "networkConfigSha256": "0eea489e8cf0753b2b0cf0b91b6949566044e50c20bd4d02eea814490f64fe0e",
+    "dependencyManifestSha256": "e6da27717e6a84ca7b29d707ff63591b2ff0cfc38892d3b4667f8615bdf7bbc0"
+  },
+  "freezeSha256": "55b668e56a946ec94f0195b03530aba23593bd71d7fd52493d5403b21882757f",
+  "checklistSha256": "e2fb4b2f53e9aa10f21ec5ffcf708cc2749b456a39703c9228a7fce7fc574f73",
+  "proofs": [
+    {
+      "path": "evidence/agave-source-environment-freshness-review.json",
+      "sha256": "6e31d5f376973ae680b24f95a2dce71c0ac945a4046b496363d533119f2b4706"
+    },
+    {
+      "path": "evidence/agave-source-frontend-rollback.json",
+      "sha256": "31b5ec394480997c0826b51e21df3610dc28a4ce64b68adfe175f28a88b9af9b"
+    },
+    {
+      "path": "evidence/agave-source-recovery-individual-review.json",
+      "sha256": "2bbe32f5aeb4079e81c7defc35dcbae1699ce7d8d365f6eacee94a80840dcb6a"
+    }
+  ],
+  "requirements": {
+    "G5.12": {
+      "claim": "The previous verified frontend can be restored; current production API/status responses are fresh and project environment targets are separate from previews.",
+      "basis": "The selected actual rollback record has successful preflight, prior-deployment rollback and frozen-deployment restoration, with exact frontend hashes and unchanged full backend identity. Current read-only provider metadata lists only the API origin and expected genesis, both production-only, with no preview/development/branch/custom-environment entries. Five live frontend entries match the freeze. Two public runtime/status observations have no-store headers, current timestamps and advancing status slots.",
+      "scopeLimit": "Environment separation means the current project environment target configuration. It does not certify every historical or manually overridden preview deployment. No new preview build or rollback was performed."
+    }
+  },
+  "reviewMethod": {
+    "selectedRollbackRawChecksumVerified": true,
+    "rollbackStagesAndRestoredFrozenEntriesVerified": true,
+    "fullRollbackRuntimeIdentityMatchesFreeze": true,
+    "liveFrontendFilesVerified": 5,
+    "productionOnlyVariableCount": 2,
+    "previewOrDevelopmentEntries": 0,
+    "environmentValuesSaved": false,
+    "apiSourcePath": "apps/web/src/api.ts",
+    "apiSourceSha256": "9457c6d73b56c8f7a771b2c99a91592f2796dfc1e6a40f9b8d0381bc89b9830b",
+    "apiSourceMatchesFreeze": true,
+    "missingApiOriginRefusesRequests": true,
+    "statusSlots": [
+      799695,
+      799709
+    ],
+    "newTransactions": false,
+    "newDeployments": false,
+    "newRollbacks": false,
+    "configurationChanged": false
+  },
+  "supersedes": {
+    "path": "evidence/agave-source-recovery-individual-review.json",
+    "requirement": "G5.12",
+    "previousStatus": "partial retained evidence; unreviewed",
+    "resolution": "Current environment targeting and API/status freshness are now checked and paired with the selected actual rollback evidence."
+  },
+  "limitations": [
+    "Live freshness and environment targeting are observations at the recorded time, not guarantees against later changes.",
+    "The existing empty-origin API refusal was reviewed in frozen source; no new preview execution test is claimed.",
+    "Monitoring fault behavior/delivery attribution and other individual requirements remain unreviewed."
+  ],
+  "releaseAccepted": false,
+  "mainnetAccepted": false,
+  "bridgeAccepted": false
+}

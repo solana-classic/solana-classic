@@ -147,3 +147,40 @@ freshness/schema/precision, late settlement, unchanged journals and caller
 mutation across asynchronous inspection. Seven existing structural-review
 regressions also pass. This is local fixture evidence, not new Agave-ledger,
 independent-operator or production recovery acceptance.
+
+
+## Retained journal code-policy binding
+
+Authenticated expiry review now compares the caller-selected programme-pin hash
+with the verified version2 or version3 journal's own hash. Otherwise valid
+signatures cannot replace that retained selection by signing another caller
+hash. Matching records return programmePinsBoundToJournal:true. A legacy
+version1 record has no enforced pin selection, so its externally supplied hash
+is explicitly labelled unbound. This label is equality to a retained policy,
+not fresh verification of deployed code or custody. Version3's selected mint
+review remains bound through the exact journal hash and verified inspection.
+
+Three new regressions cover substituted valid signatures, both pinned journal
+versions and disabled recovery, plus the legacy label; all38 related review/
+metadata regressions pass. Six offline checks also pass against the retained
+actual metadata original-redemption expiry journal. Those use synthetic signed
+assertions and historical contexts, with no fresh RPC observations, validator
+starts or transactions. Changed code hashes, journal bindings, reported late
+settlement, missing history and lost liability reject; original journal and
+selected private inputs stay unchanged. No recovery permission is enabled.
+See [the aggregate offline result](../evidence/bridge-metadata-expiry-review-offline.json).
+
+Synthetic signatures authenticate test keys, not independent operators or fresh
+chain facts. Private packets and signed assertions stay private. Complete
+history, source movements, code/custody, funded backing and independent security
+review remain open; retry, refund, reset and production flags stay false.
+
+## Controlled loss after reviewed handoff
+
+The metadata withdrawal rehearsal now distinguishes a prepared-but-unsubmitted
+record from an actual one-time reviewed handoff followed by a deliberately
+dropped HTTP submission. The latter must keep its fsynced code/mint admissions
+and SUBMISSION_ATTEMPTED journal through actual-height expiry and reconciliation.
+Lack of an RPC acknowledgement cannot permit a new handoff or discard escrow
+liability. This controlled non-delivery case does not accept arbitrary unknown
+landing or recovery. See [the exact boundary](CONNECTION_LOSS.md).

@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "at": "2026-10-16T01:06:33.657645+00:00",
+  "scope": "retained interrupted source-built devnet browser stability attempt; not accepted",
+  "passed": false,
+  "state": "interrupted",
+  "startedAt": "2026-10-15T03:59:33.330Z",
+  "interruptedAt": "2026-10-15T23:41:39.268Z",
+  "elapsedMs": 70925938,
+  "completedJourneys": 237,
+  "retainedReceiptRows": 237,
+  "retainedReportSHA256": "dd962bf7a16d68a577c7b84c8098a96bd851fbcc25402ae0aa67ac624c2bcd14",
+  "error": "Runtime observation unavailable.",
+  "httpStatusRecorded": false,
+  "exactFailedResponseCauseKnown": false,
+  "terminalReviewFailureCode": "SOURCE_RUN_NOT_COMPLETED",
+  "laterQaVantageProbes": {
+    "count": 3,
+    "statuses": [
+      200,
+      200,
+      200
+    ],
+    "scope": "bounded subsequent observations only; not proof of uninterrupted availability"
+  },
+  "priorRunPreserved": true,
+  "replacementStarted": false,
+  "stabilityAccepted": false,
+  "releaseAccepted": false,
+  "mainnetAccepted": false,
+  "bridgeAccepted": false
+}

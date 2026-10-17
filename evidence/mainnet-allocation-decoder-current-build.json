@@ -1,0 +1,72 @@
+{
+  "schemaVersion": 1,
+  "state": "passed",
+  "startedAt": "2026-10-17T14:06:23.140102+00:00",
+  "sourceHashes": {
+    "mainnet/genesis-allocation-bytes/Cargo.toml": "647c90fcc99883ecda89ee5be9adf14064495866283564d9657a2e60e76e5150",
+    "mainnet/genesis-allocation-bytes/Cargo.lock": "1dc604aaa101af8ded20883d1de6030d54542fcf48c2c7c0f455c6b6dd4d1940",
+    "mainnet/genesis-allocation-bytes/src/main.rs": "7119cbbf204b81cf128a02f125bd0129a5c26df8cce644ad1d821835d463b752",
+    "mainnet/offline_process.py": "eb5868795c9184a1fc8c8d01bbd29692de18acceeed3fab3c2b73b8351168743",
+    "mainnet/process_admission.py": "0c8b9bfa15ab908c2f21bac1cc53d8a785dc1ddbae764eeaa41fe6f6cbbb95fd"
+  },
+  "validatorsStarted": 0,
+  "newGenesisCompiled": false,
+  "chainRequests": 0,
+  "privateKeysRead": 0,
+  "canonicalNetworkChanged": false,
+  "productionReady": false,
+  "rustVersion": "rustc 1.86.0 (05f9846f8 2025-03-31)",
+  "rustTestsPassed": 11,
+  "sourceFilesUnchanged": true,
+  "priorAttemptUnchanged": true,
+  "originalRuntimeArtifactsUnchanged": true,
+  "artifact": {
+    "name": "classic-genesis-allocation-bytes",
+    "profile": "debug",
+    "sha256": "36a48973dd65ab636534306a76e6b4550caba4f5843533f9a370dbf5af0db496",
+    "bytes": 15308568
+  },
+  "completedAt": "2026-10-17T14:06:38.275878+00:00",
+  "scope": "Actual offline locked build and eleven Rust unit tests on the separate Linux compiler worker; no fresh genesis or validator rehearsal",
+  "buildId": "allocation-decoder-build-20261017T1401",
+  "buildCommands": [
+    [
+      "cargo",
+      "+1.86.0",
+      "test",
+      "--offline",
+      "--locked",
+      "--manifest-path",
+      "mainnet/genesis-allocation-bytes/Cargo.toml"
+    ],
+    [
+      "cargo",
+      "+1.86.0",
+      "build",
+      "--offline",
+      "--locked",
+      "--manifest-path",
+      "mainnet/genesis-allocation-bytes/Cargo.toml"
+    ]
+  ],
+  "maximumBuildJobs": 2,
+  "freshTargetDirectory": true,
+  "testTimeoutSeconds": 420,
+  "buildTimeoutSeconds": 180,
+  "selectedBuildDriverSHA256": "868ec97fc8d9eb3330e0322f6e3b6a5dacd6a7ce648cc4a78c9426d1063fc4a2",
+  "artifactManifestSHA256": "da23b3a92c560883ba6c92b055c62925dc078ae543e2071a61ca88ba07952d83",
+  "canonicalRuntimeBeforeAndAfterMatchesFreeze": true,
+  "frozenSourceFilesMatched": 45,
+  "freezeSHA256": "55b668e56a946ec94f0195b03530aba23593bd71d7fd52493d5403b21882757f",
+  "verifiedAfter": "2026-10-17T14:12:49.685790+00:00",
+  "limitations": [
+    "The debug executable is an offline audit tool, not a validator runtime or production deployment.",
+    "Unit tests use constructed genesis data; no retained raw ledger, key or fresh compiled genesis was supplied to the new executable.",
+    "This compiler worker has not passed the stricter three-validator rehearsal host admission.",
+    "The artifact manifest is prepared for integration; the fresh preparer does not invoke this decoder yet.",
+    "Full reserve-adapter integration, complete comparison of newly compiled genesis, strict replays, consensus, backing and custody remain open."
+  ],
+  "releaseAccepted": false,
+  "mainnetAccepted": false,
+  "bridgeAccepted": false
+}

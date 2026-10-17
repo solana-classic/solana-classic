@@ -1,0 +1,21 @@
+{
+  "schemaVersion": 1,
+  "at": "2026-10-16T01:20:15.866888+00:00",
+  "scope": "local auxiliary QA status transition tests only; not a stability result",
+  "passed": true,
+  "tests": 5,
+  "sourceHashes": {
+    "engine/migration/qa_state.mjs": "9bc39101c6e8b9d46fad1d948448a69bb6218b03a34f0edd2d44435866407e8a",
+    "engine/migration/qa_state.test.mjs": "658be323cdf506dc6f79ce6b86d582ad5765455ae0b74d62b8b999ab4ee9748e"
+  },
+  "checks": [
+    "Selected prerequisite hashes retained in terminal success and interruption.",
+    "Claimed input replacement or incomplete activation refused.",
+    "No acceptance inferred; checksum maps copied without caller aliasing."
+  ],
+  "frozenWorkloadChanged": false,
+  "stabilityAccepted": false,
+  "releaseAccepted": false,
+  "mainnetAccepted": false,
+  "bridgeAccepted": false
+}

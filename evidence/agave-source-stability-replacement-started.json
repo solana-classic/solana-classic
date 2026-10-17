@@ -1,0 +1,61 @@
+{
+  "schemaVersion": 1,
+  "at": "2026-10-16T01:27:01.937273+00:00",
+  "scope": "remote actual replacement full24h browser stability activation and first completed journey; in progress, not accepted",
+  "passed": true,
+  "stabilityAccepted": false,
+  "freezeSha256": "55b668e56a946ec94f0195b03530aba23593bd71d7fd52493d5403b21882757f",
+  "genesis": "7TAUSfTzQeocodtVee2qsftsCYnJu2eCM1ALdADbHNon",
+  "candidate": {
+    "apiOrigin": "https://network-release-production.up.railway.app",
+    "frontendOrigin": "https://solana-classic-soc.vercel.app",
+    "frontendDeploymentId": "dpl_3aWWzKDohr4SrgijgrB8dWgHHS5r",
+    "frontendCommit": "35f0eaf1dede45452c9cdf9e6403669e966c427d",
+    "apiCommit": "119f25e225540be78b64b19bdb6cb300a1f47c10",
+    "networkConfigSha256": "0eea489e8cf0753b2b0cf0b91b6949566044e50c20bd4d02eea814490f64fe0e",
+    "dependencyManifestSha256": "e6da27717e6a84ca7b29d707ff63591b2ff0cfc38892d3b4667f8615bdf7bbc0"
+  },
+  "startedAt": "2026-10-16T01:24:36.342Z",
+  "expectedFinishAt": "2026-10-17T01:24:36.342Z",
+  "completedJourneys": 1,
+  "observations": 0,
+  "runnerDeploymentId": "93d2d479-4064-4c2e-af8e-bdce70312ce6",
+  "runnerImageDigest": "sha256:27bf56fa528c8eb37cbdd3b7792e3946563352bbaef051bb8e30518614b41656",
+  "namespace": "source-soak-20261016T0110Z-v1",
+  "qaHelperSha256": "4544eda285e45d9090c7d28f0e79285a5fc356152687eec8cbcd63f182427ce9",
+  "auxiliarySourceHashes": {
+    "engine/migration/runtime_http_diagnostics.mjs": "be4d6a6c633726f859c15a08f5d7c033ee2f028c9b35732cae97c0d004baabe8",
+    "engine/migration/runtime_http_preload.mjs": "3073b08cc034657818091a5e66ec5fea94c34880f42bcb3f8793527b563c909d",
+    "engine/migration/qa_state.mjs": "9bc39101c6e8b9d46fad1d948448a69bb6218b03a34f0edd2d44435866407e8a"
+  },
+  "progressReaderSha256": "754d48adfcf99ff8bd7179b60df5350d439e46f5720359fce5a28612ef1450b6",
+  "prerequisiteChecksums": {
+    "candidate-freeze": "55b668e56a946ec94f0195b03530aba23593bd71d7fd52493d5403b21882757f",
+    "load": "9d22fbf4b9890be4051dbfac955b27fd2878d88b50b75c49592bb5ad9a4a34fd",
+    "backup-check": "be5633983d7c597c408a3e687f468b5a654a7e825b1f4421a696077e48734561",
+    "restart-check": "3a2db0639a11b1054156c74d21089fad2397278708f4f35d48bc2de44741c60a",
+    "pilot-agent-one": "2daa03592f04962080c0c2805264376a312225d04950111aeeb15d8c77749e76",
+    "pilot-agent-two": "a95b4e73f1eb0f1c8230113984cdb9518829045325f9f67e3e4d09af7b5a8006",
+    "monitoring-config": "b547b69d56f99f04cc81ddd4922bdc3641a5687001e8c477047df1bb23419cbf",
+    "frontend-rollback": "31b5ec394480997c0826b51e21df3610dc28a4ce64b68adfe175f28a88b9af9b",
+    "remote-negative-controls": "968809f06a9333683d0a04ce11b55d7ffac9492f62dbc9a4b2b83041375f9da6"
+  },
+  "frozenCoreFilesVerified": 45,
+  "qaImageResolvedPackageFilesVerified": 4,
+  "activeWorkloadsObserved": 1,
+  "passiveDiagnostics": {
+    "rowsObserved": 7,
+    "statusCodes": [
+      200
+    ],
+    "fileMode": "600",
+    "complete": false
+  },
+  "previousInterruptedRun": "evidence/agave-source-stability-interruption.json",
+  "oldAttemptsPreserved": true,
+  "canonicalValidatorRestarted": false,
+  "privateKeysExported": false,
+  "releaseAccepted": false,
+  "mainnetAccepted": false,
+  "bridgeAccepted": false
+}

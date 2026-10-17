@@ -17,7 +17,7 @@ between snapshots, and recorded obligations must still agree with the final
 code observation. Movement or an unavailable read requires a new observation;
 there is no cached successful fallback.
 
-The first version accepts an unextended 82-byte Token-2022 mint and an
+The default `mintPolicy: "plain"` accepts an unextended82-byte Token-2022 mint and an
 unextended 165-byte escrow. It verifies mint initialization, exact expected
 supply/precision and absent mint/freeze authorities. Escrow must hold that mint,
 be controlled by the derived vault PDA, be initialized and unfrozen, and have
@@ -34,9 +34,20 @@ A direct token donation to escrow is reported as surplus. It does not increase
 bridge obligations or authorize another native release. This module does not
 compare the native-chain counter or prove a complete pending-event inventory.
 
+An explicit `mintPolicy: "immutable-self-metadata-v1"` additionally admits only
+the immutable self-pointing MetadataPointer and TokenMetadata pair described in
+[MINT_METADATA.md](MINT_METADATA.md). It bounds mint data to4096bytes and includes
+all metadata bytes in snapshot equality. The token-code wrapper forwards this
+selection while retaining its outer code observations. Unknown policies reject
+before RPC access. Escrow remains exactly165bytes under both policies.
+
 This is a deliberately narrow observation boundary. The on-chain prototype
-permits selected metadata and immutable-owner extensions, while this observer
-rejects all extensions until their layouts and authority behavior are reviewed.
+permits selected metadata and immutable-owner extensions; the observer refuses
+all extensions except the explicitly selected immutable mint metadata pair.
+The claim journal continues to reject extended mints. The new option has local
+synthetic-response coverage and a separate fresh private Agave origin result
+linked in MINT_METADATA.md. Settlement admission and independent review remain
+pending.
 The original module checks only the Token-2022 owner address. The separate
 [`observeTokenPinnedOriginAssets` wrapper](TOKEN_CODE.md) additionally requires
 selected token ELF, complete ProgramData and authority pins before and after
@@ -60,7 +71,7 @@ single copied validator stopped and both original ledger inventories plus the
 original fixture/journal unchanged. Local tests alone do not prove execution.
 
 
-Five actual checks now pass on a fresh private copy, using30 read-only RPC calls
+The earlier default plain-mint policy passed five actual checks on a fresh private copy, using30 read-only RPC calls
 and zero simulations or broadcasts. The synthetic mint supply is2000000origin
 units; escrow and recorded obligations are1950000, with zero unallocated
 surplus. Wrong selected supply and precision reject; a fresh observation retains

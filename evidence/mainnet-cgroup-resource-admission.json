@@ -1,0 +1,60 @@
+{
+  "schemaVersion": 1,
+  "at": "2026-10-15T18:24:49.947951+00:00",
+  "state": "preparation-verified-host-blocked",
+  "scope": "Read-only private Linux resource observation and synthetic kernel-file fixtures; no limits changed, keys/genesis created or validators started",
+  "newKernelFixtureTests": 11,
+  "localOfflinePackageTests": 79,
+  "preFixFailuresReproduced": [
+    "Process-group limits missed when the mount root is unlimited",
+    "Tighter parent limits missed when the child is unlimited",
+    "Standalone helper import wrote bytecode despite the read-only contract"
+  ],
+  "checks": [
+    "Map the exact unified process membership to one visible hierarchy root",
+    "Apply the minimum RAM and CPU ceilings across all visible ancestors and physical/affinity baselines",
+    "Reject legacy, ambiguous, escaping, incomplete or malformed mappings and limits",
+    "Preserve exact 16 GiB memory and four-CPU preparation floors",
+    "Do not export private membership paths or raw filesystem errors",
+    "Load the reviewed helper source directly without consuming or creating bytecode caches"
+  ],
+  "actualLinuxProbe": {
+    "state": "read-only-probe-completed",
+    "linuxKernelFixtureTests": 11,
+    "priorReadOnlyProbeRetained": true,
+    "actualAdmissionState": "blocked",
+    "blockingReasons": [
+      "HARD_OPEN_FILE_LIMIT_BELOW_1000000",
+      "REHEARSAL_MEMORY_BELOW_16_GIB"
+    ],
+    "effectiveMemoryBytes": 16000000000,
+    "effectiveCpuCount": 4.0,
+    "hardFileLimit": 524288,
+    "containerLimitsObserved": true,
+    "visibleAncestorsObserved": 1,
+    "cgroupFailureCode": null,
+    "limitScope": "Visible unified cgroup ancestry plus physical RAM and CPU affinity; hidden host ancestors are not attested",
+    "reviewedBinariesMatch": true,
+    "sourcesUnchanged": true,
+    "validatorsBefore": 0,
+    "validatorsAfter": 0,
+    "createdKeys": false,
+    "createdGenesis": false,
+    "changedLimits": false,
+    "chainRequests": 0,
+    "productionReady": false
+  },
+  "sourceHashes": {
+    "mainnet/host-preflight.py": "11f9fb3131e2462eee021fee3af4a443097ec81c37a09a8ddc3dae5c52eb72f7",
+    "mainnet/cgroup_limits.py": "9223e108adfd57d5476180143fd69b2f17e33abb3496d12d4c3c4044d7f4828c",
+    "mainnet/cgroup_limits_test.py": "ff8e3705c795c321dd58937f711821942b771f8e45e75db804ae4d645e259fc4"
+  },
+  "canonicalNetworkChanged": false,
+  "mainnetActivated": false,
+  "actualConsensusVerified": false,
+  "actualFundedBackingVerified": false,
+  "hiddenHostAncestorsAttested": false,
+  "independentOperatorsVerified": false,
+  "productionReady": false,
+  "standaloneAdmissionCreatesNoBytecode": true
+}

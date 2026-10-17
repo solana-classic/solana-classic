@@ -68,12 +68,15 @@ export async function reviewAuthenticatedExpiry({directory,id,envelopes,reviewRo
   if(!Array.isArray(envelopes))throw new Error('Observer envelope array required');
   envelopes=envelopes.map(e=>{if(!e||Object.keys(e).length!==2||!Object.hasOwn(e,'report')||!Object.hasOwn(e,'signatureBase64'))throw new Error('Exact observer envelope required');return {report:selectedReport(e.report),signatureBase64:e.signatureBase64};});
   accounting=Object.fromEntries(accountingFields.map(k=>[k,units(accounting?.[k])]));
+  programmePinsHash=digest(programmePinsHash);
   const operation=await inspectPendingClaim(directory,id);
+  const programmePinsBoundToJournal=operation.programmePinsHash!==undefined;
+  if(programmePinsBoundToJournal&&programmePinsHash!==operation.programmePinsHash)throw new Error('Selected programme pins differ from retained journal');
   const normalized=Object.fromEntries(accountingFields.map(k=>[k,units(accounting?.[k])]));
   const authenticated=verifyObserverReports({envelopes,reviewRoster,expected:{...operation,programmePinsHash:digest(programmePinsHash),accountingHash:observerAccountingHash(normalized)},reviewedAt});
   // Reinspect through the original structural review. A concurrent settlement
   // or journal update cannot inherit an earlier authenticated snapshot.
   const {packetHash:unsignedPacketHash,...packet}=await reviewExpiredRedemption({directory,id,reports:authenticated.reports,accounting:normalized,reviewedAt});
-  const result={...packet,unsignedPacketHash,keyAuthenticationVerified:true,operatorIdentityVerified:false,rosterApprovedForProduction:false,authenticatedSigners:authenticated.signers,reviewRosterHash:authenticated.rosterHash,programmePinsHash,observerAuthenticationVerified:true};
+  const result={...packet,unsignedPacketHash,keyAuthenticationVerified:true,operatorIdentityVerified:false,rosterApprovedForProduction:false,authenticatedSigners:authenticated.signers,reviewRosterHash:authenticated.rosterHash,programmePinsHash,programmePinsBoundToJournal,observerAuthenticationVerified:true};
   return {...result,packetHash:hash(JSON.stringify(result))};
 }

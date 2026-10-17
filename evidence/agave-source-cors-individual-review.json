@@ -1,0 +1,239 @@
+{
+  "schemaVersion": 1,
+  "at": "2026-10-17T11:35:19.603166+00:00",
+  "scope": "remote exact source-candidate CORS and preflight state review, with retained no-Origin admission controls and isolated source checks",
+  "passed": true,
+  "genesis": "7TAUSfTzQeocodtVee2qsftsCYnJu2eCM1ALdADbHNon",
+  "candidate": {
+    "apiOrigin": "https://network-release-production.up.railway.app",
+    "frontendOrigin": "https://solana-classic-soc.vercel.app",
+    "frontendDeploymentId": "dpl_3aWWzKDohr4SrgijgrB8dWgHHS5r",
+    "frontendCommit": "35f0eaf1dede45452c9cdf9e6403669e966c427d",
+    "apiCommit": "119f25e225540be78b64b19bdb6cb300a1f47c10",
+    "networkConfigSha256": "0eea489e8cf0753b2b0cf0b91b6949566044e50c20bd4d02eea814490f64fe0e",
+    "dependencyManifestSha256": "e6da27717e6a84ca7b29d707ff63591b2ff0cfc38892d3b4667f8615bdf7bbc0"
+  },
+  "freezeSha256": "55b668e56a946ec94f0195b03530aba23593bd71d7fd52493d5403b21882757f",
+  "checklistSha256": "e2fb4b2f53e9aa10f21ec5ffcf708cc2749b456a39703c9228a7fce7fc574f73",
+  "proofs": [
+    {
+      "path": "evidence/agave-source-candidate-freeze.json",
+      "sha256": "55b668e56a946ec94f0195b03530aba23593bd71d7fd52493d5403b21882757f"
+    },
+    {
+      "path": "evidence/agave-source-negative-controls.json",
+      "sha256": "968809f06a9333683d0a04ce11b55d7ffac9492f62dbc9a4b2b83041375f9da6"
+    },
+    {
+      "path": "evidence/agave-source-negative-control-coverage-review.json",
+      "sha256": "88b760065215c6deec9ff4e5b4a18f9468c8a814e02c9cf7747c00620fe915a1"
+    }
+  ],
+  "requirements": {
+    "G5.05": {
+      "claim": "The exact approved production origin passes preflight; unapproved browser origins fail; OPTIONS does not create faucet reservations or business-state mutations, and server-side RPC admission also rejects forbidden methods without Origin.",
+      "basis": "Authenticated read-only state inventories bracket nine public HTTPS OPTIONS requests across faucet, assets and RPC. The sole configured origin receives exact 204 allowlist responses; unapproved and null origins receive 403 without allow-origin. All four database tables and asset file stat inventory are unchanged. Four existing regressions pass on frozen source with no upstream calls or faucet reservations. The checksum-bound retained negative run separately records forbidden no-Origin RPC requests rejected before dispatch.",
+      "scopeLimit": "No preview origin is approved on the canonical API, so no preview execution is claimed. This reviews the current policy and selected retained controls, not historical deadline compliance or every browser/service configuration."
+    }
+  },
+  "reviewMethod": {
+    "beforeAt": "2026-10-17T11:33:50.655582+00:00",
+    "afterAt": "2026-10-17T11:33:57.061932+00:00",
+    "fullRuntimeMatchesBeforeAndAfter": true,
+    "frozenSourceFilesVerified": 45,
+    "approvedOrigins": [
+      "https://solana-classic-soc.vercel.app"
+    ],
+    "approvedPreviewOrigins": [],
+    "preflightResponses": [
+      {
+        "origin": "https://solana-classic-soc.vercel.app",
+        "path": "/api/faucet",
+        "status": 204,
+        "allowOrigin": "https://solana-classic-soc.vercel.app",
+        "allowMethods": "GET, POST, OPTIONS",
+        "allowHeaders": "Content-Type, solana-client",
+        "allowCredentials": null
+      },
+      {
+        "origin": "https://solana-classic-soc.vercel.app",
+        "path": "/api/assets",
+        "status": 204,
+        "allowOrigin": "https://solana-classic-soc.vercel.app",
+        "allowMethods": "GET, POST, OPTIONS",
+        "allowHeaders": "Content-Type, solana-client",
+        "allowCredentials": null
+      },
+      {
+        "origin": "https://solana-classic-soc.vercel.app",
+        "path": "/api/rpc",
+        "status": 204,
+        "allowOrigin": "https://solana-classic-soc.vercel.app",
+        "allowMethods": "GET, POST, OPTIONS",
+        "allowHeaders": "Content-Type, solana-client",
+        "allowCredentials": null
+      },
+      {
+        "origin": "https://unapproved.example.test",
+        "path": "/api/faucet",
+        "status": 403,
+        "allowOrigin": null,
+        "allowMethods": null,
+        "allowHeaders": null,
+        "allowCredentials": null
+      },
+      {
+        "origin": "https://unapproved.example.test",
+        "path": "/api/assets",
+        "status": 403,
+        "allowOrigin": null,
+        "allowMethods": null,
+        "allowHeaders": null,
+        "allowCredentials": null
+      },
+      {
+        "origin": "https://unapproved.example.test",
+        "path": "/api/rpc",
+        "status": 403,
+        "allowOrigin": null,
+        "allowMethods": null,
+        "allowHeaders": null,
+        "allowCredentials": null
+      },
+      {
+        "origin": "null",
+        "path": "/api/faucet",
+        "status": 403,
+        "allowOrigin": null,
+        "allowMethods": null,
+        "allowHeaders": null,
+        "allowCredentials": null
+      },
+      {
+        "origin": "null",
+        "path": "/api/assets",
+        "status": 403,
+        "allowOrigin": null,
+        "allowMethods": null,
+        "allowHeaders": null,
+        "allowCredentials": null
+      },
+      {
+        "origin": "null",
+        "path": "/api/rpc",
+        "status": 403,
+        "allowOrigin": null,
+        "allowMethods": null,
+        "allowHeaders": null,
+        "allowCredentials": null
+      }
+    ],
+    "databaseBefore": {
+      "assets": {
+        "rows": 1856,
+        "sha256": "b2018cf1fbecf1487ba25c81de717b3157bf007e5a9cd1655573231ff1c80b7e"
+      },
+      "counters": {
+        "rows": 208,
+        "sha256": "7f1c0b406e454419f79299329894878039dd115ffd44df6e090beb5c564a88e9"
+      },
+      "faucet": {
+        "rows": 112,
+        "sha256": "903d27bdde5fa9606c9048f2db236207ae8ff5160dc667feb983eefa3387cfa7"
+      },
+      "gallery": {
+        "rows": 1277,
+        "sha256": "f02eada70e10414ec1dfacd68f34e17f6cda8d119d11111e1bdbc56cd9d62c02"
+      }
+    },
+    "databaseAfter": {
+      "assets": {
+        "rows": 1856,
+        "sha256": "b2018cf1fbecf1487ba25c81de717b3157bf007e5a9cd1655573231ff1c80b7e"
+      },
+      "counters": {
+        "rows": 208,
+        "sha256": "7f1c0b406e454419f79299329894878039dd115ffd44df6e090beb5c564a88e9"
+      },
+      "faucet": {
+        "rows": 112,
+        "sha256": "903d27bdde5fa9606c9048f2db236207ae8ff5160dc667feb983eefa3387cfa7"
+      },
+      "gallery": {
+        "rows": 1277,
+        "sha256": "f02eada70e10414ec1dfacd68f34e17f6cda8d119d11111e1bdbc56cd9d62c02"
+      }
+    },
+    "assetFileInventoryBefore": {
+      "count": 3712,
+      "statInventorySHA256": "7a20c89d5c2a6ce41ea437815d245508edf6275f917c5646ddf7a3761e2db0e8"
+    },
+    "assetFileInventoryAfter": {
+      "count": 3712,
+      "statInventorySHA256": "7a20c89d5c2a6ce41ea437815d245508edf6275f917c5646ddf7a3761e2db0e8"
+    },
+    "databaseReadMode": "SQLite URI mode=ro and query_only, transaction snapshots; complete rows hashed privately, no raw rows published",
+    "assetInventoryMethod": "Relative file names, byte sizes and modification times, sorted and hashed; not a new full content-byte audit",
+    "isolatedTestSource": {
+      "path": "tests/integration/api.test.ts",
+      "sha256": "00406f5ccd9dc004ced93208b3701b54a1ca2d5b4b0d448ed4a0994c9e584644"
+    },
+    "isolatedSelection": "unapproved browser origin|preflight",
+    "isolatedTestsPassed": 4,
+    "unselectedTestsSkipped": 26,
+    "maintenanceMocked": false,
+    "upstreamResponsesMockedInIsolatedTests": true,
+    "retainedNoOriginControls": [
+      {
+        "name": "forbidden RPC rejected without Origin: requestAirdrop",
+        "passed": true,
+        "observations": {
+          "status": 400,
+          "code": "INVALID_INPUT"
+        }
+      },
+      {
+        "name": "forbidden RPC rejected without Origin: validatorExit",
+        "passed": true,
+        "observations": {
+          "status": 400,
+          "code": "INVALID_INPUT"
+        }
+      },
+      {
+        "name": "forbidden RPC rejected without Origin: setLogFilter",
+        "passed": true,
+        "observations": {
+          "status": 400,
+          "code": "INVALID_INPUT"
+        }
+      },
+      {
+        "name": "forbidden RPC rejected without Origin: getProgramAccounts",
+        "passed": true,
+        "observations": {
+          "status": 400,
+          "code": "INVALID_INPUT"
+        }
+      }
+    ],
+    "newPostRequests": 0,
+    "newTransactions": 0,
+    "configurationChanged": false
+  },
+  "supersedes": {
+    "path": "evidence/agave-source-negative-control-coverage-review.json",
+    "requirement": "G5.05",
+    "previousStatus": "unreviewed; no before/after OPTIONS inventory or approved-preview policy selected",
+    "resolution": "Current complete business-table and asset-stat inventories bracket the production preflights; the exact allowlist contains one production origin and no preview origins."
+  },
+  "limitations": [
+    "Volatile admission counters may count OPTIONS requests; unchanged inventories refer to persisted business state and asset file stats.",
+    "The asset stat digest does not independently prove unchanged file contents against an attacker preserving all stat fields. Frozen route behavior and zero-upstream-call local regressions separately support the no-mutation interpretation.",
+    "No new forbidden POST, faucet claim, browser journey, restore, restart or stability run was performed.",
+    "Whole-release, mainnet and bridge acceptance remain separate."
+  ],
+  "releaseAccepted": false,
+  "mainnetAccepted": false,
+  "bridgeAccepted": false
+}

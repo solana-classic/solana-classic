@@ -1,0 +1,134 @@
+{
+  "schemaVersion": 1,
+  "at": "2026-10-17T04:33:07.896596+00:00",
+  "scope": "read-only current frozen-frontend environment targeting, public asset identity and API/status freshness; no preview deployment or rollback executed",
+  "passed": true,
+  "candidate": {
+    "apiOrigin": "https://network-release-production.up.railway.app",
+    "frontendOrigin": "https://solana-classic-soc.vercel.app",
+    "frontendDeploymentId": "dpl_3aWWzKDohr4SrgijgrB8dWgHHS5r",
+    "frontendCommit": "35f0eaf1dede45452c9cdf9e6403669e966c427d",
+    "apiCommit": "119f25e225540be78b64b19bdb6cb300a1f47c10",
+    "networkConfigSha256": "0eea489e8cf0753b2b0cf0b91b6949566044e50c20bd4d02eea814490f64fe0e",
+    "dependencyManifestSha256": "e6da27717e6a84ca7b29d707ff63591b2ff0cfc38892d3b4667f8615bdf7bbc0"
+  },
+  "genesis": "7TAUSfTzQeocodtVee2qsftsCYnJu2eCM1ALdADbHNon",
+  "freezeSha256": "55b668e56a946ec94f0195b03530aba23593bd71d7fd52493d5403b21882757f",
+  "projectId": "prj_mjv3k9UcoPgxoNvDl2foOIC8R3V9",
+  "environmentMetadata": [
+    {
+      "key": "VITE_EXPECTED_GENESIS_HASH",
+      "target": [
+        "production"
+      ],
+      "type": "encrypted",
+      "gitBranch": null,
+      "customEnvironmentIds": null
+    },
+    {
+      "key": "VITE_API_BASE_URL",
+      "target": [
+        "production"
+      ],
+      "type": "encrypted",
+      "gitBranch": null,
+      "customEnvironmentIds": null
+    }
+  ],
+  "environmentValuesSaved": false,
+  "productionOnlyTargets": true,
+  "previewOrDevelopmentEntries": 0,
+  "frontendFiles": [
+    {
+      "path": "/",
+      "status": 200,
+      "sha256": "448312a1f5170de0767b742309fad4861cc0e0a80e15d0a39d839fd1f2de2454"
+    },
+    {
+      "path": "/assets/index-Dpv-W791.js",
+      "status": 200,
+      "sha256": "6c42fffa784f160ed324ac16585e557828aca12f2d53ee1a6ee9d2c0f840f1aa"
+    },
+    {
+      "path": "/assets/index-DXgWf3wS.css",
+      "status": 200,
+      "sha256": "854b48b0499bd0f863296e157914bfd43b334ae7e82c4dfc7883d129442feca0"
+    },
+    {
+      "path": "/assets/index.browser.esm-BKUeZO4T.js",
+      "status": 200,
+      "sha256": "7c038d6f6a4b6b70762f8f685e278524630993ed2d2aa946b70d58a578119002"
+    },
+    {
+      "path": "/assets/src-DkgziyfX.js",
+      "status": 200,
+      "sha256": "701b0cb796501ced6fa2caef2081d4d0618818d6859711dcb6ce09c33a57b8ad"
+    }
+  ],
+  "observations": [
+    {
+      "checkedAt": "2026-10-17T04:33:02.339128+00:00",
+      "runtimeObservedAt": "2026-10-17T04:33:02.015Z",
+      "runtimeAgeSeconds": 0.324128,
+      "statusProgressAgeSeconds": 0.070128,
+      "runtimeMatchesFreeze": true,
+      "runtimeHeaders": {
+        "cache-control": "no-store",
+        "age": null,
+        "date": "Sat, 17 Oct 2026 04:33:02 GMT"
+      },
+      "statusHeaders": {
+        "cache-control": "no-store",
+        "age": null,
+        "date": "Sat, 17 Oct 2026 04:33:02 GMT"
+      },
+      "status": {
+        "state": "online",
+        "slot": 799695,
+        "genesisMatches": true,
+        "lastProgressAt": "2026-10-17T04:33:02.269Z",
+        "message": "Experimental devnet is responding."
+      }
+    },
+    {
+      "checkedAt": "2026-10-17T04:33:07.896559+00:00",
+      "runtimeObservedAt": "2026-10-17T04:33:07.555Z",
+      "runtimeAgeSeconds": 0.341559,
+      "statusProgressAgeSeconds": 0.071559,
+      "runtimeMatchesFreeze": true,
+      "runtimeHeaders": {
+        "cache-control": "no-store",
+        "age": null,
+        "date": "Sat, 17 Oct 2026 04:33:07 GMT"
+      },
+      "statusHeaders": {
+        "cache-control": "no-store",
+        "age": null,
+        "date": "Sat, 17 Oct 2026 04:33:07 GMT"
+      },
+      "status": {
+        "state": "online",
+        "slot": 799709,
+        "genesisMatches": true,
+        "lastProgressAt": "2026-10-17T04:33:07.825Z",
+        "message": "Experimental devnet is responding."
+      }
+    }
+  ],
+  "retainedRollbackStagesVerified": [
+    "preflight",
+    "rollback",
+    "restore"
+  ],
+  "retainedRollbackSha256": "31b5ec394480997c0826b51e21df3610dc28a4ce64b68adfe175f28a88b9af9b",
+  "limitations": [
+    "Current project scope metadata is not an audit of every historical or manually overridden preview deployment.",
+    "The source API helper refuses actions when API origin is missing; no new preview build or browser test is claimed.",
+    "Slots here are public status observations, not a new finalized transaction or throughput benchmark."
+  ],
+  "configurationChanged": false,
+  "newDeployments": false,
+  "newRollbacks": false,
+  "newTransactions": false,
+  "releaseAccepted": false
+}

@@ -1,0 +1,111 @@
+{
+  "schemaVersion": 1,
+  "at": "2026-10-17T03:05:40.848363+00:00",
+  "scope": "remote exact source-candidate individual operations review of retained evidence; no new workload or chain replay",
+  "passed": true,
+  "genesis": "7TAUSfTzQeocodtVee2qsftsCYnJu2eCM1ALdADbHNon",
+  "candidate": {
+    "apiOrigin": "https://network-release-production.up.railway.app",
+    "frontendOrigin": "https://solana-classic-soc.vercel.app",
+    "frontendDeploymentId": "dpl_3aWWzKDohr4SrgijgrB8dWgHHS5r",
+    "frontendCommit": "35f0eaf1dede45452c9cdf9e6403669e966c427d",
+    "apiCommit": "119f25e225540be78b64b19bdb6cb300a1f47c10",
+    "networkConfigSha256": "0eea489e8cf0753b2b0cf0b91b6949566044e50c20bd4d02eea814490f64fe0e",
+    "dependencyManifestSha256": "e6da27717e6a84ca7b29d707ff63591b2ff0cfc38892d3b4667f8615bdf7bbc0"
+  },
+  "freezeSha256": "55b668e56a946ec94f0195b03530aba23593bd71d7fd52493d5403b21882757f",
+  "checklistSha256": "e2fb4b2f53e9aa10f21ec5ffcf708cc2749b456a39703c9228a7fce7fc574f73",
+  "proofs": [
+    {
+      "path": "evidence/agave-source-load-completed.json",
+      "sha256": "f913ea39443c1b9c867cffdc9600cf88313da2fc06f65fa861484a00049b4405"
+    },
+    {
+      "path": "evidence/agave-source-restart-check.json",
+      "sha256": "3a2db0639a11b1054156c74d21089fad2397278708f4f35d48bc2de44741c60a"
+    },
+    {
+      "path": "evidence/agave-source-negative-controls.json",
+      "sha256": "968809f06a9333683d0a04ce11b55d7ffac9492f62dbc9a4b2b83041375f9da6"
+    },
+    {
+      "path": "evidence/agave-source-stability-replacement-started.json",
+      "sha256": "6581bb62dad92808ac77caa8eb8a6f590c04d87bf28bf6ce0dda20ee43f5fdcf"
+    }
+  ],
+  "requirements": {
+    "G2.07": {
+      "claim": "Validator restart preserves sampled genesis, balances, mint accounts and ownership.",
+      "basis": "Retained before/after snapshots are exactly equal across one sampled native balance and 50 assets, including 43 populated owner records. API and validator boot IDs changed while deployment, genesis, source, core and executable identities remained equal.",
+      "scopeLimit": "Provider process/container restart and sampled state continuity only; not hardware reboot, fresh deployment or a backup restore."
+    },
+    "G4.04": {
+      "claim": "Sampled artwork and metadata remain readable at the same content-hashed paths after app restart.",
+      "basis": "All 100 immutable file URL/hash pairs for 50 assets are identical in the retained before/after restart snapshots.",
+      "scopeLimit": "Covers the recorded sample at the restart, not all later-created assets."
+    },
+    "G5.01": {
+      "claim": "Public RPC rejects airdrop, administrative methods, arbitrary upstream URLs, batches and excessive bodies.",
+      "basis": "Actual bounded controls recorded HTTP 400 for requestAirdrop, validatorExit, setLogFilter, getProgramAccounts, batch and caller-selected upstream requests; RPC body padding above the configured 32768-byte bound returned HTTP 413."
+    },
+    "G6.01": {
+      "claim": "The bounded load uses 20 sessions and 200 logical operations with the specified cadence and unchanged public limits.",
+      "basis": "Recalculated 100 issuances and 100 transfers over 1209377 ms, one operation every 6000 ms, polling every 3000 ms, no faucet calls and 24 ms maximum absolute start deviation; 200 distinct retained receipt signatures."
+    },
+    "G6.02": {
+      "claim": "At least 99 percent of measured logical operations confirm within 15 seconds.",
+      "basis": "All 200 retained operation timings confirmed within 15 seconds; no missing confirmations or failed operations."
+    },
+    "G6.03": {
+      "claim": "Measured p95 confirmed latency is at most five seconds; finalization is separate.",
+      "basis": "Recalculated p95 confirmed latency 3313 ms and p95 finalized latency 15350 ms. Finalization is not described as instant."
+    },
+    "G6.04": {
+      "claim": "Measured gallery finalization and verification complete within 60 seconds.",
+      "basis": "All 100 issuance rows have valid finalized/verified ordering and verification at most 15497 ms after operation start."
+    },
+    "G6.05": {
+      "claim": "Load admission controls remain unchanged and a separate bounded abuse check observes an expected 429.",
+      "basis": "The selected load and separate remote negative report both record unchanged admission limits. The separate asset admission probe records 151 requests, 150 metadata assets created, then HTTP 429 LIMIT_REACHED.",
+      "scopeLimit": "The public response does not distinguish the per-IP bucket from the daily global bucket. This does not establish forwarding-header attribution or G5.04."
+    }
+  },
+  "reviewMethod": {
+    "selectedRawInputChecksums": {
+      "candidate-freeze": "55b668e56a946ec94f0195b03530aba23593bd71d7fd52493d5403b21882757f",
+      "load": "9d22fbf4b9890be4051dbfac955b27fd2878d88b50b75c49592bb5ad9a4a34fd",
+      "restart-check": "3a2db0639a11b1054156c74d21089fad2397278708f4f35d48bc2de44741c60a",
+      "remote-negative-controls": "968809f06a9333683d0a04ce11b55d7ffac9492f62dbc9a4b2b83041375f9da6"
+    },
+    "loadAuditor": {
+      "path": "engine/migration/load_review.py",
+      "sha256": "1a9dc744aea2f60b38fbd666194af240481443d4a8523c4619a6c5bc9a8abdf6",
+      "invocation": "review(selectedLoad, selectedSourceFreeze); legacy default CLI inputs not used"
+    },
+    "loadMetricsRecomputedFromIndividualRows": true,
+    "loadPublicSelectedFieldsMatch": true,
+    "restartPublicEqualsSelectedRawReport": true,
+    "negativeControlsPublicEqualsSelectedRawReport": true,
+    "restartSnapshotsExactlyEqual": true,
+    "restartAssets": 50,
+    "restartPopulatedOwnerRecords": 43,
+    "restartImmutableFiles": 100,
+    "restartBalances": 1,
+    "negativeChecks": 36,
+    "negativeChecksPassed": true,
+    "newTransactions": false,
+    "newWorkloads": false,
+    "newRestarts": false,
+    "newNegativeControlRequests": false
+  },
+  "limitations": [
+    "Twenty recorded SDK sessions on one validator do not establish chain-wide throughput or mainnet capacity.",
+    "Receipt and timing integrity is checked from retained reports, not independently replayed chain history.",
+    "Restart conclusions cover sampled process/container continuity, not hardware reboot, a fresh deployment or cold backup recovery.",
+    "The observed 429 does not prove the client-IP counter identity, global capacity, concurrent faucet admission or every storage bound.",
+    "Monitoring delivery, full recovery, rollback environment separation, deadline-specific requirements and other unreviewed checks remain open."
+  ],
+  "releaseAccepted": false,
+  "mainnetAccepted": false,
+  "bridgeAccepted": false
+}

@@ -88,19 +88,30 @@ Developers can deploy and upgrade their own SBF programs with the tested HTTP to
 
 SOC is intended to be the network token of Solana Classic. A reserve-backed bridge is planned to make original SOC on Solana redeemable one-to-one for native SOC on the independent production network.
 
-The aim is one economic supply: moving to native SOC requires backing from original tokens held in reserve. The official Solana mint is published above. Team allocation and lock plans are disclosed below; acquisition details, actual holdings, fee recipients and lock evidence will be published separately. Mainnet, reserve protection and bridge security still need implementation, published terms and review. Redemption is unavailable today. The [whitepaper](docs/whitepaper/WHITEPAPER.md) explains the proposed model.
+The aim is one economic supply: moving to native SOC requires backing from original tokens held in reserve. The official Solana mint is published above. The observed Streamflow lock and its conditions are disclosed below; acquisition details, fee recipients and any holdings outside that lock still require disclosure. Mainnet, reserve protection and bridge security still need implementation, published terms and review. Redemption is unavailable today. The [whitepaper](docs/whitepaper/WHITEPAPER.md) explains the proposed model.
 
 ### Team wallet and supply disclosure
 
-The team's wallet on Solana is published in advance:
+The disclosed team wallet on Solana is:
 
 ```
 7TGgKppPDB3B8riBz763UKw971LnzhgQUShVAPUFY4HU
 ```
 
-When the original SOC token is launched on Solana, 70% of the supply will be held by this wallet and locked on-chain. The remaining 30% will be available to trade on Solana. The locked 70% stays locked until the Solana Classic mainnet is live; the team will then bridge those tokens to mainnet through the reserve bridge, where they fund the full tokenomics of the coin. The full tokenomics breakdown will be published with the mainnet launch.
+**Approximately 70% of SOC is allocated to the native-chain migration.** On 15 October 2026, the [public Streamflow record](https://app.streamflow.finance/contract/solana/mainnet/BcKXq8svKSR8A8kR44zJ25xhR7mj7TsWPWy74zB6gRxQ) displays **698.6725 million SOC** in the team's lock; Streamflow's search displays this as **70.88% of the current supply**. These are the displayed, rounded figures, rather than a new allocation or a claim that all other tokens are freely tradable. The disclosed team wallet is both sender and recipient.
 
-The lock contract, its unlock conditions and how the tokens were acquired will be published separately. The allocation above is the stated plan; publishing the mint address does not verify that a lock is in place. No other address is a team wallet. Nothing sent to this wallet creates any entitlement.
+| Public lock term | Streamflow record |
+| --- | --- |
+| Contract | `BcKXq8svKSR8A8kR44zJ25xhR7mj7TsWPWy74zB6gRxQ` |
+| Lock type | Price-based |
+| Unlock price | USD 0.02029 |
+| Expiry | 21 October 2026 at 23:00 UTC, shown as 22 October at 00:00 BST |
+
+This is **not an unconditional seven-day time lock**. The price condition can release the tokens before expiry; Streamflow's [price-based lock documentation](https://docs.streamflow.finance/en/articles/10750946-price-based-lock) also describes release when the configured maximum duration expires. The lock does not wait for mainnet readiness. Readers can inspect the live record above for current status and terms.
+
+**Our migration target is 22 October 2026.** The intended use of this allocation is to support native Classic SOC and its tokenomics through the proposed reserve-backed bridge. Migration remains conditional on mainnet, funded backing, custody, bridge security and release checks passing. Unlocking the Streamflow contract does not itself bridge any tokens or activate mainnet. The full native tokenomics and migration instructions will be published before activation.
+
+Acquisition details, fee recipients and any holdings outside this lock still require their own disclosure. No other address is a disclosed team wallet. Nothing sent to this wallet creates an entitlement.
 
 ## What is in this repository
 
@@ -151,6 +162,8 @@ The engine is a complete Git subtree source snapshot of upstream Agave v3.0.14. 
 Vercel serves the frontend and the main site's `/roadmap` route. Railway hosts the persistent test network and a separate compiler/test worker. The roadmap reads six fixed public status sources; it accepts no caller-selected upstream URL. Compiler artifacts and its fresh staging ledger use a dedicated volume. A completed isolated test does not certify a production migration or replace a full stability run.
 
 `solanaclassic.net` now serves directly through a separate frontend deployment. Its bounded same-origin adapter reaches the unchanged gateway, and uploaded artwork uses a separate persistent service. The current soak still certifies its original frozen Vercel candidate; the domain frontend and upload service receive separate checks. See [custom-domain deployment](infra/custom-domain/README.md) and [image service](infra/image-assets/README.md).
+
+The replacement source-built devnet stability run completed on 17 October 2026: 288 distinct browser journeys and 2,880 observations over a full 24 hours. [Strict terminal review](evidence/agave-source-stability-replacement-completed.json) verified its frozen candidate and unchanged runtime identity. [Final desktop and mobile browser checks](evidence/agave-source-final-browser-review.json) also passed on both sites, with 24 finalized receipts across four passing journeys. Remaining release requirements are pending; this does not approve mainnet or the bridge.
 
 During an active stability run, keep the tested source, runtime identity and served application files unchanged. Follow [HOSTED_QA.md](docs/HOSTED_QA.md) before operational changes. Preserve failed and interrupted attempts. Private keys, runtime ledgers, local tools and credentials remain ignored and must not enter source releases or frontend builds.
 

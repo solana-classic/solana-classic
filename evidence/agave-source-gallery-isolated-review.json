@@ -1,0 +1,88 @@
+{
+  "schemaVersion": 1,
+  "at": "2026-10-17T16:06:06.514020+00:00",
+  "scope": "local isolated gallery API with real SQLite, asset verifier and Token-2022 byte decoders; supplied chain observations",
+  "passed": true,
+  "candidate": {
+    "apiOrigin": "https://network-release-production.up.railway.app",
+    "frontendOrigin": "https://solana-classic-soc.vercel.app",
+    "frontendDeploymentId": "dpl_3aWWzKDohr4SrgijgrB8dWgHHS5r",
+    "frontendCommit": "35f0eaf1dede45452c9cdf9e6403669e966c427d",
+    "apiCommit": "119f25e225540be78b64b19bdb6cb300a1f47c10",
+    "networkConfigSha256": "0eea489e8cf0753b2b0cf0b91b6949566044e50c20bd4d02eea814490f64fe0e",
+    "dependencyManifestSha256": "e6da27717e6a84ca7b29d707ff63591b2ff0cfc38892d3b4667f8615bdf7bbc0"
+  },
+  "genesis": "7TAUSfTzQeocodtVee2qsftsCYnJu2eCM1ALdADbHNon",
+  "freezeSha256": "55b668e56a946ec94f0195b03530aba23593bd71d7fd52493d5403b21882757f",
+  "proofs": [
+    {
+      "path": "evidence/agave-source-candidate-freeze.json",
+      "sha256": "55b668e56a946ec94f0195b03530aba23593bd71d7fd52493d5403b21882757f"
+    },
+    {
+      "path": "evidence/agave-source-negative-controls.json",
+      "sha256": "968809f06a9333683d0a04ce11b55d7ffac9492f62dbc9a4b2b83041375f9da6"
+    },
+    {
+      "path": "evidence/agave-source-negative-control-coverage-review.json",
+      "sha256": "88b760065215c6deec9ff4e5b4a18f9468c8a814e02c9cf7747c00620fe915a1"
+    }
+  ],
+  "testSource": {
+    "path": "tests/integration/gallery-verification-controls.test.ts",
+    "sha256": "27b37790923fd66c223814b2abf0ff76a82599365e8d2063a2d58f6731e8d30e",
+    "candidateFixtureCopyMatches": true
+  },
+  "selectedFrozenSource": {
+    "apps/api/src/app.ts": "545c78e932e12f889417a078050fff118f173cc55627e4826c733abc690542a0",
+    "apps/api/src/store.ts": "9ed76044cf292cc20022fac2d17e19baa1c3a2826a8aeab43125a50ddc1457f7",
+    "packages/chain/src/index.ts": "e9d9822a428e92eef96b35155a3cf6b34191d3ae117d385e96b3f0a5b2c5ef0c",
+    "packages/config/src/index.ts": "6f2c81341cb7b9cea9cab806936b2a2e7e36c1eeedd958d7c3745ffa8e6ae545"
+  },
+  "validation": {
+    "candidateTests": 17,
+    "candidatePassed": 17,
+    "currentRepositoryTests": 17,
+    "currentRepositoryPassed": 17,
+    "typecheckPassed": true,
+    "targetedLintPassed": true,
+    "frozenFilesVerifiedBeforeAndAfter": 45,
+    "runtimeMatchesFreezeBeforeAndAfter": true,
+    "chainAndConfigDependencySourcesMatchFrozenBytes": true,
+    "sdkPackageAndLockMatch": true,
+    "maintenanceAdmissionMocked": true,
+    "connectionReadResultsMocked": true,
+    "assetVerifierAndByteDecodersMocked": false,
+    "checks": [
+      "Two positive controls register NFT and meme fixtures through the same API using correctly encoded immutable mint, pointer and metadata bytes. Both use finalized transaction and account reads.",
+      "Five structurally encoded metadata variants change only name, symbol, URI, embedded mint or update authority. Each is refused without insertion.",
+      "Two encoded pointer variants change metadata address or pointer authority. Both are refused without insertion.",
+      "Correct mint bytes under the legacy token-program owner are refused by the actual decoder. A matching issuance instruction from that wrong program is separately refused before account reads.",
+      "One wrong private genesis and all three known public genesis identities are refused before transaction/account reads.",
+      "A valid-shaped wrong mint and an unknown issuance signature are refused before account reads.",
+      "Every negative snapshots all assets, gallery, faucet and counter rows before and after. Rows remain unchanged and gallery remains empty. No test permits a real fetch."
+    ]
+  },
+  "retainedFailedAttempt": {
+    "stage": "candidate fixture collection",
+    "testsExecuted": 0,
+    "cause": "The retained chain package lacked a local dependency resolution path for @solana/spl-token.",
+    "resolution": "Original fixture and failure record retained. Existing installed dependencies were linked only after package, lockfile and source equality checks; a fresh identical v2 fixture passed. No installation or frozen source edit."
+  },
+  "unacceptedRequirements": [
+    "G4.02"
+  ],
+  "limitations": [
+    "Issuance transactions and mint accounts are supplied observations. Positive controls do not prove real issuance or finality.",
+    "This closes isolated source-behavior coverage gaps identified in the earlier negative-control review. It is not a new deployed rejection observation or complete individual remote gate acceptance.",
+    "Maintenance admission is mocked solely inside the fixture; deployed controls and canonical state remain unchanged.",
+    "Existing package links resolve chain/configuration code with independently verified identical frozen bytes. This is not a newly built or deployed dependency artifact.",
+    "The 17 new cases ran locally in each context. Existing automatic workflows do not select this fixture."
+  ],
+  "canonicalNetworkChanged": false,
+  "chainTransactionsSubmitted": 0,
+  "newStabilityRuns": 0,
+  "releaseAccepted": false,
+  "mainnetAccepted": false,
+  "bridgeAccepted": false
+}

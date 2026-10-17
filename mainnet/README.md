@@ -84,3 +84,57 @@ also passed on Linux, with all selected artifacts unchanged and no validators. T
 refuses both modes before creating keys or ledgers. No new bank hash, genesis
 or consensus pass is claimed. See [the procedure](GENESIS_PREPARATION.md) and
 [scoped evidence](../evidence/mainnet-genesis-preparation.json).
+
+## All-node vote progression and retained finality
+
+The private launcher now requires every selected validator's vote and rooted
+slot to advance in each node's view, and rechecks the unchanged earlier shared
+finalized block on all three nodes. Stalled votes, changed stake or missing
+history cannot pass simply because network slots advance. Eight new synthetic
+regressions bring the offline package to60 local checks; this is preparation,
+not actual consensus or fork recovery. See
+[the observer contract](CONSENSUS_REHEARSAL.md#voting-and-finalized-history-continuity)
+and [scoped evidence](../evidence/mainnet-consensus-progress-local.json).
+
+The rehearsal observer also keeps reads on its three fixed local nodes: no
+redirects, environment proxies or global opener substitution. Eight actual
+loopback HTTP fixture tests bring the offline package to 68 local checks.
+[Transport verification](../evidence/mainnet-rpc-boundary-local.json) remains
+separate from actual Agave consensus and host admission.
+
+Host admission now reads the actual unified-cgroup membership and all visible
+ancestor RAM/CPU ceilings. Eleven new resource/read-only fixtures pass locally and on the
+private Linux worker; the complete offline package has 79 local checks. The
+actual worker still fails the unchanged file-limit and RAM requirements, with
+no keys, genesis or validators created. See
+[resource admission evidence](../evidence/mainnet-cgroup-resource-admission.json).
+Visible cgroup observations do not attest hidden host limits or reserved capacity.
+
+The private RPC observer also shares one three-second network deadline across
+connection, sending, headers and body reads. Slow trickle responses cannot keep
+resetting the socket timeout. Four new local HTTP test groups bring the offline
+package to 83 checks; no full validators or actual chain requests are involved.
+See [deadline verification](../evidence/mainnet-rpc-network-deadline-local.json).
+
+Both preparation and launch now share a visible Linux process census that
+recognizes truncated validator names, executable arguments and kernel links.
+Unreadable live process evidence refuses admission; this is not an atomic host
+lock or independent-host proof. Ten new regression groups include an actual
+Linux kernel-name fixture using an ordinary Python child, with no Agave starts.
+See [the process admission contract](CONSENSUS_REHEARSAL.md#visible-process-admission).
+
+The launcher also prepares an optional `--restart-node` stage for a fresh private
+run. It requires an observed owned stop, connection-refused endpoint, unchanged
+bundle/binary/original ledger and complete vote/finality continuity after the
+replacement. Sixteen new synthetic checks include full launcher ownership and
+cleanup. Local results are108 passed and one Linux-only skip out of109 checks.
+Actual warm restart still awaits an admitted host; no cold restore, quorum
+availability, fork or production claim is made. See
+[the optional restart procedure](CONSENSUS_REHEARSAL.md#optional-owned-warm-restart).
+
+Startup and warm-restart retries now distinguish temporary readiness from
+integrity failures. Wrong network/identity, changed supply/stake or finalized
+history, malformed data and unknown errors abort instead of retrying into a
+later pass. Six additional regression groups bring local validation to114
+passed and one Linux-only skip out of115 checks. See
+[the observation policy](CONSENSUS_REHEARSAL.md#readiness-retries-and-integrity-failures).

@@ -1,0 +1,12 @@
+{
+  "name": "classic-genesis-allocation-bytes",
+  "profile": "debug",
+  "sha256": "36a48973dd65ab636534306a76e6b4550caba4f5843533f9a370dbf5af0db496",
+  "bytes": 15308568,
+  "rustVersion": "rustc 1.86.0 (05f9846f8 2025-03-31)",
+  "sourceHashes": {
+    "Cargo.toml": "647c90fcc99883ecda89ee5be9adf14064495866283564d9657a2e60e76e5150",
+    "Cargo.lock": "1dc604aaa101af8ded20883d1de6030d54542fcf48c2c7c0f455c6b6dd4d1940",
+    "src/main.rs": "7119cbbf204b81cf128a02f125bd0129a5c26df8cce644ad1d821835d463b752"
+  }
+}

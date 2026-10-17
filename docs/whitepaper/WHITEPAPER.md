@@ -254,7 +254,22 @@ Original **SOC** on Solana is the proposed canonical backing asset for native Cl
 
 Team holdings must be explained by their actual acquisition method and funding. Any purchased or otherwise acquired team balance, its source, custody, restrictions and public addresses require disclosure. Creation does not establish an arbitrary free developer allocation. A token announcement does not itself activate mainnet or redemption.
 
-**Team wallet and supply disclosure.** The team wallet on Solana is `7TGgKppPDB3B8riBz763UKw971LnzhgQUShVAPUFY4HU`. At the launch of the original SOC token, 70% of the supply will be held by this wallet and locked on-chain until the Solana Classic mainnet is live; the remaining 30% will be available to trade on Solana. Once mainnet is live, the team will bridge the locked 70% to mainnet through the reserve bridge, where it funds the coin's full tokenomics, and the full tokenomics breakdown will be published with the mainnet launch. The lock contract, its unlock conditions and the acquisition method will be published with the official mint at the token announcement. No other address is a team wallet, the wallet holds nothing related to SOC before that announcement, and transfers to it create no entitlement.
+**Team wallet and supply disclosure, updated 15 October 2026.** The disclosed team wallet on Solana is `7TGgKppPDB3B8riBz763UKw971LnzhgQUShVAPUFY4HU`.
+
+**Approximately 70% of SOC is allocated to the native-chain migration.** On 15 October 2026, the [public Streamflow record](https://app.streamflow.finance/contract/solana/mainnet/BcKXq8svKSR8A8kR44zJ25xhR7mj7TsWPWy74zB6gRxQ) displays **698.6725 million SOC** in the team's lock; Streamflow's search displays this as **70.88% of the current supply**. These are the displayed, rounded figures, rather than a new allocation or a claim that all other tokens are freely tradable. The disclosed team wallet is both sender and recipient.
+
+| Public lock term | Streamflow record |
+| --- | --- |
+| Contract | `BcKXq8svKSR8A8kR44zJ25xhR7mj7TsWPWy74zB6gRxQ` |
+| Lock type | Price-based |
+| Unlock price | USD 0.02029 |
+| Expiry | 21 October 2026 at 23:00 UTC, shown as 22 October at 00:00 BST |
+
+This is **not an unconditional seven-day time lock**. The price condition can release the tokens before expiry; Streamflow's [price-based lock documentation](https://docs.streamflow.finance/en/articles/10750946-price-based-lock) also describes release when the configured maximum duration expires. The lock does not wait for mainnet readiness. Readers can inspect the live record above for current status and terms.
+
+**Our migration target is 22 October 2026.** The intended use of this allocation is to support native Classic SOC and its tokenomics through the proposed reserve-backed bridge. Migration remains conditional on mainnet, funded backing, custody, bridge security and release checks passing. Unlocking the Streamflow contract does not itself bridge any tokens or activate mainnet. The full native tokenomics and migration instructions will be published before activation.
+
+Acquisition details, fee recipients and any holdings outside this lock still require their own disclosure. No other address is a disclosed team wallet. Nothing sent to this wallet creates an entitlement.
 
 If the team receives creator or trading fees, publish who receives them, how the rights were obtained and how the proceeds are used with the official announcement. Fee revenue is not guaranteed and cannot be the sole validator operating budget. Published token terms must cover both team allocations and fee rights.
 

@@ -1,0 +1,51 @@
+{
+  "schemaVersion": 1,
+  "at": "2026-10-17T14:39:18.701597+00:00",
+  "scope": "Local offline preparation orchestration with supplied compiler, decoder and replay responses; no actual genesis compilation or ledger replay",
+  "passed": true,
+  "sourceHashes": {
+    "mainnet/prepare-consensus.py": "df3c77856d223845441254c49d3f09d6242d83249db9c593a6ff58e7974d6214",
+    "mainnet/prepare_consensus_test.py": "2b19f77d447b09cc4ddaab0c372523a337b3fca72bae029117618cd1870f698e",
+    "mainnet/allocation-decoder-artifact.json": "da23b3a92c560883ba6c92b055c62925dc078ae543e2071a61ca88ba07952d83",
+    "mainnet/genesis-allocation-bytes/src/main.rs": "7119cbbf204b81cf128a02f125bd0129a5c26df8cce644ad1d821835d463b752",
+    "mainnet/offline_process.py": "eb5868795c9184a1fc8c8d01bbd29692de18acceeed3fab3c2b73b8351168743"
+  },
+  "change": "Require the current pinned allocation decoder and compare complete account fingerprints and non-account parameters before replay.",
+  "allowedDifferences": [
+    "Exact budgeted balance and resulting full fingerprint of the selected empty non-executable System reserve; zero rent epoch and empty data digest remain required.",
+    "Explicitly recorded genesis creation time."
+  ],
+  "validation": {
+    "focusedTests": 35,
+    "focusedPassed": 35,
+    "newTestGroups": 8,
+    "packageTests": 173,
+    "packagePassed": 172,
+    "packageSkipped": 1,
+    "skipReason": "Existing Linux-only process-name check on a non-Linux development host.",
+    "finalFingerprintAndParameterDriftCases": 6,
+    "malformedReportCases": 36,
+    "reserveExceptionNegativeCases": 5,
+    "checks": [
+      "Probe decoder validation precedes final compilation; final decoder comparison precedes bundle copy and replay.",
+      "Exact admitted bytes and digest are passed through bounded stdin; changed input refuses and decoded private output remains retained.",
+      "Account data/full digests, rent epochs, non-account parameters and authority summaries cannot drift.",
+      "Report schema, metadata, authority coverage and false permission fields are validated.",
+      "Named pipes, symlinks, empty, oversized and replaced input files refuse.",
+      "Decoder artifact is mandatory alongside existing artifacts; binary revalidation remains before every tool invocation.",
+      "Normal synthetic flow allows recorded creation-time and exact reserve-balance differences and completes two supplied replay responses."
+    ]
+  },
+  "limitations": [
+    "This verifies orchestration with supplied responses, not the current executable against a fresh real genesis.",
+    "Reserve-address adapter integration, admitted Linux host, fresh real compilation and two strict replays remain outstanding.",
+    "No custody, backing, independent operators, consensus or release acceptance is established."
+  ],
+  "canonicalNetworkChanged": false,
+  "runtimeBinariesChanged": false,
+  "validatorsStarted": 0,
+  "mainnetActivated": false,
+  "releaseAccepted": false,
+  "mainnetAccepted": false,
+  "bridgeAccepted": false
+}

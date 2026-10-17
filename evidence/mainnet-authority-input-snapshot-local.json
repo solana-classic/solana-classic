@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "at": "2026-10-17T12:34:03.245578+00:00",
+  "scope": "Local synthetic input selection and mocked decoder invocation; no actual genesis decoding or worker execution",
+  "passed": true,
+  "sourceHashes": {
+    "mainnet/genesis_authority_review.py": "7e89f525ca0d9415868272c12743af8a851f903a5a5091d3949a155c8e8a1f37",
+    "mainnet/genesis_authority_review_test.py": "aaad644daba0e2f3eb194c4fd0832df70fdeacf9c2106ed99499fa2466f37e7a",
+    "mainnet/offline_process.py": "eb5868795c9184a1fc8c8d01bbd29692de18acceeed3fab3c2b73b8351168743"
+  },
+  "change": "Feed the selected genesis byte snapshot directly to bounded decoder stdin; refuse named pipes without waiting for a writer and reject empty files or invalid selectors.",
+  "validation": {
+    "focusedTests": 9,
+    "focusedPassed": 9,
+    "newTestGroups": 3,
+    "packageTests": 162,
+    "packagePassed": 161,
+    "packageSkipped": 1,
+    "skipReason": "Existing Linux-only process-name check on a non-Linux development host.",
+    "checks": [
+      "A real named pipe with no writer refuses within a bounded child process.",
+      "Empty selected input and non-string digest selectors refuse.",
+      "A mocked decoder receives exactly the admitted genesis bytes without a shell or reopened genesis path.",
+      "A later selected-file mutation fails the post-review check and retains the decoded output and failed attempt.",
+      "Completed and failed attempt namespaces are not overwritten."
+    ]
+  },
+  "limitations": [
+    "The decoder invocation is supplied by the test fixture; no actual account bytes, custody or consensus were verified.",
+    "Existing retained worker attempts and decoder artifacts were not modified or rerun.",
+    "This changes the authority review reader only. The retained allocation-byte rehearsal driver and fresh preparer integration remain separate work.",
+    "File selection and executable checks do not establish independent operator custody or production security."
+  ],
+  "canonicalNetworkChanged": false,
+  "validatorsStarted": 0,
+  "chainRequests": 0,
+  "mainnetActivated": false,
+  "releaseAccepted": false,
+  "mainnetAccepted": false,
+  "bridgeAccepted": false
+}

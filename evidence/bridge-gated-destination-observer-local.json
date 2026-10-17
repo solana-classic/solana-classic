@@ -1,0 +1,72 @@
+{
+  "schemaVersion": 1,
+  "at": "2026-10-16T10:29:24.117875+00:00",
+  "state": "synthetic-gated-destination-observer-verified",
+  "scope": "Supplied-account and controlled RPC/actual loopback HTTP tests only; no actual Agave chain observations or operational lifecycle admission",
+  "contract": "native-bootstrap-trailer-v3",
+  "checks": {
+    "suppliedAccountGroups": 13,
+    "endpointTransportDeadlineGroups": 3,
+    "fullDefaultBridgeClientGroups": 352,
+    "explicitLocalSelectedArtifactGroups": 5,
+    "roadmapRegressionGroups": 30,
+    "failed": 0,
+    "skipped": 0
+  },
+  "defaultCIExcludesSelectedArtifactGroups": true,
+  "selectedPublicArtifact": {
+    "sha256": "19424e0679c8d2d801fcb6ab015860b7b8f487cf0b1c6e2e7b41ca3d40efc16b",
+    "bytes": 217032,
+    "unchanged": true,
+    "publishedOrUploaded": false,
+    "executedOrRebuilt": false
+  },
+  "verifiedControls": [
+    "Exact external message review and captured caller intent",
+    "Nine derived account owners/layouts/full config/bootstrap bytes and consumed/absent receipts",
+    "Exact u64 reserve/recipient/payer rent and fee capacity",
+    "Actual supplied Rent/Clock, day rollover/daily cap and checkpoint rules",
+    "Current exact code/ProgramData/authority brackets in controlled RPC responses",
+    "15 read-only requests with fee/height/hash validity brackets",
+    "One bounded overall deadline and actual stalled HTTP body cancellation",
+    "Late receipt, reserve, clock, code and expiry changes refuse"
+  ],
+  "retainedInitialArtifactRefusal": {
+    "passed": 2,
+    "failed": 2,
+    "reason": "Synthetic fixture advanced Clock buffer but returned stale serialized bytes; corrected fixture and explicit intended-cause rejection assertions"
+  },
+  "actualAgaveObservations": 0,
+  "actualSBFExecutions": 0,
+  "retainedPrivateInputsRead": 0,
+  "validatorStarts": 0,
+  "chainSubmissions": 0,
+  "canonicalNetworkChanged": false,
+  "independentFinalityVerified": false,
+  "sourceBackingVerified": false,
+  "canPrepareSubmission": false,
+  "canSign": false,
+  "canBroadcast": false,
+  "productionReady": false,
+  "sourceHashes": {
+    "bridge/gated-claim-accounts.mjs": "d20bbde2bc69f673f372baa619cfc54f0479253047943bb9d5c47f759a18da8b",
+    "bridge/gated-claim-accounts.test.mjs": "7fc448ff4d39b93f0b9f3abe37d78f6cac62f881a72e1b464476a337319dd415",
+    "bridge/gated-claim-observer.mjs": "0f0d4f8232d1158a006bf5f72fffe3b649f6a568ac97dceb37c4b5ceb10a524e",
+    "bridge/gated-claim-observer.test.mjs": "8d016bdc6f61ce873d29e0175199ea56e53f63f99fd545522d60f15fa7c9e3f1",
+    "bridge/gated-claim-observer-artifact.test.mjs": "f03d629544cfa1094e17e90d4106c114beb9e7e9882242d617776d223fe5a427",
+    "bridge/test-fixtures/gated-destination.mjs": "b43b6c94922fc463154efd0a8e9fd8e5440e41fcea0fc5212818d5ab90fc71d4",
+    "bridge/GATED_CLAIM_OBSERVATION.md": "a6089b2d4ae1c5c6b0a2a46657b1748a1d51fae8ce1b1b2ad32a9a213e9b551b",
+    ".github/workflows/bridge-metadata-review.yml": "eb4a949c2e1c677c07dd9e73ddbbcf9bce96eaf78a1542c14593369dd0ce7fa7",
+    "bridge/gated-message-review.mjs": "bd2df470378ccde1c4429dfbc0df4bbabc45c6c86189a8405864cea5ef7ee1eb",
+    "bridge/gated-native.mjs": "5f76bd10a5b158126e2068b0b9eea4ca14bd3b172127781c657ea78ed3bddae5",
+    "bridge/program-pins.mjs": "1f72a2007be0d4ebd6b1a3080dc2ad93224177e49ae32e0513beb2e163256d42",
+    "bridge/lossless-native-rpc.mjs": "83b35f96ddeff8835236abfe2204a370ae5f5d53cc89b30187970e988d726567",
+    "bridge/bootstrap.mjs": "76303de82557f8ba2a88773ef55bbc5234a88164673f0afe2458f21e46c1d04e",
+    "bridge/pending-claim.mjs": "a06ef6539298f200194bd97dcaea92b9ac26b09c3c32c7cc750720ffd29b3d32",
+    "bridge/gated-claim-review-journal.mjs": "960ad883b4b41177b642e677b4f6ac8d922d08f99b1b49a52aa56fe6da080b8c",
+    "bridge/sdk.mjs": "e603242692bedc2457ec9dd3cb144122ca1adb7341506d244ec864943bd8c988"
+  },
+  "existingCompiledCodeOrJournalVersionsChanged": false,
+  "rentArithmeticRestrictedToSupportedExactRange": true,
+  "selfConsistentLargeRentRefusalCovered": true
+}

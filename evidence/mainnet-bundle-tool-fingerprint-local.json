@@ -1,0 +1,57 @@
+{
+  "schemaVersion": 1,
+  "at": "2026-10-17T06:35:06.353870+00:00",
+  "scope": "local disposable-file and process fixtures for offline bundle inspection; no compiled validator execution",
+  "passed": true,
+  "problem": "The bundle inspection helper hashed the entire selected tool before checking its length and did not bind read-time file identity or executable permission.",
+  "change": "Reuse the existing bounded regular-file executable fingerprint before invoking either selected bundle-inspection tool; failed reads return a path-free refusal.",
+  "sourceHashes": {
+    "mainnet/consensus.py": "94f53b69c6e6787f94e42bf9d012cc70157fffed3e9f6d0c85187f2631c590a2",
+    "mainnet/bundle_inspection_test.py": "ac4303569e2b2028b746efa844c1c9decfb7cf51a613f555a5e95bb3ec9528d9",
+    "mainnet/host-preflight.py": "c8c993e5811e3087c2b19ab787ab99a6718eac4e0c52531aef4a49164a92b25c"
+  },
+  "previousConsensusSourceSha256": "bcc3112beb9f358ad685d427198dfed2f53bf94c0c4f794a05f7079d5229a7cd",
+  "verification": {
+    "newRegressionGroups": 4,
+    "focusedTests": 10,
+    "focusedPassed": 10,
+    "fullOfflineTests": 146,
+    "fullOfflinePassed": 145,
+    "fullOfflineSkipped": 1,
+    "skipReason": "Existing Linux-only process comm fixture; local development system is not Linux.",
+    "failedBeforeFix": {
+      "testsRun": 10,
+      "failures": 4,
+      "scope": "New assertions exercised before changing the inspection helper. Three reproduce unsafe admission/read ordering; one requires the new fingerprint error boundary."
+    },
+    "observations": [
+      "A file with executable permission removed refuses before invoking the process helper.",
+      "A wrong-length regular file refuses before either a buffered or descriptor open.",
+      "Replacing a selected file with a same-byte, same-mode file during hashing refuses before invocation.",
+      "An injected fingerprint I/O failure returns only REVIEWED_INSPECTION_TOOL_REQUIRED.",
+      "Existing real disposable-process checks still bound stdout/stderr, preserve path-free failure reporting and create no inspection log."
+    ]
+  },
+  "continuity": {
+    "canonicalRuntimeMatchesFreeze": true,
+    "runtimeObservedAt": "2026-10-17T06:34:21.619Z",
+    "frozenContextFilesVerified": 45,
+    "qaState": "completed",
+    "soakAccepted": true,
+    "newSoakStarted": false
+  },
+  "limitations": [
+    "Checks use disposable fixture files and Python processes, not the compiled genesis auditor, keygen or validators.",
+    "The shared fingerprint implementation and runtime artifact pins are unchanged.",
+    "The binary directory still requires trusted operator control: later path-based execution is not atomically bound to the checked descriptor.",
+    "This changes only inspection-tool admission; it does not newly bound all bundle inputs or attest operator custody.",
+    "No new host admission, genesis compilation, bank replay, consensus or native transaction-history recovery is established."
+  ],
+  "validatorsStarted": 0,
+  "runtimeArtifactsChanged": false,
+  "hostRequirementsChanged": false,
+  "canonicalNetworkChanged": false,
+  "actualFundedBackingVerified": false,
+  "mainnetActivated": false,
+  "productionReady": false
+}

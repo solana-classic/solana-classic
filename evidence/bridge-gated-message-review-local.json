@@ -1,0 +1,62 @@
+{
+  "schemaVersion": 1,
+  "at": "2026-10-16T09:19:42.178320+00:00",
+  "state": "offline-gated-message-compatibility-verified",
+  "scope": "Synthetic offline legacy-message/signature verification only; no chain observation, SBF execution or journal lifecycle admission",
+  "contract": "native-bootstrap-trailer-v3",
+  "checks": {
+    "focusedGroups": 19,
+    "fullBridgeClientGroups": 321,
+    "failed": 0,
+    "skipped": 0
+  },
+  "reviewSelection": [
+    "Explicit ABI and complete normalized code/ProgramData/policy/authority pins",
+    "Configuration and externally selected bootstrap record/source event plus declared minimum rent",
+    "Exact compiled legacy message and fee payer/signers",
+    "Selected expiry height bound separately from message bytes"
+  ],
+  "refusals": [
+    "Changed selections even with identical instruction bytes",
+    "Invalid or missing signatures, altered instructions/accounts/privileges, extra instructions or trailing bytes",
+    "Wrong kind/schema, versioned messages, signer aliases, stale legacy nine-account messages",
+    "Legacy journal refuses new account contract before creating a record"
+  ],
+  "legacyJournalBytesUnchanged": true,
+  "retainedInitialTestFailure": {
+    "passed": 16,
+    "failed": 1,
+    "reason": "Test helper default substituted the omitted digest; direct public verifier call now tests refusal"
+  },
+  "compiledDuplicateVaultPrivilegesCovered": true,
+  "testSignaturesAreEphemeralSyntheticFixtures": true,
+  "retainedPrivateInputsRead": 0,
+  "validatorStarts": 0,
+  "chainRequests": 0,
+  "externalBroadcasts": 0,
+  "existingSDKOrJournalsChanged": false,
+  "compiledProgrammeChanged": false,
+  "actualSBFScenariosExecutedThisReview": 0,
+  "chainStateVerified": false,
+  "sourceFinalityVerified": false,
+  "expiryVerified": false,
+  "canPrepareJournal": false,
+  "canSign": false,
+  "canBroadcast": false,
+  "canonicalNetworkChanged": false,
+  "productionReady": false,
+  "sourceHashes": {
+    "bridge/gated-message-review.mjs": "bd2df470378ccde1c4429dfbc0df4bbabc45c6c86189a8405864cea5ef7ee1eb",
+    "bridge/gated-message-review.test.mjs": "58c2ccead5e42fcef63e4f3dc0ca7998a2e889ed129175576079e643e5a8807c",
+    "bridge/GATED_MESSAGE_REVIEW.md": "f437ff25cb9fee97660013ed081e3dbce78f252351505a1433ae167a74ab774e",
+    ".github/workflows/bridge-metadata-review.yml": "a095527fefff2060f649df0e5f543deaa59c1a3dae275893e01046f5fda46b71",
+    "bridge/gated-native.mjs": "5f76bd10a5b158126e2068b0b9eea4ca14bd3b172127781c657ea78ed3bddae5",
+    "bridge/program-pins.mjs": "1f72a2007be0d4ebd6b1a3080dc2ad93224177e49ae32e0513beb2e163256d42",
+    "bridge/sdk.mjs": "e603242692bedc2457ec9dd3cb144122ca1adb7341506d244ec864943bd8c988",
+    "bridge/bootstrap.mjs": "76303de82557f8ba2a88773ef55bbc5234a88164673f0afe2458f21e46c1d04e",
+    "bridge/pending-claim.mjs": "a06ef6539298f200194bd97dcaea92b9ac26b09c3c32c7cc750720ffd29b3d32",
+    "bridge/claim-pin-policy.mjs": "9ee31bcd58218860fcb5660624531e22c7038d29b34f8bd22590d72c70bb8893",
+    "bridge/gated-program/artifact-sha256.txt": "15dcd1fe5837525e3c655ab7c08429ef80e95a8cde9a5d963f2c9c967e638822",
+    "bridge/gated-program/src/lib.rs": "69c380988b755ad26a8d59ced7a65830176e00f9de84476aa851a829449a7823"
+  }
+}

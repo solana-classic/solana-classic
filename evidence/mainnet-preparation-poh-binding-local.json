@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 1,
+  "at": "2026-10-17T07:33:58.783564+00:00",
+  "scope": "local offline preparation orchestration and command validation with supplied tool responses; no compiled genesis or chain execution",
+  "passed": true,
+  "sourceHashes": {
+    "mainnet/prepare-consensus.py": "572f6fd1b9e8e08ae7ccc441a26861c73f6f99f6dece4c7c854f1a2a875e6ebd",
+    "mainnet/prepare_consensus_test.py": "f75609482b58b8a410b123c37fe3b77957d8201e27340913d9649b7356693629",
+    "engine/agave/genesis/src/main.rs": "d30905cdcbc51d996e7f9aab13d5e3c39106ff295b556f38e877df08678ab536"
+  },
+  "change": "Calibrate the budget probe once, pass its exact positive u64 hash count to final genesis, and require equal audited PoH configuration before bundle copy or replay.",
+  "validation": {
+    "focusedTests": 20,
+    "focusedPassed": 20,
+    "packageTests": 149,
+    "packagePassed": 148,
+    "packageSkipped": 1,
+    "skipReason": "Existing Linux-only process-name truncation check on a non-Linux development host.",
+    "preFixRun": {
+      "tests": 20,
+      "failures": 4,
+      "errors": 2,
+      "basis": "The extended synthetic driver observed auto calibration on both commands. Two new helper/signature checks initially failed because the new interface did not exist."
+    },
+    "checks": [
+      "Positive u64 count, including maximum, admitted; zero, negative, overflow, boolean, float, string and missing/malformed PoH fields refused.",
+      "Final command uses the exact selected numeric count, with no auto or sleep value.",
+      "Changed final count, boolean count or other PoH field retains a failed attempt before bundle genesis copy, manifest publication or ledger-tool invocation.",
+      "Successful synthetic orchestration uses auto only for the probe, numeric final count, and two distinct replay copies."
+    ]
+  },
+  "limits": [
+    "No real compiler, key generator, genesis auditor, ledger tool or validator was executed by these fixtures.",
+    "Existing artifact pins, host admission and validator PoH speed checks are unchanged.",
+    "This is not reserve-byte adapter integration, complete non-account parameter equivalence, actual genesis replay, funded backing or independent consensus."
+  ],
+  "canonicalNetworkChanged": false,
+  "runtimeBinariesChanged": false,
+  "validatorsStarted": 0,
+  "mainnetActivated": false,
+  "releaseAccepted": false,
+  "mainnetAccepted": false,
+  "bridgeAccepted": false
+}

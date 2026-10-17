@@ -1,0 +1,53 @@
+{
+  "schemaVersion": 1,
+  "at": "2026-10-15T21:24:56.645710+00:00",
+  "state": "local-checks-passed",
+  "scope": "Optional private full-validator warm-restart preparation with synthetic processes and RPC observations; no actual validator or network execution",
+  "newWarmRestartTestGroups": 16,
+  "localValidation": {
+    "testsDiscovered": 109,
+    "passed": 108,
+    "skipped": 1,
+    "skipReason": "Actual Linux process-name fixture requires Linux",
+    "command": "python3 -B -W error::ResourceWarning -m unittest discover -s mainnet -p *_test.py"
+  },
+  "checks": [
+    "Default and read-only modes cannot execute the optional restart",
+    "Invalid node or missing/dead/duplicate ownership refuses before a stop",
+    "Original process exit must be observed without forced or abnormal termination",
+    "Only connection refusal proves selected endpoint unavailable; replies/timeouts/malformed responses refuse",
+    "Surviving node processes, genesis and identities must remain selected",
+    "Replacement must be distinct and registered in outer cleanup ownership",
+    "Changed bundle, runtime bytes or original ledger genesis refuse before replacement",
+    "Integrated synthetic restart uses identical original/replacement command and only three initial ledger materializations",
+    "All nine vote/root views, unchanged stake and earlier finalized history are required after restart",
+    "Stalls, child exits, ambiguous progress and cancellation cannot become acceptance",
+    "All synthetic children are cleaned after both successful and rejected launcher paths"
+  ],
+  "sourceHashes": {
+    "mainnet/validator_restart.py": "643b74b5d23b2cb407abbe8535e60e6d2bb2075e10bd26b7b6390649957db038",
+    "mainnet/validator_restart_test.py": "32513c4d9e177ab9ffe9da64aa34678548fb8ff50d57286461949d4d95d5e611",
+    "mainnet/consensus.py": "58cb6c417e51d5deb42d18f91accb948478a4c5dc71c2e79ece7c25d11788549",
+    "mainnet/process_admission.py": "0c8b9bfa15ab908c2f21bac1cc53d8a785dc1ddbae764eeaa41fe6f6cbbb95fd",
+    "mainnet/consensus_test.py": "3dc1ca8abeac2ab2c368f1f0f71dfc991020ae3ee5c7961ebbb4238e9101d3e5"
+  },
+  "actualValidatorsStarted": 0,
+  "actualGenesisCreated": false,
+  "actualKeysGenerated": false,
+  "actualChainRequests": 0,
+  "canonicalNetworkChanged": false,
+  "hostChecksWeakened": false,
+  "actualWarmRestartVerified": false,
+  "actualColdRestoreVerified": false,
+  "actualForkRecoveryVerified": false,
+  "quorumOutagePolicyVerified": false,
+  "independentOperatorsVerified": false,
+  "mainnetActivated": false,
+  "productionReady": false,
+  "remainingRequirements": [
+    "Capable Linux host and actual fresh hashing genesis/startup replays",
+    "Actual three-full-validator consensus and optional warm restart",
+    "Separate cold restore, hard-crash, fork and quorum-limit drills",
+    "Independent operators, funded backing, custody, security and release review"
+  ]
+}

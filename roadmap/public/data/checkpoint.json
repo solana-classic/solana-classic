@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "reviewedAt": "2026-10-15T04:00:55.044275+00:00",
+  "reviewedAt": "2026-10-17T01:48:57.059193+00:00",
   "t0": "2026-10-13T03:00:54Z",
   "deadline": "2026-10-19T03:00:54Z",
   "target": "2026-10-17T15:00:54Z",
@@ -151,6 +151,18 @@
       "at": "2026-10-14T16:48:23.028Z",
       "scope": "remote original frozen browser soak evidence review; recorded receipts, not independent transaction replay or full release acceptance",
       "sha256": "50462038ce8992d5988af1e9c602eddb2de47ce48fbcd87a1cfd95a3702d6612"
+    },
+    "replacement-source-soak-terminal": {
+      "passed": true,
+      "at": "2026-10-17T01:24:36.808Z",
+      "scope": "remote replacement source-built devnet terminal evidence review; recorded complete report and receipts, not independent chain replay or release acceptance",
+      "sha256": "f84bd7ffe13c946e8e772145893154af9da38df25ad331f9616a2de6bc4ea54c"
+    },
+    "source-final-browser": {
+      "passed": true,
+      "at": "2026-10-17T01:48:57.059193+00:00",
+      "scope": "Remote final browser verification after the exact source-built replacement stability run; separate frozen and branded frontend results.",
+      "sha256": "51bff09bfdedcbb736132d87f8cf7c5d20fa684bb2e4d8ea595273b838f76b07"
     }
   },
   "load": {
@@ -172,7 +184,7 @@
     "Native mainnet",
     "1:1 bridge"
   ],
-  "soakStartedAt": "2026-10-15T03:59:33.330Z",
+  "soakStartedAt": "2026-10-16T01:24:36.342Z",
   "engineBuild": {
     "runId": "40de48b7-6963-429b-ae3e-81a610d81b7d",
     "sourceManifestSha256": "337512bc1df2f382ccfab957347281b1c153353429b77d2695d65aafd29ec081",
@@ -223,7 +235,7 @@
     }
   },
   "development": {
-    "reviewedAt": "2026-10-15T08:26:46.585759+00:00",
+    "reviewedAt": "2026-10-17T01:48:57.059193+00:00",
     "scope": "Development checkpoint only; separate from the live devnet release",
     "projects": [
       {
@@ -231,7 +243,7 @@
         "title": "Native SOC mainnet",
         "state": "blocked",
         "description": "A separate production-network implementation, beginning with exact genesis supply and backed validator bootstrap.",
-        "currentScope": "The source-built genesis compiler, complete synthetic inventory auditor, ledger inspection tool and guarded preparation/three-validator launcher are ready for private execution. Current host admission fails: hard file limit 524,288 vs required 1,000,000. Fresh hashing genesis, actual slot-zero replay and full-validator consensus/recovery still await suitable hosting. Funded genesis/reserve custody, independent operators and production review remain separate gates.",
+        "currentScope": "The source-built genesis compiler, complete synthetic inventory auditor, ledger inspection tool and guarded preparation/three-validator launcher are ready for private execution. Current hosting is below the file-limit and RAM requirements. Fresh hashing genesis, actual slot-zero replay and full-validator consensus/recovery await a suitable Linux host. Funded genesis/reserve custody, independent operators and production review remain separate gates.",
         "source": "https://github.com/solana-classic/solana-classic/tree/main/mainnet",
         "milestones": [
           {
@@ -248,8 +260,8 @@
           {
             "title": "Validator-host admission and operator handoff",
             "state": "blocked",
-            "detail": "Read-only host tool and operator handoff prepared; five local checks. Actual existing compiler host still fails the hard open-file requirement524288 vs1000000; three reviewed binaries match. No keys/ledgers created, no validator starts or limit changes. A capable Linux host is required for the next three-validator consensus rehearsal.",
-            "evidence": "https://github.com/solana-classic/solana-classic/blob/main/evidence/mainnet-host-readiness.json"
+            "detail": "Proposed resource fix in PR #6, not yet merged. The checker now applies actual process-group and visible parent RAM/CPU limits. Sixteen host/resource checks pass locally; eleven new resource/read-only fixtures also pass on Linux. The actual read-only worker probe remains blocked by its 524288 file limit and 16 GB RAM, below the unchanged one-million-file and 16 GiB requirements. Three reviewed binaries match; no limits changed, keys/genesis created or validators started. Hidden host capacity still needs operator review. Suitable Linux hosting is required.",
+            "evidence": "https://github.com/solana-classic/solana-classic/pull/6"
           },
           {
             "title": "Private full-validator rehearsal package",
@@ -270,17 +282,37 @@
             "evidence": "https://github.com/solana-classic/solana-classic/blob/main/evidence/mainnet-offline-process-linux.json"
           },
           {
+            "title": "Validator voting, finality and RPC boundaries",
+            "state": "local-passed",
+            "detail": "Proposed in PR #6, not yet merged. All 93 offline mainnet package checks pass on Linux; 92 pass locally with one Linux-only case skipped. Votes and roots must advance in all nine node views, stake stays fixed and earlier finalized blocks remain unchanged. Twelve local HTTP test groups verify direct reads, redirect/proxy refusal, protocol/size bounds and one shared three-second network deadline. Slow headers and ordinary/chunked bodies cannot reset the budget; timeout sockets close. These use synthetic HTTP fixtures and mocked processes, with no actual full validators, genesis or chain requests. Suitable hosting and genuine consensus/recovery remain required.",
+            "evidence": "https://github.com/solana-classic/solana-classic/pull/6"
+          },
+          {
             "title": "Exact genesis backing, protected rent and precision audit",
             "state": "local-passed",
             "detail": "14 auditor +14 planner checks; retained 249-account inventory and V2 rent regression. Historical eight-byte evidence preserved. The fixture generator reports projections without claiming it executed tests. Declared synthetic backing does not prove escrow or actual counter initialization."
           },
           {
             "title": "Backed bootstrap and full supply reconciliation",
-            "state": "pending"
+            "state": "pending",
+            "detail": "Proposed in PR #6, not yet merged. Complete byte fingerprints for 249 retained genesis accounts now bind an exact reserve input. Six offline checks and ten compiled decoder checks cover unchanged accounts, rent epochs and genesis parameters; proposed-output success is synthetic, with no fresh genesis compiled. Controlled bridge reply-loss and expiry proofs remain separate. Actual preparer integration, fresh activation inventory, funded backing, capable hosting, independent operators, custody and security review remain required.",
+            "evidence": "https://github.com/solana-classic/solana-classic/pull/6"
           },
           {
             "title": "Operators, consensus, recovery and production release",
             "state": "pending"
+          },
+          {
+            "title": "Existing-validator process admission",
+            "state": "local-passed",
+            "detail": "Proposed in PR #6, not yet merged. Preparation previously missed Linux-truncated test-validator process names. Both preparation and launch now share a read-only census of names, executable arguments and kernel links; incomplete live evidence refuses. Ten new regression groups pass, including an actual Linux kernel-name fixture using an ordinary Python child. All 93 offline mainnet package checks pass on Linux; 92 pass locally with the Linux-only case skipped. No Agave starts, real keys, genesis, chain changes or host-limit changes. This is visible admission only, not an atomic host lock or consensus proof. Suitable hosting remains required.",
+            "evidence": "https://github.com/solana-classic/solana-classic/pull/6"
+          },
+          {
+            "title": "Owned full-validator warm restart preparation",
+            "state": "local-passed",
+            "detail": "Proposed in PR #6, not yet merged. Sixteen synthetic restart checks plus six new observation-admission groups prepare an optional owned one-node restart on its original ledger after initial three-validator consensus. Startup and restart retry explicit readiness/failed connections; wrong genesis/identity, changed supply/stake/history and malformed or unknown observations abort instead of disappearing behind a later healthy reply. Full launcher fixtures verify original command/ledger reuse, selected pins and cleanup. Local suite: 114 passed, one Linux-only skip out of 115. No real Agave, keys, genesis or chain requests. Actual hosting, consensus/recovery, cold restore, forks, quorum policy, independent operators and release remain separate gates.",
+            "evidence": "https://github.com/solana-classic/solana-classic/pull/6"
           }
         ]
       },
@@ -289,7 +321,7 @@
         "title": "SOC redemption bridge",
         "state": "building",
         "description": "Original SOC escrow and a native Classic reserve, targeting exact 1:1 display-unit redemption in both directions.",
-        "currentScope": "The private bridge prototype completes finalized transfers in both directions, cold restore and process-crash recovery. Claim handoff requires reviewed code and policy pins; Actual authority changes on either side and an incompatible native code replacement block a prepared claim before submission. Read-only checks verify the fixture mint/escrow and bracket them with selected token-programme code and authority pins. Separate native reserve and consumed bootstrap receipt checks reconcile its declared budget. One expired private withdrawal remains unresolved, with no retry or refund authorized. Complete funded genesis backing, native reserve reconciliation, token-extension support, independent operators and custody, origin-side code-upgrade/fork tests and external security review remain required before live redemption.",
+        "currentScope": "The private bridge prototype completes finalized transfers in both directions, cold restore and process-crash recovery. Claim handoff requires reviewed code and policy pins; Actual authority changes on either side and separately scoped incompatible native and metadata-origin code replacements block prepared claims before submission. Read-only checks verify the fixture mint/escrow and bracket them with selected token-programme code and authority pins. Separate native reserve and consumed bootstrap receipt checks reconcile its declared budget. One expired private withdrawal remains unresolved, with no retry or refund authorized. Complete funded genesis backing, native reserve reconciliation, remaining metadata unknown-landing/expiry recovery and competing-fork testing, independent operators and custody, compatible upgrade/rollback and fork tests and external security review remain required before live redemption. A controlled lost-connection rehearsal preserves one handed-out withdrawal through actual expiry without a second handoff or refund.",
         "source": "https://github.com/solana-classic/solana-classic/tree/main/bridge",
         "milestones": [
           {
@@ -418,12 +450,87 @@
             "evidence": "https://github.com/solana-classic/solana-classic/blob/main/evidence/bridge-code-replacement-agave.json"
           },
           {
+            "title": "Immutable metadata mint and escrow admission",
+            "state": "rehearsal-passed",
+            "detail": "Proposed in PR #6, not yet merged. Seven actual checks on a fresh private Agave origin plus four local worker guards and 62 offline checks. Four valueless fixture transactions; immutable metadata mint, bridge escrow and one source lock finalized. Complete code pins and exact escrow/counter verified; default policy and wrong inputs reject. 65 observer reads, zero settlement broadcasts, private validator stopped. Metadata settlement and independent security review remain pending.",
+            "evidence": "https://github.com/solana-classic/solana-classic/pull/6"
+          },
+          {
+            "title": "Reviewed mint policy before journal integration",
+            "state": "rehearsal-passed",
+            "detail": "Proposed in PR #6, not yet merged. Eight new local policy/integration checks plus 62 regressions; three copy guards pass locally and on Linux. Five actual checks on one fresh private origin copy bind exact selected mint bytes, supply and complete code pins. Wrong digest, edited review and wrong code refuse; 56 read-only RPC calls, zero transactions. Copy stopped; original ledger and transaction records unchanged. That observation proof does not verify journal integration or metadata settlement.",
+            "evidence": "https://github.com/solana-classic/solana-classic/pull/6"
+          },
+          {
+            "title": "Reviewed metadata claim journal in both directions",
+            "state": "local-passed",
+            "detail": "Proposed in PR #6, not yet merged. Explicit version3 binds reviewed mint bytes, supply and complete code pins before returning existing signed bytes once. 16 new local checks; 145 combined JavaScript regressions and seven worker guards pass. Changed metadata/code, depleted escrow, expiry, receipt and tampering refuse handoff. Local synthetic responses only; actual-chain results are recorded in the next milestone. Further expiry/fork tests, production custody/backing and independent security review remain pending.",
+            "evidence": "https://github.com/solana-classic/solana-classic/blob/bridge/metadata-mint-review/evidence/bridge-reviewed-journal-local.json"
+          },
+          {
+            "title": "Actual metadata bridge round trip and restart recovery",
+            "state": "rehearsal-passed",
+            "detail": "Proposed in PR #6, not yet merged. Ten actual checks on two fresh private source-built Agave ledgers. Both version3 metadata settlement directions finalize; four wrong mint/code handoffs refuse with unchanged journals and economics. Each destination RPC outage preserves its finalized journal; same-genesis restart reconciles the original signature and exact deltas. All four process starts stopped. Four worker guards pass locally and on Linux. This round-trip result covers known-finalized recovery only. Following milestones record both pending process-fault cases. Expiry branches, forks, production backing/custody and independent security review remain pending.",
+            "evidence": "https://github.com/solana-classic/solana-classic/pull/6"
+          },
+          {
+            "title": "Metadata native claim recovers after pre-finality process kill",
+            "state": "rehearsal-passed",
+            "detail": "Proposed in PR #6, not yet merged. Seven actual checks on new private ledger copies. One source lock and one reviewed claim submission; copied destination SIGKILL after observed confirmation above its finalized root. RPC outage preserves the attempted journal and blocks retry. Same-genesis restart reconciles the original finalized signature and exact native payout with unchanged signed bytes and review admissions. All three copy starts stopped; original ledgers and private records unchanged. Five worker guards pass locally and on Linux, plus six local copy guards. This native-claim result covers one direction; the next milestone records original redemption. Expiry branches, forks, production backing/custody and independent security review remain unverified.",
+            "evidence": "https://github.com/solana-classic/solana-classic/pull/6"
+          },
+          {
+            "title": "Metadata original redemption recovers after pre-finality process kill",
+            "state": "rehearsal-passed",
+            "detail": "Proposed in PR #6, not yet merged. Seven actual checks on new private copies of the completed native-claim fixture. One native return and one reviewed withdrawal submission; copied origin SIGKILL before observed finality. RPC outage preserves the journal and blocks retry. Same-genesis restart reconciles the original finalized signature, exact token payout and unchanged recipient native balance. Signed bytes and review admissions retained; escrow/counters, returned native value and protected floor reconcile. All three copy starts stopped; original ledgers and prior finalized journal unchanged. Five worker guards pass locally and on Linux. This fault's expiry branch was not exercised; the following milestone covers deliberately unsubmitted expiry. Unknown landing, forks, production backing/custody and independent security review remain unverified.",
+            "evidence": "https://github.com/solana-classic/solana-classic/pull/6"
+          },
+          {
+            "title": "Metadata-token cold archive restore",
+            "state": "rehearsal-passed",
+            "detail": "Proposed in PR #6, not yet merged. Eight actual checks on new private copies: stopped backups were archived, hash-verified, extracted and restored with matching complete cold inventories. Nineteen selected finalized account records retain exact balances, metadata, code/authority pins, events and both consumed receipts. Two compiled-bridge replay simulations reject; zero broadcasts. Four copy starts stopped; original ledgers/private records unchanged. Initial baseline precision refusal retained, corrected with raw exact-integer parsing. Six worker and seven parser checks pass on Linux; 169 bridge regressions pass locally. Controlled-stop single-host test-validator scope only. Physical host loss, independent backups, arbitrary unknown landing/forks, full-validator consensus, funded backing/custody and security review remain open.",
+            "evidence": "https://github.com/solana-classic/solana-classic/pull/6"
+          },
+          {
+            "title": "Unsubmitted metadata claim expires at actual finalized height",
+            "state": "rehearsal-passed",
+            "detail": "Proposed in PR #6, not yet merged. Eight actual checks on new private ledger copies. One unused source lock finalizes; a signed version3 native claim remains unsubmitted until real finalized block height passes its original expiry. All three handoff APIs refuse with unchanged prepared bytes, then refuse again after EXPIRED_UNRESOLVED reconciliation. Zero claim handoffs or broadcasts; no landed signature/receipt, payout, replacement or refund. Source escrow/liability and reserve floor retained. Both copies stopped; originals unchanged. Five guards pass locally and on Linux. Deliberately unsubmitted native expiry only; the following milestone separately covers original redemption. Unknown landing, pruning, forks, funded backing/custody and independent security remain open.",
+            "evidence": "https://github.com/solana-classic/solana-classic/pull/6"
+          },
+          {
+            "title": "Unsubmitted metadata redemption expires without payout or refund",
+            "state": "rehearsal-passed",
+            "detail": "Proposed in PR #6, not yet merged. Eight actual checks on fresh private ledger copies. One unused native return finalizes with event rent separate from value; a signed version3 original-token withdrawal remains unsubmitted until actual origin finalized block height passes its original expiry. All three handoff APIs refuse unchanged PREPARED bytes, then refuse again after EXPIRED_UNRESOLVED reconciliation. Zero withdrawal handoffs/broadcasts, no landed signature/receipt, token payout, retry, replacement or native refund. Original escrow obligation, returned backing and reserve floor retained. Recipient token/native balances unchanged. Both copies stopped; originals unchanged. Five guards pass locally and on Linux. This complements deliberately unsubmitted native expiry; submitted-but-uncertain recovery, pruning, forks, funded backing/custody and independent security remain open.",
+            "evidence": "https://github.com/solana-classic/solana-classic/pull/6"
+          },
+          {
+            "title": "Changed origin bridge code blocks an unexpired metadata claim",
+            "state": "rehearsal-passed",
+            "detail": "Proposed in PR #6, not yet merged. Eight actual checks on new private copies. Six buffer setup transactions stage a deliberately incompatible reviewed ELF; one unused metadata-token lock finalizes and a version3 native claim is prepared, then one actual origin Loader-v3 code replacement finalizes with authority, capacity and rent unchanged. All three handoff APIs refuse old code pins while the claim is unexpired. Zero claim handoffs/broadcasts, unchanged prepared bytes/review, attempts0 and no destination signature/receipt or payout. Destination code pins and exact mint/escrow/recipient/configuration/reserve snapshots remain unchanged. Both copies stopped; originals unchanged. Five guards pass locally and on Linux; six code-comparison checks pass locally. Incompatible private refusal only; compatible migration, post-snapshot upgrade risk, forks, funded backing/custody and independent security remain open.",
+            "evidence": "https://github.com/solana-classic/solana-classic/pull/6"
+          },
+          {
+            "title": "Expiry review binds the retained code policy",
+            "state": "local-passed",
+            "detail": "Proposed in PR #6, not yet merged. Fixed caller code-hash substitution in authenticated expiry review: version2/version3 input must match the verified retained journal, even with otherwise valid signed reports. Legacy supplied pins are labelled unbound. Three new regressions; all38 related checks pass. Six offline compatibility/refusal checks on the retained actual metadata expiry journal use synthetic signed assertions and historical contexts, with zero RPC calls, validator starts or transactions. Original journal/selected inputs unchanged; no retry, refund, reset or production permission. These are offline checks, not fresh chain history or independent-operator verification.",
+            "evidence": "https://github.com/solana-classic/solana-classic/pull/6"
+          },
+          {
+            "title": "Dropped submission preserves the one-time withdrawal",
+            "state": "rehearsal-passed",
+            "detail": "Proposed in PR #6, not yet merged. Nine actual checks on fresh private Agave copies: one native return and one reviewed withdrawal handoff, then a complete local HTTP submission deliberately dropped before node delivery. Actual finalized height passes original expiry; all three APIs refuse another handoff before expiry, after expiry and after EXPIRED_UNRESOLVED reconciliation. Signed bytes and code/mint admissions retained, no token payout or native refund, escrow obligation intact. Both copies stopped; originals unchanged. Six worker guards and three transport checks pass locally and on Linux. Initial zero-transaction port refusal retained. Controlled non-delivery only; arbitrary unknown landing, forks, funded backing/custody and security remain open.",
+            "evidence": "https://github.com/solana-classic/solana-classic/pull/6"
+          },
+          {
             "title": "Bootstrap reconciliation, custody and recovery",
-            "state": "pending"
+            "state": "pending",
+            "detail": "Proposed in PR #6, not yet merged. Initial source capture passes eight actual checks on fresh private Agave ledgers. Five further capture-file archive checks now pass: both saved captures and original signed receipts restore byte-for-byte, an offline verifier rechecks their selected signatures/status/economics, and a corrupted archive refuses before extraction. This drill starts no validator and submits no transaction. All 279 bridge regressions and six archive guards pass locally. The earlier native transaction remains confirmed-only with transaction/finalized block unavailable; its history gate and unresolved obligations stay open. Suitable Linux hosting, offline blockstore/archive inspection, independent finality/history, funded bootstrap/reserve custody, three-validator rehearsal and security review remain required.",
+            "evidence": "https://github.com/solana-classic/solana-classic/pull/6"
           },
           {
             "title": "Independent security review and live redemption",
-            "state": "pending"
+            "state": "pending",
+            "detail": "Proposed in PR #6, not yet merged. A new offline declaration analyzer flags shared operators, signing/recovery access and outage domains across the three-of-five committee. Ten focused checks include overlapping control and an exhaustive reference across 80 small models; all 289 bridge regressions pass locally. Read-only review of the retained synthetic roster correctly flags its declared single-owner/shared-host setup, with no new keys, chain requests or submissions. Different labels and passing proposed criteria do not verify independence. Real operator assignments, enforceable custody/recovery, independent source observations, upgrade controls and external security review remain required before production signing or live redemption."
           }
         ]
       },
@@ -574,7 +681,7 @@
         "title": "Devnet release evidence",
         "state": "building",
         "description": "Candidate-specific validation of the source-built devnet and its fresh 24-hour stability test.",
-        "currentScope": "All eight current-candidate admission checks passed, including isolated cold-backup recovery. A fresh uninterrupted 24-hour stability test started on 15 October at 03:59 UTC, with earliest completion on 16 October at 03:59 UTC. Live progress appears above. Final regression and release review remain pending; the original stability result remains historical.",
+        "currentScope": "The separate replacement completed on 17 October at 01:24 UTC: 288 distinct journeys and 2,880 observations over a full 24 hours. Strict terminal review verified the exact activation, eight prerequisite hashes, all 45 frozen source files and unchanged runtime identity. The earlier 237-journey failure remains retained. Four final Chromium journeys passed on the frozen and branded sites, covering desktop/mobile and 24 finalized receipts. One earlier storage-assertion failure remains retained; its narrow panel-preference correction passed 11 driver checks. Remaining release requirements and operator handoff are pending. Source and evidence are in PR #6.",
         "source": "https://github.com/solana-classic/solana-classic/blob/main/engine/migration/STABILITY_RELEASE_REVIEW.md",
         "milestones": [
           {
@@ -617,13 +724,13 @@
           {
             "title": "Source-built Agave migration",
             "state": "live-passed",
-            "detail": "Source-built Agave is live on the existing devnet. All 2163 accounts, program code, tokens/NFTs, application records and 1992 immutable files survived. Current-candidate admission checks passed and a fresh stability test is running."
+            "detail": "Source-built Agave is live on the existing devnet. All 2163 accounts, program code, tokens/NFTs, application records and 1992 immutable files survived. Current-candidate admission checks and the separately recorded replacement full-day stability audit passed. Final desktop/mobile browser regression also passed; whole release review remains pending."
           },
           {
             "title": "New source-build stability run",
-            "state": "running",
-            "detail": "A fresh full 24-hour run started on 15 October at 03:59 UTC, with earliest completion on 16 October at 03:59 UTC. Follow live progress above. Completion and release acceptance remain pending; the original result remains historical.",
-            "evidence": "https://github.com/solana-classic/solana-classic/blob/main/evidence/agave-source-stability-started.json"
+            "state": "live-passed",
+            "detail": "Completed 17 October at 01:24:36 UTC after 86,400,466ms. Full retained report audited: 288 unique mints, recipients and transfer receipts; 2,880 observations; no faucet calls during measurement; maximum schedule delay 10ms. Exact activation, selected prerequisites, frozen source and runtime match. Recorded evidence review is not independent transaction replay or mainnet/release acceptance.",
+            "evidence": "https://github.com/solana-classic/solana-classic/blob/bridge/metadata-mint-review/evidence/agave-source-stability-replacement-completed.json"
           },
           {
             "title": "Source-built devnet original mobile verification",
@@ -664,8 +771,14 @@
           {
             "title": "Source-run final stability audit preparation",
             "state": "local-passed",
-            "detail": "18 new terminal checks plus 16 existing terminal/load regressions. Binds the exact run, activation digest, engine, eight prerequisite hashes, complete 288-journey report, valid unique receipts and independent health. Actual ongoing run correctly refused as incomplete at 54/288; no test restart or acceptance. Real full-day terminal review remains pending.",
-            "evidence": "https://github.com/solana-classic/solana-classic/blob/main/evidence/source-terminal-auditor-preparation.json"
+            "detail": "Proposed auditor strengthening in PR #6, not yet merged. All 37 source/historical terminal and load regressions pass locally. Exact run, activation, engine, eight prerequisite hashes, full duration and 288 unique mint/transfer receipts remain mandatory. Three new groups reject self-transfer/reused recipient or mint roles and ambiguous workload/exit-code types. These preparation checks use synthetic reports and cannot themselves accept a stability run. The actual replacement terminal review and final browser results are recorded separately below; release handoff remains pending.",
+            "evidence": "https://github.com/solana-classic/solana-classic/pull/6"
+          },
+          {
+            "title": "Post-stability source-runtime final browser verification",
+            "state": "live-passed",
+            "detail": "Four fresh full journeys: 1440x1000 desktop and 360x844 touch-emulated mobile on frozen and branded origins. Eight demo assets, 24 finalized receipts, exact balances and owners, uploaded PNG NFTs on the branded site, and no page or console errors. One earlier assertion failure with six finalized receipts is retained separately. Branded local storage contains only the exact non-secret panel preference; frozen local storage and all session storage remain empty. Remaining release, security and operator gates stay open.",
+            "evidence": "https://github.com/solana-classic/solana-classic/blob/bridge/metadata-mint-review/evidence/agave-source-final-browser-review.json"
           }
         ]
       }
@@ -675,7 +788,7 @@
   "migrationMaintenance": {
     "authorizedAt": "2026-10-14T21:40:39.917980+00:00",
     "state": "source-live-validation",
-    "detail": "Source-built Agave is live. All eight current-candidate prerequisites passed. A fresh full24h stability test is running; its actual first mint, transfer and ownership journey passed. Completion and release acceptance remain pending.",
+    "detail": "Source-built Agave is live. The previous source-build stability attempt interrupted after 237 of 288 journeys. A separately admitted full24h replacement started on 16 October at 01:24 UTC with passive runtime diagnostics; its first mint, transfer and ownership journey passed. Completion and release acceptance remain pending.",
     "deploymentId": "22e5870a-afb8-4027-89b5-ccb8a39391c2",
     "imageDigest": "sha256:f48877aec5c7e2ec010470f148368810034dece2f8ffd05d2f882928df649264",
     "writesOpened": true,

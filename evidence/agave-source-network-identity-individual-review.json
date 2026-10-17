@@ -1,0 +1,118 @@
+{
+  "schemaVersion": 1,
+  "at": "2026-10-17T08:36:45.660373+00:00",
+  "scope": "remote read-only current-candidate genesis and public configuration review",
+  "passed": true,
+  "genesis": "7TAUSfTzQeocodtVee2qsftsCYnJu2eCM1ALdADbHNon",
+  "candidate": {
+    "apiOrigin": "https://network-release-production.up.railway.app",
+    "frontendOrigin": "https://solana-classic-soc.vercel.app",
+    "frontendDeploymentId": "dpl_3aWWzKDohr4SrgijgrB8dWgHHS5r",
+    "frontendCommit": "35f0eaf1dede45452c9cdf9e6403669e966c427d",
+    "apiCommit": "119f25e225540be78b64b19bdb6cb300a1f47c10",
+    "networkConfigSha256": "0eea489e8cf0753b2b0cf0b91b6949566044e50c20bd4d02eea814490f64fe0e",
+    "dependencyManifestSha256": "e6da27717e6a84ca7b29d707ff63591b2ff0cfc38892d3b4667f8615bdf7bbc0"
+  },
+  "freezeSha256": "55b668e56a946ec94f0195b03530aba23593bd71d7fd52493d5403b21882757f",
+  "checklistSha256": "e2fb4b2f53e9aa10f21ec5ffcf708cc2749b456a39703c9228a7fce7fc574f73",
+  "proofs": [
+    {
+      "path": "evidence/agave-source-candidate-freeze.json",
+      "sha256": "55b668e56a946ec94f0195b03530aba23593bd71d7fd52493d5403b21882757f"
+    },
+    {
+      "path": "evidence/agave-source-public-disclosure-individual-review.json",
+      "sha256": "4c483e472ea9a58e8fe12852cbfc5ec4ad251dfcc2af0be505e2aabac9663a83"
+    }
+  ],
+  "requirements": {
+    "G1.01": {
+      "claim": "Configured genesis differs from the current Solana mainnet and devnet genesis hashes.",
+      "basis": "Fresh getGenesisHash responses from the canonical gateway and both public Solana RPC endpoints were compared directly. Canonical RPC, public configuration and the exact frozen runtime agree; both public hashes differ.",
+      "scopeLimit": "Current identity verification only; this does not establish an H12 milestone or multi-validator independence."
+    },
+    "G1.07": {
+      "claim": "The public configuration records operator count 1 and an experimental reset policy.",
+      "basis": "The anonymous canonical network response exactly matches the frozen configuration, including operatorCount 1, hasMonetaryValue false and the explicit persistent experimental ledger/no automatic reset policy.",
+      "scopeLimit": "Configuration disclosure, not an independent operator census or a new reset/recovery drill."
+    }
+  },
+  "reviewMethod": {
+    "observedAt": "2026-10-17T08:36:45.660373+00:00",
+    "sourceReference": "c13e3d57049bab0c8a8ab787cfc4c7fc30f147de",
+    "httpReads": [
+      {
+        "url": "https://network-release-production.up.railway.app/api/network",
+        "httpStatus": 200,
+        "sha256": "beb286c5f7655d53025e6151906aad41138ca08c1fb186277710023e241f93d4",
+        "response": {
+          "name": "Solana Classic experimental devnet",
+          "mode": "remote",
+          "expectedGenesisHash": "7TAUSfTzQeocodtVee2qsftsCYnJu2eCM1ALdADbHNon",
+          "denomination": "TEST",
+          "operatorCount": 1,
+          "hasMonetaryValue": false,
+          "tokenProgram": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb",
+          "associatedTokenProgram": "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL",
+          "resetPolicy": "Persistent experimental ledger. No automatic reset. Any deliberate reset will be disclosed; test assets have no monetary value."
+        }
+      }
+    ],
+    "runtimeRead": {
+      "url": "https://network-release-production.up.railway.app/api/runtime",
+      "httpStatus": 200,
+      "sha256": "8fc409065098c4a707f084ff759b5ef5d3636495caefb4d2d26de1bb4e2614cc"
+    },
+    "runtimeMatchesCompleteFreezeExceptObservationTime": true,
+    "genesisReads": [
+      {
+        "url": "https://network-release-production.up.railway.app/api/rpc",
+        "httpStatus": 200,
+        "sha256": "5a2ad4eb74494f918ee97b0cac91cb26f088c21c046bc4f87671d6779dc4e4a8",
+        "response": {
+          "jsonrpc": "2.0",
+          "result": "7TAUSfTzQeocodtVee2qsftsCYnJu2eCM1ALdADbHNon",
+          "id": 1
+        }
+      },
+      {
+        "url": "https://api.mainnet-beta.solana.com",
+        "httpStatus": 200,
+        "sha256": "072c547ad3321ad6379bf249c218bcf112eaa3bd0138f07ace4077db1785a37d",
+        "response": {
+          "jsonrpc": "2.0",
+          "result": "5eykt4UsFv8P8NJdTREpY1vzqKqZKvdpKuc147dw2N9d",
+          "id": 1
+        }
+      },
+      {
+        "url": "https://api.devnet.solana.com",
+        "httpStatus": 200,
+        "sha256": "9d0f36530a5526131672857c8ff1d2b6dbcbab3e18f347161fc36b2c3a0825c3",
+        "response": {
+          "jsonrpc": "2.0",
+          "result": "EtWTRABZaYq6iMfeYKouRu166VU2xqa1wcaWoxPkrZBG",
+          "id": 1
+        }
+      }
+    ],
+    "publicRpcMethods": [
+      "getGenesisHash"
+    ],
+    "frozenFilesVerified": 45,
+    "networkConfigSha256": "0eea489e8cf0753b2b0cf0b91b6949566044e50c20bd4d02eea814490f64fe0e",
+    "credentialsSent": false,
+    "walletsCreated": false,
+    "transactionsSigned": 0,
+    "transactionsSubmitted": 0,
+    "newWorkloads": false
+  },
+  "limitations": [
+    "Only G1.01 and G1.07 are accepted by this review. Historical candidate passes are not carried over.",
+    "The separate 31-test local identity regression passed with mocked RPC/helper inputs; it is not evidence that every test entry point was freshly exercised against a real-money network. G5.10 remains unreviewed.",
+    "Point-in-time read-only observations do not establish continuous availability, deadline compliance or a new stability result."
+  ],
+  "releaseAccepted": false,
+  "mainnetAccepted": false,
+  "bridgeAccepted": false
+}
