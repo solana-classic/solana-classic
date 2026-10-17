@@ -227,7 +227,7 @@ non-account equivalence, account-data identity or reserve-adapter integration.
 ## Bounded decoder input transport
 
 The offline process runner now accepts optional immutable `input_bytes`, bounded
-to 16 MiB for selected genesis input. It writes through a nonblocking pipe while
+by default to 16 MiB for selected genesis input. It writes through a nonblocking pipe while
 draining both output streams under the existing deadline and output bounds.
 Empty or absent input delivers EOF; tools never inherit an interactive terminal.
 An early input-pipe closure or timeout fails and reaps the owned process group.
@@ -520,3 +520,27 @@ into the preparer and does not retroactively sanitize existing tool launches.
 It is not a sandbox or tool allowlist. Full integration must select the executable
 pins, environment and end-to-end input bounds before any fresh compilation. See
 [the environment selection evidence](../evidence/mainnet-offline-environment-local.json).
+
+
+## Select the reserve transport input bound
+
+The process helper accepts `stdin_limit` as an explicit positive integer up to
+32 MiB. Its default remains 16 MiB, including existing genesis-preparation calls.
+Invalid bounds and oversized input refuse before process creation, even if no
+input was otherwise supplied. Selected genesis snapshots retain their separate
+16 MiB admission check. Output limits, process lifetime and cleanup are unchanged.
+
+Three new test groups cover exact 32 MiB binary delivery, lower bounds, default
+and explicit overflow, and malformed limits. The local Python package passes
+179 of 180 tests with the existing Linux-only skip. Six real invocations of the
+unchanged reserve bundle cover both prepare/review modes using a supplied
+two-account fixture, unpadded and padded with JSON whitespace to 16 MiB plus one
+and exactly 32 MiB. Each uses an empty environment and produces the same output
+with all activation flags disabled. Four controls verify refusal before process
+creation for default-bound and explicit-maximum overflow.
+
+This resolves the transport size mismatch for callers that explicitly select
+32 MiB; it does not automatically change the preparer or admit its runtime.
+The padded fixtures establish byte transport, not maximum account-count support
+or host memory capacity. Runtime pins, caller policy, reserve wiring and fresh
+compiler/replay validation remain open. See [the input-bound review](../evidence/mainnet-offline-input-bound-local.json).

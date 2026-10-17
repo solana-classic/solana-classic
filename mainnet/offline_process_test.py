@@ -85,6 +85,23 @@ class OfflineInput(unittest.TestCase):
    with self.subTest(kind=type(data).__name__),patch.object(m.subprocess,'Popen') as start,self.assertRaisesRegex(ValueError,'^BOUNDED_OFFLINE_INPUT_REQUIRED$'):
     self.execute('raise Exception()',input_bytes=data)
    start.assert_not_called()
+ def test_explicit_32_mib_bound_streams_exact_bytes_without_logging(self):
+  import hashlib
+  data=bytes(range(256))*(32*1024**2//256)
+  out,err=self.execute("import hashlib,sys;print(hashlib.sha256(sys.stdin.buffer.read()).hexdigest())",input_bytes=data,stdin_limit=32*1024**2,environment={},timeout=10)
+  self.assertEqual(out.decode().strip(),hashlib.sha256(data).hexdigest());self.assertEqual(err,b'')
+ def test_selected_bound_refuses_overflow_before_start_and_allows_exact_size(self):
+  for data,options in [(b'abc',{'stdin_limit':2}),(b'x'*(32*1024**2+1),{'stdin_limit':32*1024**2}),(b'x'*(16*1024**2+1),{})]:
+   with self.subTest(length=len(data),options=options),patch.object(m.subprocess,'Popen') as start,self.assertRaisesRegex(ValueError,'^BOUNDED_OFFLINE_INPUT_REQUIRED$'):
+    self.execute('raise Exception()',input_bytes=data,**options)
+   start.assert_not_called()
+  out,err=self.execute("import sys;sys.stdout.buffer.write(sys.stdin.buffer.read())",input_bytes=b'ab',stdin_limit=2)
+  self.assertEqual(out,b'ab');self.assertEqual(err,b'')
+ def test_invalid_selected_input_limits_refuse_even_without_input(self):
+  for limit in [0,-1,True,False,1.0,'32',None,32*1024**2+1]:
+   with self.subTest(limit=limit),patch.object(m.subprocess,'Popen') as start,self.assertRaisesRegex(ValueError,'^BOUNDED_OFFLINE_INPUT_REQUIRED$'):
+    self.execute('raise Exception()',stdin_limit=limit)
+   start.assert_not_called()
  def test_child_closing_stdin_is_reaped_without_input_in_error(self):
   started=[];real=m.subprocess.Popen
   def start(*args,**kwargs):

@@ -2,14 +2,17 @@
 import math,os,selectors,signal,subprocess,time
 
 STDIN_LIMIT=16*1024**2
+MAX_STDIN_LIMIT=32*1024**2
 STDOUT_LIMIT=4*1024**2
 STDERR_LIMIT=8*1024**2
 
-def run_tool(args,log,timeout=180,stdout_limit=STDOUT_LIMIT,stderr_limit=STDERR_LIMIT,input_bytes=None,environment=None):
+def run_tool(args,log,timeout=180,stdout_limit=STDOUT_LIMIT,stderr_limit=STDERR_LIMIT,input_bytes=None,environment=None,stdin_limit=STDIN_LIMIT):
  """Return bounded stdout. Retain stderr privately; never print raw failures.
 
  Optional immutable input bytes are bounded and streamed while both output
- pipes drain. No input inherits an interactive terminal. Input is never logged.
+ pipes drain. The default remains 16 MiB; a caller can select a positive bound
+ up to 32 MiB for the reserve adapter. No input inherits an interactive terminal.
+ Input is never logged.
  An explicit environment replaces inheritance, including an empty mapping;
  omission preserves the existing inherited environment. The caller selects
  allowed variables and admits executable pins and private paths. This function cannot
@@ -18,7 +21,8 @@ def run_tool(args,log,timeout=180,stdout_limit=STDOUT_LIMIT,stderr_limit=STDERR_
  """
  if type(timeout) not in [int,float] or not math.isfinite(timeout) or timeout<=0 or type(stdout_limit) is not int or type(stderr_limit) is not int or min(stdout_limit,stderr_limit)<=0:
   raise ValueError('BOUNDED_OFFLINE_PROCESS_REQUIRED')
- if input_bytes is not None and (type(input_bytes) is not bytes or len(input_bytes)>STDIN_LIMIT):raise ValueError('BOUNDED_OFFLINE_INPUT_REQUIRED')
+ if type(stdin_limit) is not int or not 0<stdin_limit<=MAX_STDIN_LIMIT:raise ValueError('BOUNDED_OFFLINE_INPUT_REQUIRED')
+ if input_bytes is not None and (type(input_bytes) is not bytes or len(input_bytes)>stdin_limit):raise ValueError('BOUNDED_OFFLINE_INPUT_REQUIRED')
  if environment is not None:
   try:
    if type(environment) is not dict or len(environment)>64:raise ValueError()
