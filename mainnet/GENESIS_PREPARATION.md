@@ -579,3 +579,35 @@ schema, plan/report selectors and compiler input. Rechecks are not an atomic
 execution guarantee or a network/filesystem sandbox; host integrity and loaded
 runtime dependencies remain separate. The preparer is unchanged and still does
 not invoke this adapter. See [the selected-process review](../evidence/mainnet-reserve-selected-process-local.json).
+
+
+## Validate selected reserve results
+
+`reserve_adapter_result.py` validates the bounded raw output against an exact
+mode-specific schema and expectations selected independently of that output.
+It binds the plan digest, baseline genesis, count and native total. Prepare also
+binds the proposed reserve address and units; review binds a distinct proposed
+genesis and the selected creation-time-change boolean. Every capability flag
+must remain literal false. Required descriptive assertions must be literal true.
+
+Strict UTF-8 JSON parsing rejects duplicate members, non-finite values,
+fractional, exponent and negative numeric tokens, extra fields and malformed or
+oversized output. Integer amounts retain all u64 digits. The nested primordial
+input must contain exactly the selected reserve account, exact integer balance,
+System owner, empty-data marker and false executable flag. Failures expose only
+a fixed refusal code, with no raw input or parser diagnostics.
+
+Nine new test groups cover ambiguous JSON, schema and selection mismatches,
+permission promotion, account substitution, balances beyond floating-point
+precision and the exact 1 MiB output boundary. The full local Python suite passes
+198 of 199 tests with its existing Linux-only skip and resource warnings treated
+as errors. Two actual invocations of the unchanged selected bundle produce
+valid synthetic prepare/review output; six corrupted versions refuse validation.
+
+This is result-contract validation, not independent plan, PDA, decoder or
+account-history verification. Raw report hashes are absent from the output and
+must be selected and checked on the input side. Trusting output-derived
+expectations would defeat the comparison. The preparer still does not invoke
+the adapter: trusted runtime selection, complete caller integration, admitted
+Linux hosting, fresh compilation and strict replays remain open. See
+[the result-validation review](../evidence/mainnet-reserve-result-local.json).

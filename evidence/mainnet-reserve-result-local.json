@@ -1,0 +1,66 @@
+{
+  "schemaVersion": 1,
+  "at": "2026-10-17T23:38:02.730398+00:00",
+  "scope": "Local strict reserve-adapter result validation against caller-selected expectations; no compiler invocation or runtime admission",
+  "passed": true,
+  "sourceFiles": {
+    "mainnet/reserve_adapter_result.py": "9e66b3adc789de84efebbc938a2105a3d0bd02e953012d8cbf21592afe76a006",
+    "mainnet/reserve_adapter_result_test.py": "3a013e33c90176b5488bd5123266e36311af491ae03cbf6d1e46a6eaaa6c23aa",
+    "mainnet/reserve_adapter_process.py": "6e267cadc4ab0431fd2b10d5552b6404d4bf2af88ddd47841e5b990da175b0be",
+    "mainnet/offline_process.py": "6e17a75e1269e9a7cd89ad351f9946c386af5f0df345b9891712020b774988ed"
+  },
+  "validation": {
+    "pythonTests": 199,
+    "pythonPassed": 198,
+    "pythonSkipped": 1,
+    "skipScope": "Existing Linux-only check on the local non-Linux host",
+    "newResultTestGroups": 9,
+    "resourceWarningsAreErrors": true,
+    "pythonTestLogSHA256": "f294d449ed99cc2b71452a885f424f4d366fc6a0861221a1a6688e33d49568c0",
+    "controlReportSHA256": "ddf21d31ac0b09fbcd26bbae4a82a07c2291bae045c8bbdd908da4c8d19a548e",
+    "controlDriverSHA256": "e970ae94ccf1d00a500a225b3bb9e0ceddfe368db0281b512196b86afb5031f4",
+    "fixtureInputSHA256": "2e9e7e0885778e627c16aadc3a4a0f9ac5b503dfbd9e2c471e3f91f714b21060",
+    "nodeExecutableSHA256": "d0c6c74401e6a544bb4d4b2a9ded9c43298d4e6dcd5ebac4dd010c4c81774105",
+    "retainedBundleSHA256": "9091ca58a4767e40678fd069ae76712ad7d5eb5c6f140d41feb882bbb0a565c3",
+    "realNodeInvocations": 2,
+    "alteredActualOutputRefusals": 6,
+    "processResults": [
+      {
+        "mode": "prepare",
+        "passed": true,
+        "outputSHA256": "4c858b63c00ba394d11a6006996a1bba770752b8d26da9ad760ef9c82836a389",
+        "stderrBytes": 0,
+        "selectedFromPinnedInput": true
+      },
+      {
+        "mode": "review",
+        "passed": true,
+        "outputSHA256": "972c82ecd97fb903d5d3cea37376d9709d7cc803e3b280362df9bf7f99697747",
+        "stderrBytes": 0,
+        "selectedFromPinnedInput": true
+      }
+    ]
+  },
+  "resultContract": {
+    "maximumBytes": 1048576,
+    "encoding": "Strict UTF-8 JSON with duplicate member names, fractional/exponent/negative numeric tokens, non-finite constants, malformed or oversized output refused; bounded canonical integer tokens preserve exact u64 values.",
+    "schemas": "Exact mode-specific fields, schema version, state and scope. All 13 capability and verification flags must be literal false; required descriptive assertions must be literal true.",
+    "externalSelection": "Exact caller-selected plan digest, baseline genesis, account count and total. Prepare additionally binds reserve address and units. Review additionally binds distinct proposed genesis and the selected creation-time-change boolean. Selection must come from independently selected input, never from returned stdout.",
+    "compilerInput": "Prepare requires exactly one selected reserve entry with an exact integer balance, System owner, empty-data marker and literal false executable flag. No additional, missing or duplicate fields or accounts.",
+    "failureHandling": "A fixed SELECTED_RESERVE_RESULT_REFUSED error with no raw input, key material, paths or parser diagnostics."
+  },
+  "limitations": [
+    "This validates syntax, schema and equality to caller-supplied expectations. It does not independently derive a reserve PDA or validate the full plan, authenticate decoder execution or complete account history, or accept compiler results.",
+    "The adapter output does not include raw decoder report digests. The integrating caller must separately validate the input selectors and trusted artifact execution; output assertions alone are not independent evidence of account bytes.",
+    "The two actual Node invocations use the retained synthetic two-account fixture and unchanged bundle through the existing bounded selected-process helper. Expected fields come from the pinned input; the proposed reserve address is a separately fixed fixture expectation. Six corrupted versions of those outputs refuse. No compiler, decoder, key generator, validator, chain operation or fresh genesis was run.",
+    "Large u64 values, duplicate fields, encoding, numeric-token ambiguity, exact output bounds, permissions and mismatched selections are local synthetic parser tests, not a Linux host or runtime admission.",
+    "The existing preparation entry point is unchanged and does not call this validator or reserve adapter. Trusted runtime pins, input/output integration, admitted Linux hosting, fresh compilation and two strict slot-zero replays remain required. Backing, custody, operators, monitoring fault delivery and independent review remain open."
+  ],
+  "preparerIntegrated": false,
+  "hostAdmitted": false,
+  "runtimeAdmitted": false,
+  "canonicalNetworkChanged": false,
+  "chainTransactionsSubmitted": 0,
+  "mainnetActivated": false,
+  "productionReady": false
+}
