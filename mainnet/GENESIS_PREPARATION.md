@@ -640,3 +640,26 @@ selected adapter still checks its input report selectors. The preparation entry
 point remains unchanged and does not use this combined caller; fresh compilation,
 strict replays and host admission remain open. See
 [the combined-caller review](../evidence/mainnet-reserve-validated-caller-local.json).
+
+
+## Isolated Linux caller compatibility
+
+The combined caller now passes its 25 artifact/process, result-schema and
+invocation checks on the separate Linux x86-64 worker, with no skips and
+resource warnings treated as errors. The existing Node v24.19.0 executable was
+selected by its observed bytes and hash before execution and checked afterward.
+The unchanged retained bundle produces the same synthetic prepare/review objects
+as the local host. A third invocation withholds a valid adapter response when
+the external plan selection differs.
+
+The attempt used a new exclusive private directory. Independent readback verified
+the completed result, all nine selected files, the test log and Node fingerprint;
+no attempt process or private validator remained. Previous attempts and all
+ledgers were preserved. No compiler, decoder, key generator, validator or chain
+request was run. See [the Linux caller evidence](../evidence/mainnet-reserve-caller-linux.json).
+
+These are offline compatibility results. Observed executable selection does not
+establish independent distribution provenance, a general runtime allowlist or a
+sandbox. The bundle was not rebuilt on Linux. The full-validator host requirements
+remain unsatisfied, and the preparation entry point still does not invoke this
+adapter. Fresh compilation, strict replays and production gates remain open.
