@@ -286,3 +286,18 @@ is unchanged. A null lookup does not overturn the historical finalization or
 establish a pruning cause. Available-transaction and failed-transaction display
 coverage, and durable history availability, remain separate gaps. No transaction
 was repeated; the inventory stays at 28 of 75 with 47 unreviewed.
+
+
+The [isolated forwarding-attribution review](../../evidence/agave-source-forwarding-attribution-review.json)
+adds three checks against both exact candidate and current API source over real
+loopback HTTP. Asset and faucet cases exhaust only one client counter. Four
+changing spoofed prefixes and alternate forwarding fields still hit that same
+counter; a different nearest client succeeds with global usage at one. Each
+denial preserves all persisted counters and creates no asset or faucet record.
+Without X-Forwarded-For, the actual socket peer supplies the client identity.
+
+These tests remove global exhaustion as an explanation for the isolated denials.
+They use supplied ingress headers, a fixed clock, mocked chain methods and
+fixture-only maintenance admission. They do not establish how the live provider
+rewrites headers or protects direct backend access. G5.04 remains unreviewed;
+no canonical quota, grant, transaction or runtime changed.

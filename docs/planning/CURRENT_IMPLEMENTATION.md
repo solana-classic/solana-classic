@@ -1,6 +1,6 @@
 # Current implementation handoff
 
-## Current checkpoint — 18 October 2026, 01:05 UTC
+## Current checkpoint — 18 October 2026, 01:36 UTC
 
 This checkpoint supersedes the historical hold, branch names, pending-run
 statements and next-action instructions below. The founder resumed development.
@@ -32,6 +32,10 @@ and [inventory](../../evidence/agave-source-acceptance-gates.json) record **29 o
 75 requirements accepted, with 46 unreviewed**. Overall devnet release, mainnet
 and bridge acceptance remain false; historical requirement passes do not carry
 over automatically.
+Three new isolated forwarding-attribution checks pass against the exact candidate
+and current source using real loopback HTTP. They separate client-limit denial
+from global exhaustion; deployed ingress behavior remains unverified and G5.04
+is still unreviewed. No canonical controls or counters changed.
 
 Current independent preparation work binds final genesis policy and audited
 metadata to its budget probe. The current allocation decoder is now integrated
