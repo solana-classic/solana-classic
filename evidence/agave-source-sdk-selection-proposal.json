@@ -1,0 +1,148 @@
+{
+  "schemaVersion": 1,
+  "at": "2026-10-18T05:36:54.938125+00:00",
+  "scope": "Undeployed frontend SDK-selection proposal with two controlled local builds and isolated lazy-import browser checks",
+  "passed": true,
+  "activeCandidate": {
+    "apiOrigin": "https://network-release-production.up.railway.app",
+    "frontendOrigin": "https://solana-classic-soc.vercel.app",
+    "frontendDeploymentId": "dpl_3aWWzKDohr4SrgijgrB8dWgHHS5r",
+    "frontendCommit": "35f0eaf1dede45452c9cdf9e6403669e966c427d",
+    "apiCommit": "119f25e225540be78b64b19bdb6cb300a1f47c10",
+    "networkConfigSha256": "0eea489e8cf0753b2b0cf0b91b6949566044e50c20bd4d02eea814490f64fe0e",
+    "dependencyManifestSha256": "e6da27717e6a84ca7b29d707ff63591b2ff0cfc38892d3b4667f8615bdf7bbc0"
+  },
+  "freezeSHA256": "55b668e56a946ec94f0195b03530aba23593bd71d7fd52493d5403b21882757f",
+  "builderSHA256": "ed0d3cd899a8f7cd10f844b77b631d93c30349552b608a737ce585376dbc499e",
+  "buildReportSHA256": "21bd7494e9ffcf5739d39cf36727335d66497b4387f127936083849c710850db",
+  "browserReportSHA256": "1388d9b9c0d909d7a0e5a1d6550876bbf321ddaecc245d3dc2a7c94e96736e11",
+  "browserDriverSHA256": "9ec1dc3d4d9e0c9089cf81e0491d58643dd748e53a4b949f0c7c1f0d8985daf1",
+  "guardReportSHA256": "1bea41f5c0a0e3cf7050dc8be6d5652661c038372fce205115820ae932d848fb",
+  "change": "Destructure only Keypair and Connection from the wallet dynamic import, and only Keypair from the mint dynamic import. Preserve lazy loading and use the original public SDK entry point. No string replacement in generated bundles or signing/identity-policy change.",
+  "variants": {
+    "baseline": {
+      "playgroundSHA256": "cd7a96fd8589dc8468936a624d5a8bc4a082b1eb612f23375c4ec2e66ffac229",
+      "javascriptBytes": 677189,
+      "mainnetDefaultFiles": [
+        "index.browser.esm-unehyIUk.js"
+      ],
+      "javascriptArtifacts": {
+        "assets/index-CWsRUqX7.js": {
+          "sha256": "3a71dd4e92f9fa4628337f01d753ae3c19f958e0d26ab97298c8e33d1bfbc913",
+          "bytes": 362256
+        },
+        "assets/index.browser.esm-unehyIUk.js": {
+          "sha256": "521661ac57eea5f118b7602a22f707899bd5628022ed9fe1d22618fdfa5cef56",
+          "bytes": 284239
+        },
+        "assets/src-Bp42Ts6L.js": {
+          "sha256": "5fa24d4963dddad88930a6545b9ff0b820ceb5cab5d21bad5d9dbcf8111e196f",
+          "bytes": 30694
+        }
+      }
+    },
+    "named": {
+      "playgroundSHA256": "3c0604281f2449b9c017f5eae746911257b570e3f2162fa49d3e9523715c721d",
+      "javascriptBytes": 640440,
+      "mainnetDefaultFiles": [],
+      "javascriptArtifacts": {
+        "assets/index-CWC84BZR.js": {
+          "sha256": "a5a12e0b73febc8b97d9bb35036be0a464b715542af1f37b2c09a3dd40fce906",
+          "bytes": 362379
+        },
+        "assets/index.browser.esm-Ce37xAia.js": {
+          "sha256": "3d0c9bdc4b442904f853b7b07b6af7e00f1148ab44623a7951bd29ee77557662",
+          "bytes": 247367
+        },
+        "assets/src-CMd2g9JV.js": {
+          "sha256": "e86598b4e05cd74c60be89f39243eb29936907f8448145a2379162276ea421b3",
+          "bytes": 30694
+        }
+      }
+    }
+  },
+  "javascriptBytesRemoved": 36749,
+  "browser": "Existing pinned Chromium; Browser plugin not available",
+  "browserCases": [
+    {
+      "variant": "baseline",
+      "width": 1440,
+      "passed": true,
+      "disposableWalletCreated": true,
+      "sdkConnectionBalanceRead": true,
+      "mintKeyGenerationAndChainModuleLoaded": true,
+      "suppliedAssetRefusalDisplayed": true,
+      "walletLostOnReload": true,
+      "browserStorageEmpty": true,
+      "unexpectedRequests": 0,
+      "pageErrors": 0,
+      "expected409ResourceErrors": 1,
+      "screenshot": "baseline-1440.png",
+      "screenshotSHA256": "ca649dc48708076f29efdf5e74ab3e2adb687ec6b9332b1b5e7522a6b6bc1f7f"
+    },
+    {
+      "variant": "named",
+      "width": 1440,
+      "passed": true,
+      "disposableWalletCreated": true,
+      "sdkConnectionBalanceRead": true,
+      "mintKeyGenerationAndChainModuleLoaded": true,
+      "suppliedAssetRefusalDisplayed": true,
+      "walletLostOnReload": true,
+      "browserStorageEmpty": true,
+      "unexpectedRequests": 0,
+      "pageErrors": 0,
+      "expected409ResourceErrors": 1,
+      "screenshot": "named-1440.png",
+      "screenshotSHA256": "2a1bb43967029828ddc04fab3fc8d0ffc00e4a463b018174a6a99dc7f5f3fa11"
+    },
+    {
+      "variant": "named",
+      "width": 360,
+      "passed": true,
+      "disposableWalletCreated": true,
+      "sdkConnectionBalanceRead": true,
+      "mintKeyGenerationAndChainModuleLoaded": true,
+      "suppliedAssetRefusalDisplayed": true,
+      "walletLostOnReload": true,
+      "browserStorageEmpty": true,
+      "unexpectedRequests": 0,
+      "pageErrors": 0,
+      "expected409ResourceErrors": 1,
+      "screenshot": "named-360.png",
+      "screenshotSHA256": "45bdc7d115d4a3b250d61eb05a7555f058b5a9710baf062f7096e182837d91b2"
+    }
+  ],
+  "guardChecks": {
+    "passed": true,
+    "retentionAndIdentifierRefusals": 3,
+    "childCommands": 0,
+    "retainedFilesUnchanged": 97,
+    "pilotAndBuilderJavaScriptHashesMatch": {
+      "baseline": true,
+      "named": true
+    }
+  },
+  "rejectedInitialInvocation": {
+    "reason": "Uppercase attempt identifier rejected before creating any output directory or starting a build.",
+    "outputCreated": false
+  },
+  "frozenFilesUnchanged": 45,
+  "liveRuntimeMatchesFreeze": true,
+  "liveAPIRequests": 0,
+  "chainSubmissions": 0,
+  "deployed": false,
+  "newCandidateAdmitted": false,
+  "activeCandidateG306Accepted": false,
+  "releaseAccepted": false,
+  "mainnetAccepted": false,
+  "bridgeAccepted": false,
+  "limitations": [
+    "This proposal does not change the deployed SDK or repair G3.06 for the active candidate. A reviewed candidate transition and its applicable checks are still required.",
+    "Built from frozen web/chain/config sources and locked dependency manifests using existing installed packages. This is not an independent dependency integrity audit or a byte-for-byte reproduction of the deployed build.",
+    "Baseline and named builds differ only in four SDK-reference substitutions; both use identical overlay configuration. The earlier exploratory builds and the published builder produce identical JavaScript hashes without repeating either retained attempt.",
+    "All browser requests are intercepted. Disposable wallet generation, supplied balance reading, lazy mint-module loading and local mint-key generation pass, followed by a deliberate asset-admission refusal before signing or issuance. No successful issuance, transfers, live API integration or stability result is claimed.",
+    "No private-key import UI was introduced, but complete G3.06 import coverage, security review and other release requirements remain separate.",
+    "The known clipped mobile navigation remains; these targeted checks do not accept general layout or accessibility. Static whitepaper files were not copied into the test overlays and publishing them as a site is not supported by this builder."
+  ]
+}

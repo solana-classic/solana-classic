@@ -1,6 +1,6 @@
 # Current implementation handoff
 
-## Current checkpoint — 18 October 2026, 04:35 UTC
+## Current checkpoint — 18 October 2026, 05:36 UTC
 
 This checkpoint supersedes the historical hold, branch names, pending-run
 statements and next-action instructions below. The founder resumed development.
@@ -49,6 +49,12 @@ remains separately verified, but the literal G3.06 bundle-absence condition
 is not satisfied. No mainnet request or key-import interface is inferred from
 those defaults. The candidate is preserved; remediation requires a reviewed
 bundle change and applicable candidate checks.
+An undeployed proposal now selects only the needed SDK exports at both lazy
+imports. Controlled local builds remove the known mainnet defaults and 36,749
+JavaScript bytes; three intercepted browser profiles pass wallet creation and
+mint-module loading, stopping before issuance. Frozen sources, the deployed
+frontend and runtime remain unchanged. This prepares a remediation for review;
+it does not accept G3.06 or transfer the existing stability result to new bytes.
 
 Current independent preparation work binds final genesis policy and audited
 metadata to its budget probe. The current allocation decoder is now integrated

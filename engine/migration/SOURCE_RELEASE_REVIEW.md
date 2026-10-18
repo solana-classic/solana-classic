@@ -339,3 +339,30 @@ Resolving the literal bundle condition requires a reviewed dependency/bundle
 change and the applicable candidate checks. The current freeze and services
 remain unchanged; do not silently reinterpret the requirement as a pass because
 the configured application destination is correct.
+
+## Undeployed SDK-selection proposal
+
+The [isolated SDK-selection proposal](../../evidence/agave-source-sdk-selection-proposal.json)
+uses named destructuring at the two lazy SDK imports. Controlled baseline and
+proposed builds retain the same configuration and frozen source inputs; the
+baseline includes the known mainnet defaults and the proposed JavaScript does
+not. It removes 36,749 JavaScript bytes without replacing strings in generated
+code. Earlier exploratory outputs match the published builder's JavaScript hashes.
+The builder refuses reused attempts and requires the selected frozen inputs.
+
+Three isolated browser profiles cover baseline desktop and proposed desktop/mobile.
+Wallet generation, supplied balance reading and lazy mint-module loading work;
+asset admission is deliberately refused before any signing or chain submission.
+All browser requests are intercepted. These checks do not establish successful
+issuance, transfers or live integration. The current candidate, its five deployed
+frontend files and runtime remain unchanged; G3.06 is not accepted retrospectively.
+The proposal still requires candidate review and all applicable release checks.
+
+To reproduce in a new ignored directory, run
+`python3 -B engine/migration/frontend-sdk-selection.py frontend-sdk-review-unique`
+with a lowercase identifier, followed by
+`python3 -B scripts/pnpm.py exec node engine/migration/frontend-sdk-selection-check.mjs frontend-sdk-review-unique`
+using that same lowercase identifier. The latter creates its own exclusive browser
+result directory. These explicit local tools are not deployment commands or part
+of the live end-to-end workflow. Test overlays omit the static whitepaper and must
+not be published as a complete website.
