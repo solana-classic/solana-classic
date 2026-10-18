@@ -682,3 +682,27 @@ were hashed in memory, with no installation, extraction to disk or execution.
 The completed Linux caller attempt was not repeated. Dynamic dependencies and
 execution-host integrity remain outside this comparison. Preparer integration
 and all existing host, compiler, replay and production gates remain open.
+
+
+## Signed Linux Node release selection
+
+The [signature review](../evidence/mainnet-reserve-node-signature.json) now
+verifies the official release checksums with the existing isolated worker's
+GnuPG verifier. The active upstream keyring and release README are selected at
+recorded commits. The valid signature's primary fingerprint belongs to that
+README's release roster. Its selected archive digest matches the previous
+archive/member comparison and therefore the retained Linux Node executable.
+The procedure follows the [publisher's verification instructions](https://github.com/nodejs/node/blob/cdc1b38d40cb567b7ad0b39c86addf830a0af0ae/README.md#verifying-binaries).
+
+An initial post-signature assertion expected the recovered checksum text to be
+byte-identical to the unsigned download. It failed because the signed payload
+has one additional terminal line feed. That attempt remains retained. A fresh
+attempt requires exactly that relationship, with both original hashes recorded;
+changing one character in the archive checksum produces a bad signature and is
+rejected. Independent readback checks the completed record and selected files.
+
+No runtime artifact was executed, installed or rebuilt. No global keyring or
+service changed. Trust rests on the selected publisher roster and the existing
+verification host; this is not an independent build or full execution-host
+attestation. Runtime admission, preparer integration and all existing rehearsal
+and production gates remain separate requirements.
