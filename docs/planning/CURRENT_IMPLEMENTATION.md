@@ -1,6 +1,6 @@
 # Current implementation handoff
 
-## Current checkpoint — 17 October 2026, 22:07 UTC
+## Current checkpoint — 18 October 2026, 00:05 UTC
 
 This checkpoint supersedes the historical hold, branch names, pending-run
 statements and next-action instructions below. The founder resumed development.
@@ -39,8 +39,10 @@ through bounded input, with complete account fingerprints and non-account
 parameter comparisons tested under supplied responses. See
 [genesis preparation](../../mainnet/GENESIS_PREPARATION.md) for the precise
 reserve-balance and creation-time exceptions and local/synthetic limits.
-The offline reserve adapter now has a repeatable bundle builder with executable
-fingerprints and tested binary-override refusal. Its artifact remains unadmitted.
+The offline reserve adapter now has a repeatable bundle builder and a combined
+caller that binds exact input bytes, checks selected runtime artifacts and
+validates output against independent expectations. Local synthetic checks pass;
+its runtime remains unadmitted and the preparation entry point does not call it.
 Reserve-address adapter integration, fresh real genesis compilation, two strict
 slot-zero replays and the three-validator rehearsal remain open. No Linux host
 has passed rehearsal admission; preserve host and security checks.

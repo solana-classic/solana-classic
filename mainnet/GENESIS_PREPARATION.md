@@ -611,3 +611,32 @@ expectations would defeat the comparison. The preparer still does not invoke
 the adapter: trusted runtime selection, complete caller integration, admitted
 Linux hosting, fresh compilation and strict replays remain open. See
 [the result-validation review](../evidence/mainnet-reserve-result-local.json).
+
+
+## Use the combined selected caller
+
+`reserve_adapter_process.run_validated` connects input selection, bounded
+execution and strict output validation. Before reading artifacts or starting a
+process, it verifies a caller-selected SHA-256 over the exact immutable input
+bytes and validates a copy of the expected result fields. The canonical service,
+canonical development genesis and known public Solana genesis selections refuse.
+Caller dictionary changes during execution cannot replace the copied expectations.
+
+The existing artifact checks, empty child environment, private diagnostic sink,
+limits and cleanup still apply. The function returns only a validated object;
+process failures, changed artifacts and invalid output withhold results.
+Cancellation propagates. The lower-level `run_selected` remains a raw-byte API.
+
+Six combined-caller test groups cover both modes, pre-execution refusal,
+forbidden identities, invalid output, expectation mutation and process failures.
+The full local Python suite passes 204 of 205 tests with its existing Linux-only
+skip and resource warnings treated as errors. Three real retained-bundle calls
+verify both synthetic success modes and refusal of otherwise valid adapter
+output against a wrong externally selected plan.
+
+Input hashing binds bytes, not plan validity or trusted provenance. Select input
+and expectations independently of stdout, and admit the runtime separately. The
+selected adapter still checks its input report selectors. The preparation entry
+point remains unchanged and does not use this combined caller; fresh compilation,
+strict replays and host admission remain open. See
+[the combined-caller review](../evidence/mainnet-reserve-validated-caller-local.json).

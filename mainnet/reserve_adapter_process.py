@@ -7,6 +7,7 @@ No compiler, validator, key generation or chain operation is exposed here.
 import hashlib,os,re,stat
 from pathlib import Path
 import offline_process
+import reserve_adapter_result
 
 CANONICAL_SERVICE='d0a1de40-bd9c-47eb-a7fc-477f1c55b2d6'
 MAX_NODE_BYTES=256*1024**2
@@ -61,3 +62,29 @@ def run_selected(node,bundle,*,node_sha256,node_bytes,bundle_sha256,bundle_bytes
  if artifact(node,node_sha256,node_bytes,MAX_NODE_BYTES,True)!=node_before or artifact(bundle,bundle_sha256,bundle_bytes,MAX_BUNDLE_BYTES)!=bundle_before:raise ValueError('SELECTED_RESERVE_ARTIFACT_CHANGED')
  if not result:raise ValueError('SELECTED_RESERVE_OUTPUT_REQUIRED')
  return result
+
+
+# The running development chain and known public Solana clusters are excluded
+# even for this offline invocation. No selected result grants chain access.
+FORBIDDEN_GENESIS=frozenset((
+ '7TAUSfTzQeocodtVee2qsftsCYnJu2eCM1ALdADbHNon',
+ '5eykt4UsFv8P8NJdTREpY1vzqKqZKvdpKuc147dw2N9d',
+ 'EtWTRABZaYq6iMfeYKouRu166VU2xqa1wcaWoxPkrZBG',
+ '4uhcVJyU9pJkvQyS88uRDiswHXSCkY3zQawwpjk2NsNY',
+))
+
+
+def run_validated(node,bundle,*,node_sha256,node_bytes,bundle_sha256,bundle_bytes,mode,input_bytes,input_sha256,selection,log):
+ """Return only schema-checked output for exact selected immutable input bytes.
+
+ Select the input digest and result expectations independently of stdout.
+ Input hashing binds bytes, not plan validity or trusted report provenance;
+ the selected adapter must still validate its input and report selectors.
+ The preparation entry point does not yet invoke this function.
+ """
+ if os.environ.get('RAILWAY_SERVICE_ID')==CANONICAL_SERVICE:raise ValueError('CANONICAL_SERVICE_FORBIDDEN')
+ if type(input_bytes) is not bytes or not 0<len(input_bytes)<=INPUT_BYTES or type(input_sha256) is not str or re.fullmatch('[0-9a-f]{64}',input_sha256) is None or hashlib.sha256(input_bytes).hexdigest()!=input_sha256:raise ValueError('SELECTED_RESERVE_INPUT_REQUIRED')
+ selected=reserve_adapter_result.validate_selection(mode,selection)
+ if selected['baselineGenesis'] in FORBIDDEN_GENESIS or selected.get('proposedGenesis') in FORBIDDEN_GENESIS:raise ValueError('ISOLATED_RESERVE_GENESIS_REQUIRED')
+ raw=run_selected(node,bundle,node_sha256=node_sha256,node_bytes=node_bytes,bundle_sha256=bundle_sha256,bundle_bytes=bundle_bytes,mode=mode,input_bytes=input_bytes,log=log)
+ return reserve_adapter_result.validate_result(raw,mode=mode,selection=selected)

@@ -80,14 +80,8 @@ def strict_json(raw):
                       parse_int=integer, parse_float=refused, parse_constant=refused)
 
 
-def validate_result(raw, *, mode, selection):
-    """Return a validated result or one fixed, path-free refusal.
-
-    `selection` has exactly the mode's SELECTED fields, obtained from the
-    separately selected plan and reports, never copied from this result.
-    Raw report hashes are not emitted by the adapter and cannot be authenticated
-    by this function; input selection and trusted execution remain necessary.
-    """
+def validate_selection(mode, selection):
+    """Validate and copy external expectations before starting a process."""
     try:
         require(type(mode) is str and mode in SELECTED)
         shape(selection, SELECTED[mode])
@@ -105,6 +99,23 @@ def validate_result(raw, *, mode, selection):
             address(selected['proposedGenesis'])
             require(selected['proposedGenesis'] != selected['baselineGenesis'])
             require(type(selected['creationTimeChanged']) is bool)
+
+        return selected
+    except (ValueError, TypeError, KeyError, OverflowError):
+        raise ValueError('SELECTED_RESERVE_RESULT_REFUSED') from None
+
+
+def validate_result(raw, *, mode, selection):
+    """Return a validated result or one fixed, path-free refusal.
+
+    `selection` has exactly the mode's SELECTED fields, obtained from the
+    separately selected plan and reports, never copied from this result.
+    Raw report hashes are not emitted by the adapter and cannot be authenticated
+    by this function; input selection and trusted execution remain necessary.
+    """
+    try:
+        selected = validate_selection(mode, selection)
+        count = selected['baselineAccountCount' if mode == 'prepare' else 'accountCount']
 
         result = strict_json(raw)
         fields = SELECTED[mode] | FLAGS | TRUE_FIELDS[mode] | {'schemaVersion', 'state', 'scope', 'unchangedAccountCount'}
