@@ -80,7 +80,7 @@ def run_validated(node,bundle,*,node_sha256,node_bytes,bundle_sha256,bundle_byte
  Select the input digest and result expectations independently of stdout.
  Input hashing binds bytes, not plan validity or trusted report provenance;
  the selected adapter must still validate its input and report selectors.
- The preparation entry point does not yet invoke this function.
+ The explicit reserve preparation mode invokes this function after host admission.
  """
  if os.environ.get('RAILWAY_SERVICE_ID')==CANONICAL_SERVICE:raise ValueError('CANONICAL_SERVICE_FORBIDDEN')
  if type(input_bytes) is not bytes or not 0<len(input_bytes)<=INPUT_BYTES or type(input_sha256) is not str or re.fullmatch('[0-9a-f]{64}',input_sha256) is None or hashlib.sha256(input_bytes).hexdigest()!=input_sha256:raise ValueError('SELECTED_RESERVE_INPUT_REQUIRED')

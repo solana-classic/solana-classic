@@ -6,6 +6,11 @@ activates mainnet or a bridge. The current host remains blocked before keys
 or genesis are created. A successful build or local driver cannot supply a
 real bank hash.
 
+Current scope: the explicit selected-reserve mode described at the end now uses
+the combined adapter caller. Earlier checkpoint sections retain their original
+local evidence scopes. The new mode has only disposable orchestration proof;
+actual reserve compilation, strict replays and host admission remain open.
+
 ## Required tools and host
 
 Transfer or reproduce the exact reviewed Linux x86_64 binaries into one private
@@ -706,3 +711,76 @@ service changed. Trust rests on the selected publisher roster and the existing
 verification host; this is not an independent build or full execution-host
 attestation. Runtime admission, preparer integration and all existing rehearsal
 and production gates remain separate requirements.
+
+
+## Explicit second-stage reserve preparation
+
+The default fresh-baseline command remains unchanged. After a new synthetic
+baseline bundle has been prepared and independently reviewed, the same entry
+point accepts an owner-only selection file and its separately reviewed SHA-256:
+
+```sh
+python3 mainnet/prepare-consensus.py \
+  --binary-directory <reviewed-binary-directory> \
+  --bundle-id <new-reserve-bundle-id> \
+  --reserve-selection <private-selection-file> \
+  --reserve-selection-sha256 <reviewed-selection-sha256>
+```
+
+Without `--prepare --ack fresh-private-synthetic-genesis`, this mode performs
+read-only host, artifact and baseline-bundle inspection. Unlike the original
+host-only default, baseline inspection invokes the pinned auditor and keygen's
+public-key reader. It creates no attempt, keys or ledger and does not run the
+reserve adapter. All existing canonical-service and host admission checks apply
+before opening the private selection file.
+
+The selection object has exactly these fields:
+
+| Field | Required selection |
+| --- | --- |
+| `schemaVersion`, `scope` | `1`, `isolated-reserve-preparation-v1` |
+| `baselineBundleId` | Existing reviewed private synthetic baseline identifier |
+| `baselineManifestSHA256` | Independently selected exact manifest bytes |
+| `planningInput` | Reviewed input to `planPrefundedReserve`, including the complete baseline audit |
+| `prepareSelection` | Exact `prepare` expectations defined in `reserve_adapter_result.py`; select the plan hash and derived reserve address independently of adapter stdout |
+| `node`, `bundle` | Absolute selected artifact paths; bytes must match `reserve-runtime-artifacts.json` |
+
+The runtime manifest selects the previously reviewed Linux Node executable and
+unchanged retained adapter bundle. The publisher-signature and compatibility
+records explain those selections. They do not attest dynamic libraries, the
+execution host or sandboxing. Keep runtime dependencies and the binary directory
+under reviewed operator control; changing the manifest requires source review.
+The private selection contains economic inputs and paths and must stay outside
+source, public evidence and deployments.
+
+Explicit execution creates a new exclusive attempt and bundle, then reads the
+baseline again with the pinned auditor and allocation decoder. The complete
+actual audit must match the selected planning input. `run_validated` receives
+exact input bytes and independent prepare expectations. Only its validated
+primordial account JSON reaches the fixed compiler command. The compiler uses
+the baseline's three synthetic validator public identities and calibrated PoH.
+
+The proposed genesis must be distinct and isolated. Its complete audited policy
+must match the baseline. A fresh pinned decode is checked against the proposed
+audit; Python independently compares every serialized account fingerprint after
+exactly one reserve-address replacement, non-account parameters and authority
+summaries. The selected adapter's review must also pass. Only then are two fresh
+slot-zero replay directories materialized with normal verification. Matching
+bank hashes and shred versions, a baseline recheck and final bundle inspection
+are required for `prepared`.
+
+This second stage deliberately copies only the three identity key files from
+its explicitly selected synthetic baseline into the new owner-only bundle; it
+generates no new keys. It never imports origin-chain, production or canonical
+devnet keys and never changes the baseline. Vote/stake public identities remain
+bound to the baseline manifest. Failed attempts and partial outputs remain;
+identifiers cannot be reused. No validator or network starts automatically.
+
+Fifteen new local groups exercise the CLI, selection, normal orchestration,
+refusals, cancellation and baseline preservation. The full Python suite passed
+219 of 220 checks with one existing Linux-only skip. Compiler, decoder, adapter
+and bundle-inspection responses were supplied fixtures; these are not actual
+fresh-genesis or replay results. See [the integration review](../evidence/mainnet-reserve-preparer-integration-local.json).
+The current worker still fails the unchanged host profile. Real reserve
+compilation, strict replays, the three-validator rehearsal and production
+requirements remain open.

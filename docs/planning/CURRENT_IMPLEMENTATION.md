@@ -1,6 +1,6 @@
 # Current implementation handoff
 
-## Current checkpoint — 18 October 2026, 02:08 UTC
+## Current checkpoint — 18 October 2026, 02:39 UTC
 
 This checkpoint supersedes the historical hold, branch names, pending-run
 statements and next-action instructions below. The founder resumed development.
@@ -52,10 +52,15 @@ the official release archive through a checksum/member comparison. A subsequent
 signed-checksum review verifies the publisher signature against a commit-pinned
 release-key roster, with a tampered-checksum refusal. This narrows artifact
 provenance; full runtime and validator-host admission remain open, and the
-preparation entry point does not call the adapter.
-Reserve-address adapter integration, fresh real genesis compilation, two strict
-slot-zero replays and the three-validator rehearsal remain open. No Linux host
-has passed rehearsal admission; preserve host and security checks.
+explicit selected-reserve mode now calls the adapter after unchanged host admission.
+Its second-stage orchestration binds a reviewed baseline and plan, compares
+complete decoded bytes, preserves baseline identities and requires two strict
+slot-zero replays before success. Fifteen new supplied-response groups pass;
+the full local Python suite passes 219 of 220 checks with one existing Linux-only
+skip. This is source integration, not actual compiled reserve evidence. Fresh
+real reserve compilation, two strict slot-zero replays and the three-validator
+rehearsal remain open. No Linux host has passed rehearsal admission; preserve
+host and security checks.
 
 The separate native transaction-history case remains
 `UNKNOWN/EXPIRED_UNRESOLVED`. Do not retry, refund, reset or create a new nonce to

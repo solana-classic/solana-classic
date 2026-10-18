@@ -262,9 +262,14 @@ def run(binary_directory,bundle_id,execute=False):
  return proof
 
 def main():
- p=argparse.ArgumentParser(description=__doc__);p.add_argument('--binary-directory',type=Path,required=True);p.add_argument('--bundle-id',required=True);p.add_argument('--prepare',action='store_true');p.add_argument('--ack');args=p.parse_args()
+ p=argparse.ArgumentParser(description=__doc__);p.add_argument('--binary-directory',type=Path,required=True);p.add_argument('--bundle-id',required=True);p.add_argument('--prepare',action='store_true');p.add_argument('--ack');p.add_argument('--reserve-selection',type=Path);p.add_argument('--reserve-selection-sha256');args=p.parse_args()
  if args.prepare and args.ack!='fresh-private-synthetic-genesis':p.error('Explicit fresh-private-synthetic-genesis acknowledgment required')
- try:result=run(args.binary_directory,args.bundle_id,args.prepare)
+ if bool(args.reserve_selection)!=bool(args.reserve_selection_sha256):p.error('Both reserve selection path and digest are required')
+ try:
+  if args.reserve_selection:
+   import reserve_preparation
+   result=reserve_preparation.run(args.binary_directory,args.bundle_id,args.reserve_selection,args.reserve_selection_sha256,args.prepare)
+  else:result=run(args.binary_directory,args.bundle_id,args.prepare)
  except Exception as error:
   message=str(error);result={'state':'blocked','failureType':type(error).__name__,'failureCode':message if type(error) is ValueError and re.fullmatch('[A-Z_]+',message) else 'PRIVATE_PREPARATION_ADMISSION_FAILED','validatorsStarted':0,'productionReady':False}
  print(json.dumps(result,indent=2));return 0 if result['state'] in ['preparation-host-admitted','prepared'] else 78
