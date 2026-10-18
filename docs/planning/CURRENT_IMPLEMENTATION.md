@@ -1,6 +1,6 @@
 # Current implementation handoff
 
-## Current checkpoint — 18 October 2026, 00:37 UTC
+## Current checkpoint — 18 October 2026, 01:05 UTC
 
 This checkpoint supersedes the historical hold, branch names, pending-run
 statements and next-action instructions below. The founder resumed development.
@@ -43,8 +43,11 @@ The offline reserve adapter now has a repeatable bundle builder and a combined
 caller that binds exact input bytes, checks selected runtime artifacts and
 validates output against independent expectations. Local synthetic checks and
 25 isolated Linux caller checks pass; the unchanged bundle produces matching
-synthetic results on both hosts. Runtime provenance and full-validator hosting
-remain unadmitted, and the preparation entry point does not call the adapter.
+synthetic results on both hosts. Its retained Linux Node executable also matches
+the official release archive through an HTTPS checksum/member comparison. This
+is a publisher-origin byte match, not signed-release verification or full runtime
+admission. Full-validator hosting remains unadmitted, and the preparation entry
+point does not call the adapter.
 Reserve-address adapter integration, fresh real genesis compilation, two strict
 slot-zero replays and the three-validator rehearsal remain open. No Linux host
 has passed rehearsal admission; preserve host and security checks.

@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "at": "2026-10-18T01:03:20.778694+00:00",
+  "scope": "HTTPS upstream release archive checksum and member comparison to retained isolated Linux caller executable; no execution or runtime admission",
+  "checksumURL": "https://nodejs.org/dist/v24.19.0/SHASUMS256.txt",
+  "checksumFileSHA256": "be0629ee2bcd8e40bb856abdd3407f0762101b76bd60a36b8867f637733631c0",
+  "archiveURL": "https://nodejs.org/dist/v24.19.0/node-v24.19.0-linux-x64.tar.xz",
+  "archiveSHA256": "14b342e71204f811bde6153be8e04b62aef63c236fef92b55f9c83154b409647",
+  "archiveBytes": 31633904,
+  "archiveChecksumMatched": true,
+  "member": "node-v24.19.0-linux-x64/bin/node",
+  "memberSHA256": "bc17c508ffeed0ec622934f9b7fa72f8e78da65350e63c3eceb56fa688aa5e12",
+  "memberBytes": 125989464,
+  "memberDeclaredBytes": 125989464,
+  "memberRegularFile": true,
+  "retainedWorkerNodeMatches": true,
+  "checksumSignatureVerified": false,
+  "trustScope": "Direct official HTTPS archive and checksum list from the same publisher origin; no detached signature verification or independent build attestation",
+  "runtimeAdmitted": false,
+  "executablesRun": 0,
+  "canonicalNetworkChanged": false,
+  "productionReady": false,
+  "comparisonEvidence": {
+    "path": "evidence/mainnet-reserve-caller-linux.json",
+    "sha256": "7241ec1248baf1c813c310a9a82cd0d2a23bb6e28b0e8587860a955aae426123"
+  },
+  "limitations": [
+    "The archive and checksum list were read over verified HTTPS from the same official distribution origin. This comparison does not independently authenticate the release with a reviewed signing-key roster or reproducible build.",
+    "The compared worker identity comes from the retained completed Linux caller attempt; no caller attempt or executable was run again. This is not a new live worker measurement.",
+    "The archive was checked in memory and its single regular bin/node member was read for hashing. No archive files were extracted onto the filesystem, installed or executed.",
+    "Matching the official distribution does not establish dynamic-library provenance, immutable path execution, a sandbox or complete runtime admission.",
+    "The existing preparer remains unwired. Host requirements, fresh genuine compilation, two strict slot-zero replays, three-validator consensus, custody, backing, independent operators, monitoring and security review remain open."
+  ],
+  "preparerIntegrated": false,
+  "hostAdmitted": false,
+  "mainnetActivated": false
+}

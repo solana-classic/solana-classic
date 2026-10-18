@@ -663,3 +663,22 @@ establish independent distribution provenance, a general runtime allowlist or a
 sandbox. The bundle was not rebuilt on Linux. The full-validator host requirements
 remain unsatisfied, and the preparation entry point still does not invoke this
 adapter. Fresh compilation, strict replays and production gates remain open.
+
+
+## Linux Node upstream comparison
+
+The executable selected in the retained Linux caller attempt now matches the
+single regular `bin/node` member of the official Node v24.19.0 Linux x64
+release archive: SHA-256
+`bc17c508ffeed0ec622934f9b7fa72f8e78da65350e63c3eceb56fa688aa5e12`,
+125,989,464 bytes. The 31,633,904-byte archive matches the checksum fetched
+from the official release directory. Both reads used verified HTTPS.
+See [the upstream comparison](../evidence/mainnet-reserve-node-upstream.json).
+
+This establishes a publisher-origin byte match to the retained observation.
+The checksum list and archive share the same origin; no release signature,
+independent build attestation or runtime admission is claimed. Archive contents
+were hashed in memory, with no installation, extraction to disk or execution.
+The completed Linux caller attempt was not repeated. Dynamic dependencies and
+execution-host integrity remain outside this comparison. Preparer integration
+and all existing host, compiler, replay and production gates remain open.
