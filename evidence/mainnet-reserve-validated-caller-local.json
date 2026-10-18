@@ -1,0 +1,74 @@
+{
+  "schemaVersion": 1,
+  "at": "2026-10-18T00:05:12.862376+00:00",
+  "scope": "Local combined selected-input, bounded-process and strict-result reserve adapter caller; no preparer or host admission",
+  "passed": true,
+  "sourceFiles": {
+    "mainnet/reserve_adapter_process.py": "5e75ed4402b71495390697cac5e52387206e2278c594be4fd76e8c38420fb75e",
+    "mainnet/reserve_adapter_result.py": "f00b86265c5e44e3070e2fac867d3034d71c0050fe22aca5f1884076836426b8",
+    "mainnet/reserve_adapter_validated_test.py": "0413f3d1ce8ee126dc62a8114592daeffb7e6debd09eda06f8a052d60d151f52",
+    "mainnet/reserve_adapter_result_test.py": "3a013e33c90176b5488bd5123266e36311af491ae03cbf6d1e46a6eaaa6c23aa",
+    "mainnet/offline_process.py": "6e17a75e1269e9a7cd89ad351f9946c386af5f0df345b9891712020b774988ed"
+  },
+  "validation": {
+    "pythonTests": 205,
+    "pythonPassed": 204,
+    "pythonSkipped": 1,
+    "skipScope": "Existing Linux-only check on the local non-Linux host",
+    "newCombinedCallerTestGroups": 6,
+    "resourceWarningsAreErrors": true,
+    "testLogSHA256": "93f7de426cf45d1c180b133246e13a9c80e8a67d032420b6e72b51ac8ac00749",
+    "controlReportSHA256": "ed712c433b6c886d77df3d8e35e451af67bc29991a9dcbd685fea6805e036357",
+    "controlDriverSHA256": "6e972e94c16d82eb998750f701fb70aaaa6651ad406bd6fc34640bb36a1d114b",
+    "fixtureInputSHA256": "2e9e7e0885778e627c16aadc3a4a0f9ac5b503dfbd9e2c471e3f91f714b21060",
+    "nodeExecutableSHA256": "d0c6c74401e6a544bb4d4b2a9ded9c43298d4e6dcd5ebac4dd010c4c81774105",
+    "retainedBundleSHA256": "9091ca58a4767e40678fd069ae76712ad7d5eb5c6f140d41feb882bbb0a565c3",
+    "realNodeInvocations": 3,
+    "results": [
+      {
+        "mode": "prepare",
+        "passed": true,
+        "inputSHA256": "7672a873e797e6ab46315f975894436c20c45175eae24e05aca509dea505a943",
+        "validatedOutputObjectSHA256": "7e1d60308cb8acbfa50c0604406a893d831ff2bfb868515fefb37937f9ad78c6",
+        "stderrBytes": 0
+      },
+      {
+        "mode": "review",
+        "passed": true,
+        "inputSHA256": "17332e30de072a0cef86538affd74f19e31b3949c5ad6a2528a9747decc6de01",
+        "validatedOutputObjectSHA256": "62caf02081470218d10f8cbd0f9411a3d52aeb0945d74a0f8ef43034a7778dc7",
+        "stderrBytes": 0
+      },
+      {
+        "mode": "prepare",
+        "case": "valid-adapter-output-wrong-external-plan",
+        "passed": true,
+        "failureCode": "SELECTED_RESERVE_RESULT_REFUSED",
+        "returnedOutput": false,
+        "stderrBytes": 0
+      }
+    ]
+  },
+  "contract": {
+    "entryPoint": "reserve_adapter_process.run_validated",
+    "input": "Caller-selected SHA-256 must match nonempty immutable input bytes within 32 MiB before artifact reads or process creation. This digest selects bytes, not their provenance or plan validity.",
+    "expectations": "Validate and copy the exact mode-specific expected fields before execution; subsequent caller dictionary mutation cannot replace them. Expectations must be independent of stdout.",
+    "chainExclusion": "Refuse the canonical service and the canonical development genesis or known public Solana cluster genesis in baseline or proposed selections before artifact reads.",
+    "execution": "Use the existing selected-artifact wrapper with unchanged file rechecks, empty environment, private stderr, output limits, timeout and owned-process cleanup.",
+    "result": "Return the parsed result only after complete schema, capability, selection and primordial-input validation. Invalid output or process failure returns no partial success. Cancellation propagates."
+  },
+  "limitations": [
+    "The combined API is available for integration but prepare-consensus.py does not invoke it. Its existing host admission, ordinary synthetic reserve, compiler and replay paths are unchanged.",
+    "The caller supplies the input digest and selected expectations. These must come from a separately reviewed plan and reports; neither a digest nor a matching assertion authenticates decoder execution, account history, reserve PDA derivation, backing or custody.",
+    "The raw report selectors remain checked by the selected adapter on its input. This Python layer binds the entire input byte stream and result expectations; it does not independently reimplement all adapter semantics.",
+    "Three actual local Node invocations use an unchanged retained bundle and a synthetic two-account fixture. Both modes return validated results; a valid adapter output paired with a wrong external plan selection is withheld. These are not fresh compiled genesis, Linux runtime admission or on-chain tests.",
+    "Artifact hashes are caller selections rather than a trusted allowlist, and execution is not atomically pinned or sandboxed. Trusted Linux artifacts and host admission, actual preparer wiring, fresh compilation, two strict slot-zero replays, independent validators, custody, backing, monitoring fault delivery and security review remain open."
+  ],
+  "preparerIntegrated": false,
+  "hostAdmitted": false,
+  "runtimeAdmitted": false,
+  "canonicalNetworkChanged": false,
+  "chainTransactionsSubmitted": 0,
+  "mainnetActivated": false,
+  "productionReady": false
+}

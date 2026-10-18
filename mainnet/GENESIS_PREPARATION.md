@@ -6,14 +6,20 @@ activates mainnet or a bridge. The current host remains blocked before keys
 or genesis are created. A successful build or local driver cannot supply a
 real bank hash.
 
+Current scope: the explicit selected-reserve mode described at the end now uses
+the combined adapter caller. Earlier checkpoint sections retain their original
+local evidence scopes. The new mode has only disposable orchestration proof;
+actual reserve compilation, strict replays and host admission remain open.
+
 ## Required tools and host
 
 Transfer or reproduce the exact reviewed Linux x86_64 binaries into one private
 directory: `agave-validator`, `solana-genesis`, `solana-keygen`,
-`classic-genesis-audit-v2` and `agave-ledger-tool`. Their selected digests are in
+`classic-genesis-audit-v2`, `agave-ledger-tool` and
+`classic-genesis-allocation-bytes`. Their selected digests are in
 `host-preflight.py`, `consensus-audit-artifact.json` and
-`ledger-tool-artifact.json`. Keep this repository's mainnet scripts and those
-manifests together, including `offline_process.py`. The pinned ledger tool was compiled from the complete
+`ledger-tool-artifact.json` and `allocation-decoder-artifact.json`. Keep this repository's mainnet scripts and those
+manifests together, including `offline_process.py` and `cgroup_limits.py`. The pinned ledger tool was compiled from the complete
 reviewed Agave source tree; existing runtime binaries were unchanged.
 
 The same host admission applies as for the three-validator launcher: Linux
@@ -82,6 +88,50 @@ After a real `prepared` result, independently review the retained outputs and
 run the separate `consensus.py` admission and explicit private rehearsal from
 [the launcher contract](CONSENSUS_REHEARSAL.md). Preparation cannot launch nodes.
 
+## Preserve the probe calibration
+
+The budget probe alone uses `--hashes-per-tick auto`. The pinned Development
+compiler measures the host and selects half its measured peak hash rate;
+running that calibration twice can produce different genesis parameters.
+Preparation now reads the probe auditor's positive u64 hash count and supplies
+that exact numeric value to the final compiler. It checks the final audited
+count and full PoH configuration against the probe before copying genesis into
+the launch bundle or starting either slot-zero replay. A mismatch retains the
+failed attempt and partial outputs. Host and validator PoH speed checks remain
+unchanged; no sleep mode or performance-check bypass is introduced.
+
+Three additional offline groups cover numeric bounds/types, the final command,
+and changed final PoH reports. The synthetic orchestration driver verifies one
+calibration followed by numeric selection, retained refusal before bundle copy
+or replay, and the successful two-replay path. All 20 focused checks pass; the
+full package runs 149 checks locally with 148 passing and one Linux-only check
+skipped. These are supplied tool responses and disposable files, not compiled
+genesis or real replay evidence. See [the local calibration review](../evidence/mainnet-preparation-poh-binding-local.json).
+
+This removes one source of parameter drift within the existing preparer. It
+does not integrate the reserve-byte adapter, prove that every other account or
+non-account parameter is unchanged, or reuse a retained genesis/key set. Fresh
+compiled genesis, complete byte comparison and actual strict replays still need
+an admitted Linux host and a new reviewed attempt.
+
+## Empty synthetic reserve admission
+
+Before copying the final genesis or invoking either replay, preparation now
+requires the selected reserve to have an integer data length of zero and an
+explicit false executable flag, in addition to its exact address, System owner
+and balance. Previously the latter three fields alone admitted a nonempty or
+executable reserve in a supplied audit report.
+
+One new orchestration regression covers nine invalid data-length/flag variants.
+All nine reproduced the previous acceptance; each now retains a failed attempt
+before bundle genesis, manifest or ledger-tool invocation. The normal empty
+reserve still completes the existing synthetic two-replay driver. All 21 focused
+checks pass; the offline package runs 150 checks locally, with 149 passing and
+one existing Linux-only skip. These tests use supplied tool responses and
+disposable files, not compiled genesis or real ledger replay. Full account-byte
+comparison, reserve-byte adapter integration and an admitted Linux host remain
+separate requirements. See [the reserve admission review](../evidence/mainnet-preparation-reserve-shape-local.json).
+
 ## Bounded offline tools and cancellation
 
 Each pinned tool now runs in its own process group with a fixed timeout,
@@ -103,14 +153,49 @@ verifies process control, not genesis compilation, replay or host admission.
 See [the initial local evidence](../evidence/mainnet-offline-process.json) and
 [the completed Linux verification](../evidence/mainnet-offline-process-linux.json).
 
+## Tool identity checks during preparation
+
+Initial artifact admission and every later offline invocation use the same
+bounded regular-file fingerprint as host admission. Each read checks the exact
+reviewed length, digest and executable permission, refuses symlinks and special
+files, and rejects file identity or metadata changes observed during hashing.
+Failures retain the preparation attempt and report a path-free failure code.
+The caller does not launch the tool after a failed check.
+
+Four additional local regression groups cover artifact replacement during a
+read, a FIFO without a writer, invalid file types and permissions, and runtime
+changes after host admission but before the first tool invocation. The complete
+synthetic preparation driver still exercises both replay steps. These checks
+are not compiled-tool or consensus evidence. The binary directory must remain
+under trusted operator control: fingerprinting does not atomically bind the
+later path-based process execution to the checked descriptor.
+
+## Final bundle inspection tool admission
+
+The bundle checker also uses the bounded executable fingerprint before running
+its selected genesis auditor or keygen public-key inspection. Previously this
+helper hashed the full file before checking its length, and could accept a
+same-byte replacement during that read. Wrong lengths now refuse before opening;
+changed file identity, permissions or bytes refuse before the process helper.
+Read failures use a path-free error. Existing output limits, timeouts and
+check-only behavior are unchanged.
+
+Four new fixture groups cover read ordering, same-byte replacement,
+non-executable files and sanitized I/O failure. All ten focused checks pass;
+the complete offline preparation package runs 146 checks locally, with 145
+passing and the existing Linux-only process check skipped. These are disposable
+file/process tests, not compiled-tool execution or a newly admitted host. The
+later path-based execution still requires trusted control of the binary
+directory. See [the scoped result](../evidence/mainnet-bundle-tool-fingerprint-local.json).
+
 ## Evidence and limits
 
-Thirteen preparation checks cover blocked/canonical hosts, read-only default,
+The original thirteen preparation checks cover blocked/canonical hosts, read-only default,
 commands, strict output parsing, exact budgets, disagreement, retained attempts
 and redacted failures. A synthetic tool driver exercises the full orchestration
 and real archive materialization; its simulated bank outputs are not real
 replay evidence. Together with the ten process lifecycle checks and existing
-launcher/archive/host checks, 52 local checks pass. Historical preparation
+launcher/archive/host checks, 52 local checks passed at that initial review. Historical preparation
 evidence retains its original counts and source hashes. Actual compiled-tool CLI discovery and blocked-host admissions are
 recorded in [the scoped evidence](../evidence/mainnet-genesis-preparation.json).
 
@@ -122,3 +207,607 @@ Real hashing genesis, bank replay, full-validator consensus/recovery, independen
 operators/hosts, actual funded backing, custody and external security review
 remain required before production. The canonical devnet and its fresh stability
 run are separate and unchanged.
+
+
+## Bind the audited policy to the probe
+
+The final genesis must preserve all five policy objects exposed by the pinned
+v2 auditor: inflation, fee-rate governor, rent, epoch schedule and PoH
+configuration. Preparation requires each object in both reports and compares
+canonical JSON before copying the genesis into its bundle or invoking either
+replay. JSON booleans cannot substitute for numeric zero. Missing objects,
+non-finite values and policy drift retain a failed attempt. The existing
+single-calibration, supply, reserve, binary and host checks remain in force.
+
+The [offline policy-binding review](../evidence/mainnet-preparation-policy-binding-local.json)
+records 24 focused checks and 153 package checks (152 passing locally, one
+Linux-only skip). Fifteen final-report mutation cases refuse before bundle copy
+or replay; the unchanged synthetic fixture still prepares successfully. These
+are supplied tool responses and disposable files, not compiled genesis or
+actual ledger replay. The v2 auditor does not expose every GenesisConfig field
+or full account bytes. This comparison therefore does not establish complete
+non-account equivalence, account-data identity or reserve-adapter integration.
+
+
+## Bounded decoder input transport
+
+The offline process runner now accepts optional immutable `input_bytes`, bounded
+by default to 16 MiB for selected genesis input. It writes through a nonblocking pipe while
+draining both output streams under the existing deadline and output bounds.
+Empty or absent input delivers EOF; tools never inherit an interactive terminal.
+An early input-pipe closure or timeout fails and reaps the owned process group.
+The runner does not copy input into logs or command arguments; callers still
+select and validate the executable, input file, digest and returned report.
+
+The [input transport review](../evidence/mainnet-offline-input-transport-local.json)
+records real local child-process tests for exact maximum-size binary delivery,
+simultaneous pipe pressure, EOF, invalid input, early closure and a nonreading
+child. Six new groups pass alongside the ten existing process groups. The full
+local package has 158 passes and one Linux-only skip. No genesis decoder,
+compiler or validator ran. This supplies the bounded transport needed for the
+allocation-byte decoder; integrating that decoder and reserve input into fresh
+preparation, checking every account/parameter and running strict ledger replays
+remain separate work requiring reviewed tools and an admitted Linux host.
+
+
+## Selected authority-review input snapshot
+
+The separate offline authority reviewer now sends its admitted genesis bytes
+directly through bounded stdin. It no longer opens the genesis path again in
+a shell. Its initial reader uses nonblocking open so a named pipe cannot wait
+for a writer before file-type admission, and rejects empty inputs and malformed
+digest selectors. Existing post-review selection checks still reject changed
+inputs and preserve the failed attempt and decoded output.
+
+Nine local authority-review checks pass, including three new groups for pipe
+refusal, empty/malformed input and snapshot handoff with later mutation. The
+full offline suite has 161 passes and one existing Linux-only skip locally.
+Decoder invocation is mocked in the handoff checks; no actual genesis decoder,
+worker rehearsal or canonical service was run. Existing retained attempts are
+unchanged. This integrates bounded input into the authority reviewer only; the
+allocation-byte rehearsal and fresh compiler integration remain open. See
+`evidence/mainnet-authority-input-snapshot-local.json`.
+
+
+## Bind audited allocations to the budget probe
+
+Preparation validates both complete metadata inventories and compares all
+account addresses, owners, balances, data lengths and executable flags before
+copying the final genesis or starting either replay. Only the selected empty
+System reserve balance may change, from one unit to the exact remaining budget.
+Balanced redistribution among other accounts is rejected even when the final
+total is correct. Duplicate rows, malformed values and inconsistent totals
+fail; inventory order is immaterial.
+
+The local supplied-response driver now rejects eight final inventory changes
+before bundle copy or replay. Fourteen malformed-inventory controls also pass.
+The focused preparation suite has 27 passes; the full offline suite has 164
+passes and one existing Linux-only skip locally. Failed preparation outputs
+remain retained. See `evidence/mainnet-preparation-allocation-binding-local.json`.
+
+This binds the five metadata fields emitted by the pinned v2 auditor. It does
+not compare account data contents, rent epochs or complete account fingerprints.
+The complete byte decoder, reserve adapter and fresh real compilation/replays
+remain separate requirements; no acceptance gate is promoted by these tests.
+
+
+## Current allocation decoder artifact
+
+A fresh isolated Linux build of the current allocation-byte decoder completed
+with all 11 Rust tests passing under Rust 1.86.0, offline locked dependencies
+and two build jobs. The selected debug executable is pinned in
+`allocation-decoder-artifact.json`, with its exact size, SHA256 and current
+manifest, lockfile and source hashes. The older decoder artifact and all retained
+attempts remain unchanged. Canonical runtime identity and all 45 frozen files
+matched before and after this build.
+
+This establishes a current executable/source pair for the next integration
+step. It does not admit the compiler worker as a three-validator host, run the
+new executable against a fresh genesis or enable it in the preparer. Unit tests
+use constructed data. Reserve-adapter integration, complete byte comparisons,
+real compilation/replay and consensus remain open. See
+`evidence/mainnet-allocation-decoder-current-build.json`.
+
+
+## Complete allocation decoding in preparation
+
+Preparation now requires the current pinned allocation decoder at admission and
+revalidates its executable alongside the other tools before every invocation.
+After each compiler/auditor pair, it admits a nonempty bounded regular-file
+snapshot and sends those exact bytes through bounded stdin. It retains private
+decoder output even when review fails and checks that the input remains unchanged.
+
+Both reports must agree with their independent metadata audits. Complete account
+fingerprints, data digests, rent epochs and decoded authority summaries must
+match between probe and final output. The sole account exception is the selected
+empty, non-executable System reserve: its exact budgeted balance changes, so its
+balance-dependent full fingerprint is excluded from equality. Its address,
+owner, empty-data digest, zero rent epoch and every other field remain fixed.
+No other account fingerprint is omitted. The decoder's complete non-account
+parameter digest must match; creation times may differ and are recorded
+explicitly. The copied final genesis must still match the admitted digest before
+any ledger replay.
+
+The 35 focused preparation tests pass. Eight new groups cover report drift,
+malformed probe/final reports, the reserve exception, changed input, special-file
+and replacement refusal, and required decoder artifact admission. The full
+local offline suite has 172 passes and one existing Linux-only skip. All compiler,
+decoder, key-generation and replay responses in the orchestration fixtures are
+supplied test data; no actual genesis or replay ran in this review. See
+`evidence/mainnet-preparation-decoder-integration-local.json`.
+
+This completes the preparer's decoder wiring and comparison logic under local
+fixtures. It supersedes earlier statements that the decoder is not integrated.
+The reserve-address adapter remains separate, and the integrated flow still
+needs fresh real compilation and two strict replays on an admitted Linux host.
+The current worker has not passed that admission. No release acceptance,
+custody, backing, independent operators or consensus is established here.
+
+
+## Current executable on retained genesis bytes
+
+A separate bounded audit now runs the exact current decoder executable on the
+selected retained synthetic genesis. Its complete output matches the previous
+retained report byte-for-byte: all 249 accounts and exactly 1,000,000,000,000
+native units. The current preparer comparison helper accepts that actual report
+against the separately selected metadata. Six controlled changes to copied
+reports either refuse admission or produce a different comparison: nonreserve
+account fingerprint, data digest, rent epoch, non-account parameters, reserve
+rent epoch and permission promotion.
+
+The audit preserves the selected original files, previous reports/attempts,
+current decoder and six runtime executables. Canonical runtime and all 45 frozen
+files still match. It creates a fresh private audit namespace only: no compiler,
+private-key access, genesis creation, bank replay, chain request or validator.
+The worker still has no rehearsal host admission. This is actual retained-byte
+compatibility evidence for the current executable/helper pair, not a fresh
+compiler-to-replay result. See
+`evidence/mainnet-allocation-current-baseline-review.json`.
+
+
+## Bounded reserve-adapter transport
+
+`reserve-byte-stdio.mjs` exposes the existing offline reserve adapter as a Node 24
+subprocess. Its sole argument is `prepare` or `review`; the selected input object
+arrives on stdin, with a 32 MiB limit, strict UTF-8 decoding and a 30-second input
+deadline. A successful result is one JSON document of at most 1 MiB on stdout.
+Refusal exits 78 with a fixed diagnostic that does not echo selected reports,
+assertion details or private paths. Exact u64 compiler-input digits and all
+disabled execution/activation flags are preserved.
+
+The caller must bound the complete subprocess lifetime, drain output and discard
+stdout on every nonzero exit. The input timer does not bound a stalled output
+consumer, and a pipe failure can leave incomplete output. Inputs and successful
+reports remain private operational material. This interface opens no input or
+output files and invokes no compiler, key generator, validator or RPC.
+
+Eight transport tests plus the existing adapter and related planning checks pass
+(73 total). They use supplied reports and actual local child processes, not new
+genesis compilation. The preparer still does not invoke this interface. Node and
+dependency artifact admission, externally selected planning input, integration
+with fresh compilation and output verification remain required before any
+replay. Existing host/security checks and production restrictions are unchanged.
+See [the local transport evidence](../evidence/mainnet-reserve-stdio-local.json).
+
+
+## Pure accounting import boundary
+
+The reserve adapter now imports `bootstrap-core.mjs`, which holds the unchanged
+accounting function. `bootstrap.mjs` retains its existing file CLI and export for
+compatibility. This separates the adapter's library dependency graph from a CLI
+entrypoint that could otherwise run when a bundler collapses module URLs.
+The bootstrap fixture's provenance list includes the new core.
+
+The entrypoint-collision regression failed before the split and passes afterward.
+All 75 related offline Node checks pass, including byte-for-byte CLI report
+compatibility and refusal of a missing input file. The accounting function body
+is unchanged. See [the scoped evidence](../evidence/mainnet-bootstrap-import-isolation-local.json).
+
+An exploratory bundle excludes the file CLI, but is **not admitted**: its strict
+diagnostic check fails on a dependency warning and its graph retains an optional
+non-builtin import. Runtime/dependency artifact admission and preparer integration
+remain open. No fresh genesis, replay, validator or production operation was run.
+
+
+## Executable path aliases
+
+The stdin adapter resolves its executable argument to the real filesystem path
+before comparing it with the module URL. Invoking it through a symlink previously
+exited with code zero and no report because the CLI guard did not recognize the
+entrypoint. It now produces the same prepare report or fixed refusal as a direct
+invocation. The source regression failed before repair; all 76 related offline
+Node checks pass after repair. Report input still comes only from bounded stdin.
+
+A fresh packaging probe using `browser`, `module`, then `main` resolution passes
+23 related fixture checks (14 unchanged pure-adapter checks and nine checks of
+bundled transport). CLI child processes use a temporary artifact outside the
+checkout, with PATH only and no installed dependency directory. The static graph
+has only builtin external imports; strict diagnostics pass, and two local builds
+match. The earlier failed prototypes remain retained.
+
+This is exploratory compatibility evidence, not an admitted runtime artifact.
+Dependency-selection review, dynamic-resolution analysis, Linux/runtime admission
+and the preparer/compiler/replay integration remain open. The scoped evidence
+records the prototype hash and its pre-comment-cleanup source hash separately:
+[entrypoint and packaging review](../evidence/mainnet-reserve-entrypoint-local.json).
+
+
+## Repeatable offline reserve bundle
+
+`build-reserve-bundle.mjs` builds the stdin adapter twice using the existing locked
+Node 24.19.0 / esbuild 0.28.2 toolchain. Both artifacts and the recorded input
+fingerprints must match. It refuses bundler warnings, non-builtin static imports
+and the optional native websocket loader graph. Generated CommonJS imports are
+restricted to Node builtins before resolution. This is not a network sandbox.
+
+Run `node mainnet/build-reserve-bundle.mjs <new-private-output-directory>` with
+the selected local toolchain. It creates only a new directory, an artifact and a
+manifest, with private modes and exclusive writes; an existing output directory
+is refused. Failed partial outputs remain retained. The manifest records source,
+dependency and root manifest hashes, build options and output identity. It records
+the esbuild JavaScript API hash, not a native executable pin.
+
+The related offline suite passes 79 checks. The three builder checks additionally
+run the existing 23 adapter fixtures, including nine bundled transport checks,
+outside the checkout. Package/file import refusal and existing-output protection
+are checked against actual generated bytes. The final warning-refusal change was
+followed by another successful run of all three builder checks. CI now performs
+the build and these checks on its configured Linux runner.
+
+The generated artifact is explicitly **not admitted** and the preparer does not
+invoke it. Runtime/tool executable pinning, dependency-selection review, complete
+dynamic-resolution review and fresh compiler/replay integration remain open. No
+new chain, validator or production operation is authorized by this packaging
+result. See [the local builder evidence](../evidence/mainnet-reserve-bundle-local.json).
+
+
+## Build executable provenance
+
+The bundle builder now refuses any `ESBUILD_BINARY_PATH` setting before loading
+the bundler, including empty values and its special default-looking path. A
+harmless substitute executable exposed the earlier gap by writing an invocation
+marker before refusal. The regression now verifies that no substitute runs and
+no output directory is created. All 80 related offline checks pass.
+
+Each new manifest records byte counts and SHA-256 fingerprints for the current
+Node executable and installed platform-specific native bundler, without their
+private paths. The native package must exist and match the bundler API version;
+its downloader fallback is not accepted. Both executable fingerprints and
+resolved paths are checked again after the two matching builds. Build platforms
+are limited to little-endian Linux/macOS x64/arm64.
+
+These observed fingerprints supplement the earlier API-file hash. They are not
+trusted release allowlists, origin attestations, continuous process measurements
+or runtime admission. Dynamic libraries, replacement races and host integrity
+remain separate concerns. Earlier manifests retain their original narrower
+provenance. See [the executable provenance evidence](../evidence/mainnet-reserve-toolchain-local.json).
+
+
+## Generated bundle import syntax
+
+Before writing a new artifact, the builder parses its exact nonempty UTF-8 bytes
+with the existing pinned TypeScript 5.9.3 parser, bounded to 4 MiB. Parse errors,
+any `import(...)` expression and external static import/re-export specifiers
+are refused. Variable or template imports can escape a bundler's external-import
+list, so that list alone is insufficient. The new manifest records the parser
+module hash, inspected byte count and actual builtin static specifiers; parser
+bytes are checked again after inspection.
+
+Six focused builder tests pass, including seven dynamic-import and three static
+external-module refusal cases, malformed/oversized input and inert import-like
+text. They also execute the existing 23 standalone adapter fixtures. The actual
+artifact remains byte-identical and has no import expressions.
+
+This closes a specific syntax-review gap, not all dependency or loader paths.
+Aliases, generated code, alternate loaders, builtin capabilities and host integrity
+remain outside this check. It supplies neither a network sandbox nor a trusted
+runtime allowlist. Preparer integration and real compiler/replay execution still
+require separate admission. See [the scoped syntax review](../evidence/mainnet-reserve-syntax-local.json).
+
+
+## Explicit child environment selection
+
+The bounded process helper now accepts an optional `environment` mapping. An
+explicit mapping replaces inheritance, including an empty mapping; omission
+preserves existing behavior. It snapshots at most 64 string entries and 16 KiB
+of encoded names/values, rejecting malformed fields before starting a process.
+Refusal messages do not expose supplied variables. Tool admission and variable
+policy remain the caller's responsibility.
+
+Four new test groups cover replacement versus inheritance, empty environments,
+validation and snapshot/boundary handling. The local Python suite passes 176 of
+177 tests with its existing Linux-only skip. A harmless Node preload executes
+in the inherited control but is suppressed with explicit environments; the
+retained reserve bundle's 23 fixtures also pass through the process helper.
+
+This interface prepares for safe reserve-runtime invocation; it is not yet wired
+into the preparer and does not retroactively sanitize existing tool launches.
+It is not a sandbox or tool allowlist. Full integration must select the executable
+pins, environment and end-to-end input bounds before any fresh compilation. See
+[the environment selection evidence](../evidence/mainnet-offline-environment-local.json).
+
+
+## Select the reserve transport input bound
+
+The process helper accepts `stdin_limit` as an explicit positive integer up to
+32 MiB. Its default remains 16 MiB, including existing genesis-preparation calls.
+Invalid bounds and oversized input refuse before process creation, even if no
+input was otherwise supplied. Selected genesis snapshots retain their separate
+16 MiB admission check. Output limits, process lifetime and cleanup are unchanged.
+
+Three new test groups cover exact 32 MiB binary delivery, lower bounds, default
+and explicit overflow, and malformed limits. The local Python package passes
+179 of 180 tests with the existing Linux-only skip. Six real invocations of the
+unchanged reserve bundle cover both prepare/review modes using a supplied
+two-account fixture, unpadded and padded with JSON whitespace to 16 MiB plus one
+and exactly 32 MiB. Each uses an empty environment and produces the same output
+with all activation flags disabled. Four controls verify refusal before process
+creation for default-bound and explicit-maximum overflow.
+
+This resolves the transport size mismatch for callers that explicitly select
+32 MiB; it does not automatically change the preparer or admit its runtime.
+The padded fixtures establish byte transport, not maximum account-count support
+or host memory capacity. Runtime pins, caller policy, reserve wiring and fresh
+compiler/replay validation remain open. See [the input-bound review](../evidence/mainnet-offline-input-bound-local.json).
+
+
+## Invoke explicitly selected reserve artifacts
+
+`reserve_adapter_process.py` provides the fixed prepare/review invocation for
+caller-selected runtime and bundle files. It requires exact lengths and SHA-256
+values, canonical absolute regular files owned by the current user or root,
+and no multiple hard links or group/other write access. The runtime must be executable.
+Each bounded artifact read checks descriptor and pathname identity; both files
+are checked again after the process exits. Changed artifacts withhold stdout,
+even if the process reported success. The canonical service identifier refuses
+before any artifact read.
+
+The child receives an empty environment, at most 32 MiB of nonempty immutable
+input, 1 MiB stdout, 64 KiB private stderr and a 30-second lifetime. Only prepare
+and review arguments are exposed. The existing process helper owns cleanup;
+input is not placed in arguments or logs. Fixed failure codes avoid returning
+raw path or dependency diagnostics. Successful stdout remains raw bytes for the
+integrating caller to parse and bind to its selected plan and decoder reports.
+
+Ten new test groups cover fixed invocation, malformed selections, canonical
+service refusal, aliases, special files, permissions, descriptor/path changes,
+after-execution replacement, sanitized errors and actual process transport.
+The full local Python suite passes 189 of 190 tests with its existing Linux-only
+skip and resource warnings treated as errors. Three actual invocations of the
+retained Node and bundle establish both synthetic success modes and malformed
+input refusal. Unselected parent preload variables are absent from those child
+environments.
+
+Exact byte selection is not trusted provenance or runtime admission. Before
+integration, select reviewed runtime pins and validate the complete output
+schema, plan/report selectors and compiler input. Rechecks are not an atomic
+execution guarantee or a network/filesystem sandbox; host integrity and loaded
+runtime dependencies remain separate. The preparer is unchanged and still does
+not invoke this adapter. See [the selected-process review](../evidence/mainnet-reserve-selected-process-local.json).
+
+
+## Validate selected reserve results
+
+`reserve_adapter_result.py` validates the bounded raw output against an exact
+mode-specific schema and expectations selected independently of that output.
+It binds the plan digest, baseline genesis, count and native total. Prepare also
+binds the proposed reserve address and units; review binds a distinct proposed
+genesis and the selected creation-time-change boolean. Every capability flag
+must remain literal false. Required descriptive assertions must be literal true.
+
+Strict UTF-8 JSON parsing rejects duplicate members, non-finite values,
+fractional, exponent and negative numeric tokens, extra fields and malformed or
+oversized output. Integer amounts retain all u64 digits. The nested primordial
+input must contain exactly the selected reserve account, exact integer balance,
+System owner, empty-data marker and false executable flag. Failures expose only
+a fixed refusal code, with no raw input or parser diagnostics.
+
+Nine new test groups cover ambiguous JSON, schema and selection mismatches,
+permission promotion, account substitution, balances beyond floating-point
+precision and the exact 1 MiB output boundary. The full local Python suite passes
+198 of 199 tests with its existing Linux-only skip and resource warnings treated
+as errors. Two actual invocations of the unchanged selected bundle produce
+valid synthetic prepare/review output; six corrupted versions refuse validation.
+
+This is result-contract validation, not independent plan, PDA, decoder or
+account-history verification. Raw report hashes are absent from the output and
+must be selected and checked on the input side. Trusting output-derived
+expectations would defeat the comparison. The preparer still does not invoke
+the adapter: trusted runtime selection, complete caller integration, admitted
+Linux hosting, fresh compilation and strict replays remain open. See
+[the result-validation review](../evidence/mainnet-reserve-result-local.json).
+
+
+## Use the combined selected caller
+
+`reserve_adapter_process.run_validated` connects input selection, bounded
+execution and strict output validation. Before reading artifacts or starting a
+process, it verifies a caller-selected SHA-256 over the exact immutable input
+bytes and validates a copy of the expected result fields. The canonical service,
+canonical development genesis and known public Solana genesis selections refuse.
+Caller dictionary changes during execution cannot replace the copied expectations.
+
+The existing artifact checks, empty child environment, private diagnostic sink,
+limits and cleanup still apply. The function returns only a validated object;
+process failures, changed artifacts and invalid output withhold results.
+Cancellation propagates. The lower-level `run_selected` remains a raw-byte API.
+
+Six combined-caller test groups cover both modes, pre-execution refusal,
+forbidden identities, invalid output, expectation mutation and process failures.
+The full local Python suite passes 204 of 205 tests with its existing Linux-only
+skip and resource warnings treated as errors. Three real retained-bundle calls
+verify both synthetic success modes and refusal of otherwise valid adapter
+output against a wrong externally selected plan.
+
+Input hashing binds bytes, not plan validity or trusted provenance. Select input
+and expectations independently of stdout, and admit the runtime separately. The
+selected adapter still checks its input report selectors. The preparation entry
+point remains unchanged and does not use this combined caller; fresh compilation,
+strict replays and host admission remain open. See
+[the combined-caller review](../evidence/mainnet-reserve-validated-caller-local.json).
+
+
+## Isolated Linux caller compatibility
+
+The combined caller now passes its 25 artifact/process, result-schema and
+invocation checks on the separate Linux x86-64 worker, with no skips and
+resource warnings treated as errors. The existing Node v24.19.0 executable was
+selected by its observed bytes and hash before execution and checked afterward.
+The unchanged retained bundle produces the same synthetic prepare/review objects
+as the local host. A third invocation withholds a valid adapter response when
+the external plan selection differs.
+
+The attempt used a new exclusive private directory. Independent readback verified
+the completed result, all nine selected files, the test log and Node fingerprint;
+no attempt process or private validator remained. Previous attempts and all
+ledgers were preserved. No compiler, decoder, key generator, validator or chain
+request was run. See [the Linux caller evidence](../evidence/mainnet-reserve-caller-linux.json).
+
+These are offline compatibility results. Observed executable selection does not
+establish independent distribution provenance, a general runtime allowlist or a
+sandbox. The bundle was not rebuilt on Linux. The full-validator host requirements
+remain unsatisfied, and the preparation entry point still does not invoke this
+adapter. Fresh compilation, strict replays and production gates remain open.
+
+
+## Linux Node upstream comparison
+
+The executable selected in the retained Linux caller attempt now matches the
+single regular `bin/node` member of the official Node v24.19.0 Linux x64
+release archive: SHA-256
+`bc17c508ffeed0ec622934f9b7fa72f8e78da65350e63c3eceb56fa688aa5e12`,
+125,989,464 bytes. The 31,633,904-byte archive matches the checksum fetched
+from the official release directory. Both reads used verified HTTPS.
+See [the upstream comparison](../evidence/mainnet-reserve-node-upstream.json).
+
+This establishes a publisher-origin byte match to the retained observation.
+The checksum list and archive share the same origin; no release signature,
+independent build attestation or runtime admission is claimed. Archive contents
+were hashed in memory, with no installation, extraction to disk or execution.
+The completed Linux caller attempt was not repeated. Dynamic dependencies and
+execution-host integrity remain outside this comparison. Preparer integration
+and all existing host, compiler, replay and production gates remain open.
+
+
+## Signed Linux Node release selection
+
+The [signature review](../evidence/mainnet-reserve-node-signature.json) now
+verifies the official release checksums with the existing isolated worker's
+GnuPG verifier. The active upstream keyring and release README are selected at
+recorded commits. The valid signature's primary fingerprint belongs to that
+README's release roster. Its selected archive digest matches the previous
+archive/member comparison and therefore the retained Linux Node executable.
+The procedure follows the [publisher's verification instructions](https://github.com/nodejs/node/blob/cdc1b38d40cb567b7ad0b39c86addf830a0af0ae/README.md#verifying-binaries).
+
+An initial post-signature assertion expected the recovered checksum text to be
+byte-identical to the unsigned download. It failed because the signed payload
+has one additional terminal line feed. That attempt remains retained. A fresh
+attempt requires exactly that relationship, with both original hashes recorded;
+changing one character in the archive checksum produces a bad signature and is
+rejected. Independent readback checks the completed record and selected files.
+
+No runtime artifact was executed, installed or rebuilt. No global keyring or
+service changed. Trust rests on the selected publisher roster and the existing
+verification host; this is not an independent build or full execution-host
+attestation. Runtime admission, preparer integration and all existing rehearsal
+and production gates remain separate requirements.
+
+
+## Explicit second-stage reserve preparation
+
+The default fresh-baseline command remains unchanged. After a new synthetic
+baseline bundle has been prepared and independently reviewed, the same entry
+point accepts an owner-only selection file and its separately reviewed SHA-256:
+
+```sh
+python3 mainnet/prepare-consensus.py \
+  --binary-directory <reviewed-binary-directory> \
+  --bundle-id <new-reserve-bundle-id> \
+  --reserve-selection <private-selection-file> \
+  --reserve-selection-sha256 <reviewed-selection-sha256>
+```
+
+Without `--prepare --ack fresh-private-synthetic-genesis`, this mode performs
+read-only host, artifact and baseline-bundle inspection. Unlike the original
+host-only default, baseline inspection invokes the pinned auditor and keygen's
+public-key reader. It creates no attempt, keys or ledger and does not run the
+reserve adapter. All existing canonical-service and host admission checks apply
+before opening the private selection file.
+
+The selection object has exactly these fields:
+
+| Field | Required selection |
+| --- | --- |
+| `schemaVersion`, `scope` | `1`, `isolated-reserve-preparation-v1` |
+| `baselineBundleId` | Existing reviewed private synthetic baseline identifier |
+| `baselineManifestSHA256` | Independently selected exact manifest bytes |
+| `planningInput` | Reviewed input to `planPrefundedReserve`, including the complete baseline audit |
+| `prepareSelection` | Exact `prepare` expectations defined in `reserve_adapter_result.py`; select the plan hash and derived reserve address independently of adapter stdout |
+| `node`, `bundle` | Absolute selected artifact paths; bytes must match `reserve-runtime-artifacts.json` |
+
+The runtime manifest selects the previously reviewed Linux Node executable and
+unchanged retained adapter bundle. The publisher-signature and compatibility
+records explain those selections. They do not attest dynamic libraries, the
+execution host or sandboxing. Keep runtime dependencies and the binary directory
+under reviewed operator control; changing the manifest requires source review.
+The private selection contains economic inputs and paths and must stay outside
+source, public evidence and deployments.
+
+Explicit execution creates a new exclusive attempt and bundle, then reads the
+baseline again with the pinned auditor and allocation decoder. The complete
+actual audit must match the selected planning input. `run_validated` receives
+exact input bytes and independent prepare expectations. Only its validated
+primordial account JSON reaches the fixed compiler command. The compiler uses
+the baseline's three synthetic validator public identities and calibrated PoH.
+
+The proposed genesis must be distinct and isolated. Its complete audited policy
+must match the baseline. A fresh pinned decode is checked against the proposed
+audit; Python independently compares every serialized account fingerprint after
+exactly one reserve-address replacement, non-account parameters and authority
+summaries. The selected adapter's review must also pass. Only then are two fresh
+slot-zero replay directories materialized with normal verification. Matching
+bank hashes and shred versions, a baseline recheck and final bundle inspection
+are required for `prepared`.
+
+This second stage deliberately copies only the three identity key files from
+its explicitly selected synthetic baseline into the new owner-only bundle; it
+generates no new keys. It never imports origin-chain, production or canonical
+devnet keys and never changes the baseline. Vote/stake public identities remain
+bound to the baseline manifest. Failed attempts and partial outputs remain;
+identifiers cannot be reused. No validator or network starts automatically.
+
+Fifteen new local groups exercise the CLI, selection, normal orchestration,
+refusals, cancellation and baseline preservation. The full Python suite passed
+219 of 220 checks with one existing Linux-only skip. Compiler, decoder, adapter
+and bundle-inspection responses were supplied fixtures; these are not actual
+fresh-genesis or replay results. See [the integration review](../evidence/mainnet-reserve-preparer-integration-local.json).
+The current worker still fails the unchanged host profile. Real reserve
+compilation, strict replays, the three-validator rehearsal and production
+requirements remain open.
+
+
+## Actual adapter across the preparation flow
+
+A further local integration check now exercises the real bounded Node adapter
+through `reserve_preparation.py`, with independently computed source-planner
+expectations. Its ten-account synthetic fixture includes the three validator
+identity/vote/stake sets and reserve. The test builds the adapter twice with the
+pinned toolchain, requires identical bytes and rechecks the actual test Node and
+bundle fingerprints around each adapter call.
+
+Five actual adapter subprocesses cover three cases: complete prepare/review,
+wrong external plan refusal before the supplied compiler, and invalid proposed
+creation time refusal before the supplied replays. The latter is a real adapter
+failure propagated through the caller and preparer, not a thrown mock error.
+All baselines remain unchanged, and failed attempt results remain available
+through each disposable fixture's checks. The original Python package remains
+219 passed and one existing Linux-only skip out of 220.
+
+Host admission, compiler, decoder, replay and final bundle inspection responses
+are still supplied fixtures. Genesis payloads and private key files are test
+placeholders. Only the planner and adapter execute real Node code; the test's
+artifact selection is explicit and separate from the unchanged production Linux
+manifest. It proves that the languages and preparation stages exchange the
+expected contracts, not genuine compiled genesis or host acceptance. The check
+is included in the existing preparation workflow's bundle suite. See
+[the cross-language review](../evidence/mainnet-reserve-preparer-interop-local.json).

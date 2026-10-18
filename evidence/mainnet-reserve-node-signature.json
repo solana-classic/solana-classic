@@ -1,0 +1,155 @@
+{
+  "schemaVersion": 1,
+  "at": "2026-10-18T02:07:34.323230+00:00",
+  "scope": "Signed upstream Node release checksum selection linked to the retained Linux executable comparison; no runtime or host admission",
+  "passed": true,
+  "release": "v24.19.0",
+  "platform": "linux-x64",
+  "sourceSelection": {
+    "nodeCommit": "cdc1b38d40cb567b7ad0b39c86addf830a0af0ae",
+    "keyringCommit": "481637f813e912c4aa3622d7964ab426c97b8e8d",
+    "allowedPrimaryFingerprints": [
+      "108F52B48DB57BB0CC439B2997B01419BD92F80A",
+      "5BE8A3F6C8A5C01D106C0AD820B1A390B168D356",
+      "655F3B5C1FB3FA8D1A0CA6BDE4A7D232B936D2FD",
+      "890C08DB8579162FEE0DF9DB8BEAB4DFCF555EF4",
+      "8FCCA13FEF1D0C2E91008E09770F7A9A5AE15600",
+      "A363A499291CBBC940DD62E41F10027AF002F8B0",
+      "C82FA3AE1CBEDC6BE46B9360C43CEC45C17AB93C",
+      "CC68F5A3106FF448322E48ED27F5E38D5B0A215F",
+      "DD792F5973C6DE52C432CBDAC77ABFA00DDBF2B7"
+    ],
+    "files": {
+      "pubring.kbx": {
+        "url": "https://raw.githubusercontent.com/nodejs/release-keys/481637f813e912c4aa3622d7964ab426c97b8e8d/gpg-only-active-keys/pubring.kbx",
+        "sha256": "140f2ad5260fd62773b6243ce8e1d3009645d558f121b8262c55e383dc285932",
+        "bytes": 21011
+      },
+      "README.md": {
+        "url": "https://raw.githubusercontent.com/nodejs/node/cdc1b38d40cb567b7ad0b39c86addf830a0af0ae/README.md",
+        "sha256": "47bdbbc1c1ddef217772bf72aec8e93ffe295e72228b63b988dd1035f1a68626",
+        "bytes": 41665
+      },
+      "SHASUMS256.txt.asc": {
+        "url": "https://nodejs.org/dist/v24.19.0/SHASUMS256.txt.asc",
+        "sha256": "88c7160b8d81c81bbbba7e3bd0bba88917b1e6a2e47e092044f43894a09ceb83",
+        "bytes": 3245
+      }
+    },
+    "expectedChecksumFileSHA256": "be0629ee2bcd8e40bb856abdd3407f0762101b76bd60a36b8867f637733631c0"
+  },
+  "verification": {
+    "schemaVersion": 1,
+    "at": "2026-10-18T02:06:09.836811+00:00",
+    "workerIdentityMatched": true,
+    "scope": "Official release checksum signature verification using commit-pinned active upstream keyring; no Node or chain execution",
+    "verifierVersion": "gpgv (GnuPG) 2.2.40",
+    "observedVerifierSHA256": "f006363e644beecdb2cc9ead98dbbb0c6c5d23f49e0f07ff957235893ad095e0",
+    "verifierRechecked": true,
+    "signatureVerified": true,
+    "primaryFingerprint": "5BE8A3F6C8A5C01D106C0AD820B1A390B168D356",
+    "signingFingerprint": "5BE8A3F6C8A5C01D106C0AD820B1A390B168D356",
+    "primaryListedInPinnedReleaseReadme": true,
+    "verifiedChecksumFileSHA256": "34b6cad58e954a2d5a68f7ec6a17e86b3860d58b5478709f09444c92716f633f",
+    "checksumEntriesMatchPriorHTTPS": true,
+    "signedPayloadHasOneAdditionalTerminalLF": true,
+    "signatureStatusCodes": [
+      "PLAINTEXT",
+      "NEWSIG",
+      "KEY_CONSIDERED",
+      "SIG_ID",
+      "KEY_CONSIDERED",
+      "GOODSIG",
+      "VALIDSIG"
+    ],
+    "tamperedChecksumRejected": true,
+    "tamperedExitCode": 1,
+    "tamperedStatusCodes": [
+      "PLAINTEXT",
+      "NEWSIG",
+      "KEY_CONSIDERED",
+      "KEY_CONSIDERED",
+      "BADSIG"
+    ],
+    "tamperedOutputAccepted": false,
+    "runtimeAdmitted": false,
+    "validatorsStarted": 0,
+    "nodeInvocations": 0,
+    "canonicalNetworkChanged": false,
+    "productionReady": false
+  },
+  "retainedFileHashes": {
+    "result.json": {
+      "sha256": "a7ef5594b2764b222568bb7d7fafc5b567104e5e5b27ea92af6ab32793771a85",
+      "bytes": 1320
+    },
+    "pubring.kbx": {
+      "sha256": "140f2ad5260fd62773b6243ce8e1d3009645d558f121b8262c55e383dc285932",
+      "bytes": 21011
+    },
+    "SHASUMS256.txt.asc": {
+      "sha256": "88c7160b8d81c81bbbba7e3bd0bba88917b1e6a2e47e092044f43894a09ceb83",
+      "bytes": 3245
+    },
+    "official-recovered.txt": {
+      "sha256": "34b6cad58e954a2d5a68f7ec6a17e86b3860d58b5478709f09444c92716f633f",
+      "bytes": 2968
+    },
+    "official-status.log": {
+      "sha256": "d9427d4c7c33718a43c370e14e46543d861ebc0260fd347b0bbdc926b2dd548a",
+      "bytes": 463
+    },
+    "tampered-checksums.asc": {
+      "sha256": "774581c910c0fe66d4474af81bc7f86568504abb81235c3b638ef626a9b70820",
+      "bytes": 3245
+    },
+    "tampered-status.log": {
+      "sha256": "a2b4fa8b81e49abde81b6d73575d16d7bcf11b2f849bb0e18c2e0fa68de4973a",
+      "bytes": 260
+    }
+  },
+  "retainedReadbackSHA256": "a48c08c2cbc5ee9336676a8d8b5dfaf28e4edd4dcfb65f7e899a0ac5119ccd3c",
+  "driverSHA256": "a7e2f9d451557370e16d3efc8a9872b9a56bddb32a003014b00d5a5535c158c3",
+  "proofs": [
+    {
+      "path": "evidence/mainnet-reserve-node-upstream.json",
+      "sha256": "fe358ac3b57fa9834281d39e58189262731a059ea0b5d68564be8349fdbd2984"
+    },
+    {
+      "path": "evidence/mainnet-reserve-caller-linux.json",
+      "sha256": "7241ec1248baf1c813c310a9a82cd0d2a23bb6e28b0e8587860a955aae426123"
+    }
+  ],
+  "selectedArchive": {
+    "sha256": "14b342e71204f811bde6153be8e04b62aef63c236fef92b55f9c83154b409647",
+    "bytes": 31633904,
+    "member": "node-v24.19.0-linux-x64/bin/node",
+    "nodeSHA256": "bc17c508ffeed0ec622934f9b7fa72f8e78da65350e63c3eceb56fa688aa5e12",
+    "nodeBytes": 125989464,
+    "matchesRetainedWorkerExecutable": true
+  },
+  "initialAttempt": {
+    "preserved": true,
+    "failure": "POST_SIGNATURE_CHECKSUM_BYTE_EQUALITY",
+    "explanation": "Signature verification and signer admission succeeded, but an exact-byte comparison to the earlier unsigned checksum download failed: the authenticated recovered payload has precisely one additional terminal line feed. A fresh attempt requires that exact relation and retains both digests; checksum entries are unchanged.",
+    "recoveredChecksumSHA256": "34b6cad58e954a2d5a68f7ec6a17e86b3860d58b5478709f09444c92716f633f",
+    "priorUnsignedChecksumSHA256": "be0629ee2bcd8e40bb856abdd3407f0762101b76bd60a36b8867f637733631c0",
+    "terminal": true,
+    "passed": false
+  },
+  "limitations": [
+    "Trust begins with the Node project release README and active keyring fetched over HTTPS at the recorded repository commits. This verifies the publisher signature against that selected roster; it is not an independent organizational audit or reproducible-build attestation.",
+    "The existing separate worker GnuPG verifier and its bytes were observed and rechecked. No verifier package was installed, no global keyring was changed and automatic key retrieval was not used. System library and execution-host integrity are outside this proof.",
+    "The earlier successful archive/member comparison supplies the executable link. That archive was not downloaded or executed again, and the completed caller attempt was not repeated.",
+    "The initial checksum-equality failure and fresh verification directory are both retained. The negative signature test changes one character of the selected archive digest; BADSIG and nonzero exit are required, and recovered negative output is never accepted.",
+    "Signature verification narrows artifact provenance only. Preparer wiring, full runtime and host admission, fresh real compilation, strict slot-zero replays, consensus, custody, backing, independent operators, monitoring and security review remain open."
+  ],
+  "runtimeAdmitted": false,
+  "preparerIntegrated": false,
+  "hostAdmitted": false,
+  "canonicalNetworkChanged": false,
+  "nodeInvocations": 0,
+  "validatorsStarted": 0,
+  "mainnetActivated": false,
+  "productionReady": false
+}

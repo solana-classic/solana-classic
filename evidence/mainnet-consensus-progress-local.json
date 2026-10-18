@@ -1,0 +1,58 @@
+{
+  "schemaVersion": 1,
+  "at": "2026-10-15T16:48:49.854668+00:00",
+  "scope": "Offline synthetic private-validator observation and owned-process orchestration; no real validator, genesis, RPC node or consensus execution",
+  "state": "local-checks-passed",
+  "newRegressionTests": 8,
+  "totalOfflinePackageTests": 60,
+  "preFixRegression": {
+    "newTests": 2,
+    "falsePassCasesReproduced": 3,
+    "cases": [
+      "stalled last vote with advancing network slots",
+      "stalled root with advancing network slots",
+      "changed earlier finalized block despite a newer shared block"
+    ]
+  },
+  "checks": [
+    "exact three distinct selected finalized vote accounts on every node",
+    "all nine last-vote and root-slot views must advance",
+    "activated stake must stay unchanged over the fixed rehearsal",
+    "first shared finalized block must remain available and unchanged on all three nodes",
+    "genesis and node identity bracket each retained-block read",
+    "missing or malformed observations and child exits cannot pass",
+    "mocked owned children are stopped on refused and successful synthetic attempts"
+  ],
+  "validation": {
+    "command": "python3 -m unittest discover -s mainnet -p '*_test.py'",
+    "exitCode": 0,
+    "tests": 60,
+    "scope": "Local Python execution with synthetic RPC responses, mocked validator processes and disposable process-lifecycle subprocesses; not compiled Agave execution"
+  },
+  "sourceHashes": {
+    "mainnet/consensus.py": "31656c5bb2c309ba5014378ac5b0b2eaac492123e5c36e86247e30d2efac28ac",
+    "mainnet/consensus_test.py": "f6fc96aac5fc0e4d88d31cb1f50746538f90a7bcf78a2417464b83b1aaeb9030",
+    "mainnet/host-preflight.py": "32332412e01d3ad0d77908de5691e80fa4fb205f02e31183211fc28789bbab5e",
+    "mainnet/prepare-consensus.py": "b6fd9c30cb534433a0a0e4fb482e209ed466dea000e578389fdf48e044f3070b",
+    "mainnet/genesis_archive.py": "f09d71c5bc6e0e09924602daa89148ae1a55727ce3de7a45e6380a3efddeb079",
+    "mainnet/offline_process.py": "bc7013b43537bf272b08e37122035f9e647f18496a01121424dd322dd1d06c7f",
+    ".github/workflows/mainnet-preparation.yml": "eebe64facb3215b9056b906e1610c665045a3b98b717a8c3926e414c5ff3fef5"
+  },
+  "fullValidatorsStarted": 0,
+  "actualChainRequests": 0,
+  "createdGenesis": false,
+  "canonicalNetworkChanged": false,
+  "hostChecksWeakened": false,
+  "actualConsensusVerified": false,
+  "actualForkRecoveryVerified": false,
+  "independentOperatorsVerified": false,
+  "actualFundedBackingVerified": false,
+  "productionReady": false,
+  "remainingRequirements": [
+    "Capable authorized Linux rehearsal host",
+    "Fresh hashing genesis and matching slot-zero replays",
+    "Actual full-validator consensus, execution and recovery",
+    "Independent operators and reviewed custody/governance",
+    "Complete funded genesis backing and external security review"
+  ]
+}

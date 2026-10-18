@@ -1,0 +1,90 @@
+{
+  "schemaVersion": 1,
+  "at": "2026-10-17T18:07:02.434583+00:00",
+  "scope": "local offline reserve adapter executable-path regression and exploratory packaging; no preparer, compiler or validator invocation",
+  "passed": true,
+  "sourceFiles": {
+    "mainnet/reserve-byte-stdio.mjs": "3ac8b5c131c9f5e9967f4f3fe6e239fb2926b8704df346474e8beb16bb534c1b",
+    "mainnet/reserve-byte-input.test.mjs": "19cf38e75c5cad4c112593c6b7864d36502140535b5df258208e41979c953166"
+  },
+  "validation": {
+    "relatedNodeTests": 76,
+    "relatedNodePassed": 76,
+    "preFixSymlinkRegressionFailed": true,
+    "postFixSymlinkRegressionPassed": true,
+    "checks": [
+      "A child process invoked through a symlink produces the exact selected prepare report rather than exiting successfully with empty stdout.",
+      "The same aliased entrypoint refuses malformed input with exit 78, empty stdout and only the fixed diagnostic.",
+      "Existing direct CLI, prepare/review, exact u64, input-size, UTF-8, stalled-input and output-pipe controls remain passing."
+    ],
+    "postTestSourceChange": "Comments and import ordering only; no behavioral change."
+  },
+  "packagingProbe": {
+    "artifactAdmitted": false,
+    "node": "v24.19.0",
+    "esbuild": "0.28.2",
+    "entryPoint": "mainnet/reserve-byte-stdio.mjs",
+    "platform": "node",
+    "target": "node24",
+    "format": "esm",
+    "mainFields": [
+      "browser",
+      "module",
+      "main"
+    ],
+    "bundle": true,
+    "bytes": 698157,
+    "sha256": "40c5b81be47fac826641b39e6116f9f0f247777b5940a82e8152c1a48670e27b",
+    "inputCount": 96,
+    "localRebuildIdentical": true,
+    "allStaticExternalImportsBuiltin": true,
+    "sourceInputSHA256": "6ad911e3e793040ede5d2960c03b26e372c7488aa63ace8a421ee4fcd1e43628",
+    "artifactSourcePrecedesCommentOnlyCleanup": true,
+    "relatedFixtureChecks": 23,
+    "relatedFixtureChecksPassed": 23,
+    "unchangedPureAdapterFixtureChecks": 14,
+    "bundledTransportFixtureChecks": 9,
+    "cliArtifactOutsideCheckout": true,
+    "childEnvironment": "PATH only; no NODE_PATH or NODE_OPTIONS",
+    "dependenciesInstalledInArtifactDirectory": false,
+    "strictDiagnosticsPassed": true,
+    "ciExecutesPackagingProbe": false
+  },
+  "retainedFailures": [
+    {
+      "attempt": "initial packaging with module/main resolution",
+      "result": "Unadmitted: dependency deprecation diagnostic and optional encoding import remain."
+    },
+    {
+      "attempt": "first browser/module/main packaging probe",
+      "tests": 22,
+      "passed": 20,
+      "failed": 2,
+      "result": "Successful empty output and missing refusal exit exposed an entrypoint mismatch through a filesystem alias."
+    },
+    {
+      "attempt": "source symlink regression before fix",
+      "tests": 1,
+      "passed": 0,
+      "failed": 1
+    }
+  ],
+  "limits": {
+    "preparerIntegrated": false,
+    "artifactAdmitted": false,
+    "hostAdmitted": false,
+    "actualFreshGenesisCompiled": false,
+    "fullValidatorConsensusVerified": false,
+    "canSign": false,
+    "canBroadcast": false,
+    "mainnetActivated": false,
+    "productionReady": false
+  },
+  "limitations": [
+    "Executable-path resolution reads filesystem metadata only. Adapter report input remains bounded stdin; it does not open a supplied report filename.",
+    "The prototype uses browser/module/main package resolution to remove the observed optional encoding/deprecation path. This changes dependency selection and still needs a reviewed build/admission workflow.",
+    "A builtin-only static import graph does not prove the absence of dynamic resolution or network capability. Fixture execution outside the checkout is bounded compatibility evidence, not a sandbox/security audit.",
+    "The prototype was built locally. No Linux execution, independent reproducibility, admitted Node artifact or compiler integration is claimed.",
+    "Prior failed bundles and test logs are retained; no runtime source, ledger, key, chain configuration or retained stability attempt was changed."
+  ]
+}

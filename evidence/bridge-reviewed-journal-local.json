@@ -1,0 +1,43 @@
+{
+  "schemaVersion": 1,
+  "state": "local-passed",
+  "scope": "Explicit version3 private reviewed-metadata claim journal; synthetic transaction/RPC responses in both directions, no new ledger settlement",
+  "newVersion3ChecksPassed": 16,
+  "combinedJavaScriptChecksPassed": 145,
+  "workerGuardsPassed": 7,
+  "checks": [
+    "Both directions retain exact reviewed mint and code policy before one signed-byte handoff",
+    "Every handoff API enforces version3 policy; older preparers refuse ignored review options",
+    "Changed metadata or token/bridge code, depleted escrow, late expiry and receipts refuse handoff without changing prepared bytes",
+    "Policy/admission tampering, recipient authority changes and concurrent repeated handoff refuse",
+    "Exact finalized economic reconciliation preserves original signature and admission; unreviewed external landing requires review",
+    "Legacy journals, exact-u64 native accounting and expiry-review regressions remain passing"
+  ],
+  "rpcScope": "Synthetic responses only; one regression uses local HTTP transport",
+  "actualMetadataJournalAgaveVerified": false,
+  "newBroadcasts": 0,
+  "productionReady": false,
+  "canonicalNetworkChanged": false,
+  "sourceHashes": {
+    "bridge/pending-claim.mjs": "4064b4288d1176d422883970d7f5ec96155210b5c869be34ae66d00d0e2fd163",
+    "bridge/claim-mint-policy.mjs": "98ea663cf7557ff98c0464256541543dc97b5551c01d59db6a2f542aafb86a66",
+    "bridge/reviewed-pending.test.mjs": "d330944d8cb132c454ecb978705d45301fa22b942daa123b85e943200f43bcb8",
+    "bridge/pinned-pending.test.mjs": "ec32fd082dfc8f28800d265f8168c31a1aad109b7e0673ceb4c73c6971ed882e",
+    "bridge/test-fixtures/pinned.mjs": "68d73e2cc172bea78e51fe98364b0d4dea53172565e9cadc66e74b1f26822525",
+    "bridge/test-fixtures/reviewed-pending.mjs": "d6a8f236ed8ace535c823bf05001f0f563aa5aa2506e069e093da42282f5b9b7",
+    "bridge/reviewed-origin-mint.mjs": "0c5c7d538d5643770610ea154981bb6d2c2bc70d8f85946a61e5ed1b7aff5cad",
+    "bridge/mint-metadata.mjs": "402fcf39f298a89d7682e4ab78de9bd2b2f1647f31e9f01dbff027e9fe80b64c",
+    "bridge/origin-assets.mjs": "d455cace59851dbd988e294c41c9add36980bea49a2d89d3c717b82364684ffa",
+    "bridge/origin-token-code.mjs": "22a3449f6ed238283a6b4b809dea45644438d71d71763e3ba1ed451beaaee810",
+    "bridge/program-pins.mjs": "1f72a2007be0d4ebd6b1a3080dc2ad93224177e49ae32e0513beb2e163256d42",
+    "bridge/claim-pin-policy.mjs": "9ee31bcd58218860fcb5660624531e22c7038d29b34f8bd22590d72c70bb8893",
+    "bridge/sdk.mjs": "e603242692bedc2457ec9dd3cb144122ca1adb7341506d244ec864943bd8c988",
+    "bridge/lossless-native-rpc.mjs": "5ebed7db063afd9178925eab883a4955dd15ad878bbdad19878ab75225f3398b"
+  },
+  "remaining": [
+    "Actual two-chain metadata settlement and recovery on fresh private attempts",
+    "Independent finality/history/backing verification",
+    "Authenticated custody/signing/storage and upgrade policy",
+    "External security review"
+  ]
+}

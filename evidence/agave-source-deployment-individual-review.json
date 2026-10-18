@@ -1,0 +1,91 @@
+{
+  "schemaVersion": 1,
+  "at": "2026-10-17T04:02:39.438627+00:00",
+  "scope": "remote exact source-candidate fresh-deployment and provider restart continuity review of retained records; no new deployment or restart",
+  "passed": true,
+  "genesis": "7TAUSfTzQeocodtVee2qsftsCYnJu2eCM1ALdADbHNon",
+  "candidate": {
+    "apiOrigin": "https://network-release-production.up.railway.app",
+    "frontendOrigin": "https://solana-classic-soc.vercel.app",
+    "frontendDeploymentId": "dpl_3aWWzKDohr4SrgijgrB8dWgHHS5r",
+    "frontendCommit": "35f0eaf1dede45452c9cdf9e6403669e966c427d",
+    "apiCommit": "119f25e225540be78b64b19bdb6cb300a1f47c10",
+    "networkConfigSha256": "0eea489e8cf0753b2b0cf0b91b6949566044e50c20bd4d02eea814490f64fe0e",
+    "dependencyManifestSha256": "e6da27717e6a84ca7b29d707ff63591b2ff0cfc38892d3b4667f8615bdf7bbc0"
+  },
+  "freezeSha256": "55b668e56a946ec94f0195b03530aba23593bd71d7fd52493d5403b21882757f",
+  "checklistSha256": "e2fb4b2f53e9aa10f21ec5ffcf708cc2749b456a39703c9228a7fce7fc574f73",
+  "proofs": [
+    {
+      "path": "evidence/agave-canonical-continuity.json",
+      "sha256": "1cf111b0a05656da6b1554d195ffdca5403008b773a5ac9b303721a4c99ccbc1"
+    },
+    {
+      "path": "evidence/agave-source-restart-check.json",
+      "sha256": "3a2db0639a11b1054156c74d21089fad2397278708f4f35d48bc2de44741c60a"
+    },
+    {
+      "path": "evidence/agave-source-recovery-completed.json",
+      "sha256": "be5633983d7c597c408a3e687f468b5a654a7e825b1f4421a696077e48734561"
+    },
+    {
+      "path": "evidence/agave-source-recovery-individual-review.json",
+      "sha256": "2bbe32f5aeb4079e81c7defc35dcbae1699ce7d8d365f6eacee94a80840dcb6a"
+    }
+  ],
+  "requirements": {
+    "G5.08": {
+      "claim": "The recorded fresh source-runtime deployment and subsequent provider process/container restart preserve state.",
+      "basis": "The fresh canonical source deployment compares the complete 2163-account backup bank with its held finalized snapshot. All user/programme accounts and application tables/files match; only named protocol data and exactly reconciled validator vote-fee movement differ. That deployment runtime exactly matches the restart-before identity, and the restart-after runtime matches the final freeze. The restart preserves its full sampled state snapshot.",
+      "scopeLimit": "Fresh deployment means the actual reviewed source-runtime migration onto the existing volume. Restart coverage is a provider process/container restart; hardware-host reboot is outside operator control. This does not authorize another deployment or certify arbitrary future images."
+    }
+  },
+  "reviewMethod": {
+    "retainedMigrationReportSha256": "1cf111b0a05656da6b1554d195ffdca5403008b773a5ac9b303721a4c99ccbc1",
+    "publicMigrationEqualsRetainedReport": true,
+    "migrationRuntimeEqualsRestartBeforeExceptObservedAt": true,
+    "migrationCurrentRuntimeEqualsRestartAfterAndFreezeExceptObservedAt": true,
+    "restartProofChecksumVerified": true,
+    "deploymentId": "22e5870a-afb8-4027-89b5-ccb8a39391c2",
+    "volumeId": "080bf785-50e7-4dda-893b-4d613aa5e9a8",
+    "imageDigest": "sha256:f48877aec5c7e2ec010470f148368810034dece2f8ffd05d2f882928df649264",
+    "preparedFileCount": 54,
+    "runtimeFileCount": 37,
+    "fourExecutableDigestsAndLengthsMatchFreeze": true,
+    "bankAccountCount": 2163,
+    "beforeBankSlot": 348492,
+    "afterFinalizedBankSlot": 348504,
+    "voteTransactions": 11,
+    "voteFees": 110000,
+    "voteFeeRewards": 55000,
+    "netValidatorBalanceDelta": -55000,
+    "databaseRows": {
+      "assets": 996,
+      "counters": 120,
+      "faucet": 45,
+      "gallery": 617
+    },
+    "applicationTableHashesMatchSelectedRecoveryArchive": true,
+    "immutableFiles": 1992,
+    "restartSnapshotsExactlyEqual": true,
+    "newDeployments": false,
+    "newRestarts": false,
+    "newTransactions": false,
+    "newLedgerReads": false
+  },
+  "supersedes": {
+    "path": "evidence/agave-source-recovery-individual-review.json",
+    "requirement": "G5.08",
+    "previousStatus": "partial retained evidence; unreviewed",
+    "resolution": "Fresh deployment evidence is now individually linked to the exact final candidate through the selected restart record. Other partial requirements in that review remain open."
+  },
+  "limitations": [
+    "The source-runtime image differs from the earlier probe image; the recorded source-file and executable review supports this image, not reproducible OCI image bytes.",
+    "This review checks retained report equality, identity linkage, table hashes and vote-fee arithmetic. It does not independently re-enumerate current accounts or replay a ledger.",
+    "Deployment continuity uses the complete recorded bank/application comparison; subsequent restart continuity uses its recorded sample, not a second complete inventory.",
+    "The old archive does not contain later workload/browser activity. Monitoring delivery and production/preview environment separation remain unreviewed."
+  ],
+  "releaseAccepted": false,
+  "mainnetAccepted": false,
+  "bridgeAccepted": false
+}

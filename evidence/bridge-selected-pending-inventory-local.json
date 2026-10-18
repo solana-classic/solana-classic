@@ -1,0 +1,54 @@
+{
+  "schemaVersion": 1,
+  "at": "2026-10-15T19:54:31.130110+00:00",
+  "state": "local-checks-passed",
+  "scope": "Offline selected private-journal accounting with synthetic signed fixtures; no actual ledger inventory, global history, backing or production acceptance",
+  "newTests": 13,
+  "combinedBridgeRegressionTests": 167,
+  "checks": [
+    "Both selected directions contribute exact pending original-unit obligations",
+    "Expired, failed, consumed-review and submission labels do not erase unresolved amounts",
+    "Locally finalized labels are separated without claiming independent settlement proof",
+    "Version2 and explicit metadata version3 records admitted; unpinned legacy records refused",
+    "Chain/programme/bridge/mint/epoch/precision mismatch, duplicate receipts and changed hashes refused",
+    "Checked u64 sums and conversion preserve units above Number precision and reject overflow",
+    "Declared counters, escrow and native payout capacity must reconcile with selected obligations",
+    "Selections are snapshotted before awaits and journal hashes checked again",
+    "Journal bytes remain unchanged and inspection locks are released",
+    "Output excludes directories, endpoints, signatures and signed bytes",
+    "Coordinated omission can match selected arithmetic but never verifies complete source history or backing"
+  ],
+  "validation": {
+    "command": "node --test bridge/pending-inventory.test.mjs and the existing metadata/journal/observer/accounting review suite",
+    "tests": 167,
+    "exitCode": 0,
+    "syntheticFixturesOnly": true
+  },
+  "sourceHashes": {
+    "bridge/pending-inventory.mjs": "8eb05ac8919a81381009391100d9aca3293bc49666afe7ed4b2e84e5a800d24a",
+    "bridge/pending-inventory.test.mjs": "bb70dc1def31da8ab220635b51ac25b881a523464998f55c53ff6e724bdb9267",
+    "bridge/pending-claim.mjs": "a06ef6539298f200194bd97dcaea92b9ac26b09c3c32c7cc750720ffd29b3d32",
+    ".github/workflows/bridge-metadata-review.yml": "abda969d3cfe4cff306b041f38dfe2e7f44e543f8aec4cbc1cd752972933f755"
+  },
+  "actualChainRequests": 0,
+  "fullValidatorsStarted": 0,
+  "retainedPrivateAttemptsChanged": false,
+  "canonicalNetworkChanged": false,
+  "completeSourceEventInventoryVerified": false,
+  "sameLedgerHistoryVerified": false,
+  "simultaneousSnapshotVerified": false,
+  "freshChainStateVerified": false,
+  "backingVerified": false,
+  "canRetry": false,
+  "canRefund": false,
+  "canResetAttempt": false,
+  "canSign": false,
+  "canBroadcast": false,
+  "settlementAccepted": false,
+  "productionReady": false,
+  "remainingRequirements": [
+    "Complete independently observed source events and economic history",
+    "Consistent finalized chain snapshots, reviewed code/custody and actual funded backing",
+    "Separate recovery decisions, full-validator consensus, independent operators and security review"
+  ]
+}

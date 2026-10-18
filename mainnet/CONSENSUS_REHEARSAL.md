@@ -86,6 +86,13 @@ genesis bytes and oversized or concatenated compressed streams. Each fresh
 ledger receives those verified initial blocks with owner-only permissions.
 The executable is rechecked before each start.
 
+Bundle inspection uses bounded stdout, a 64 KiB private stderr ceiling and
+owned process-group cleanup on timeout, failure or cancellation. The genesis
+auditor has a 20-second budget and 4 MiB stdout ceiling; each identity lookup
+has 10 seconds and 128 bytes. Executable hashes and sizes are checked immediately
+before each invocation. Check-only inspection discards private stderr in memory
+and creates no log files. These limits do not replace host or bundle admission.
+
 ## What is checked
 
 Agave's normal network, PoH speed and host checks stay enabled. There is no
@@ -105,6 +112,70 @@ Owned child processes are stopped at the end, including partial-start failures.
 A forced stop, cleanup error or unexpected child exit prevents success. Raw
 keys, genesis/accounts and private logs remain in the selected host package;
 `public-result.json` omits supplied paths and raw errors. Retain every failure.
+
+## Voting and finalized-history continuity
+
+An advancing network slot alone cannot prove every selected validator is still
+voting. The observer now requests finalized vote-account state explicitly and
+retains all three selected vote accounts from each of the three RPC nodes.
+Unknown, duplicate, missing or malformed vote records refuse admission.
+
+Across the bounded observation, every one of those nine views must show both
+its last vote and rooted slot advancing, with the same activated stake. A
+stalled vote or root cannot be hidden by the other validators' progress.
+Immediately before passing, each node must also return the unchanged block
+hash at the first shared finalized slot. Missing history or a changed earlier
+block refuses admission. Genesis and node identity bracket each continuity
+read; child exit or failed cleanup also prevents success.
+
+Eight additional synthetic regressions reproduce stale-vote and replaced-block
+false passes and cover the positive path, altered stake, missing readers,
+malformed votes, missing history and changed identity. All60 offline mainnet
+package checks pass locally. These checks use synthetic RPC responses and
+mocked validator processes; they do not start full validators or establish a
+real fork/recovery result. Historical evidence keeps its original source hashes
+and scope. The prepared launcher still requires the suitable host and actual
+private execution described below. See
+[the scoped local verification](../evidence/mainnet-consensus-progress-local.json).
+
+## Direct private RPC boundary
+
+The observer creates a fresh direct HTTP opener for each read. It ignores
+process proxy settings and any globally installed opener, rejects every HTTP
+redirect, and accepts only the three fixed loopback RPC ports and eight listed
+read methods. No caller URL, external endpoint or mutation method is accepted.
+Non-200 responses and invalid JSON-RPC envelopes refuse admission. Rejected
+HTTP responses are closed; the existing 2 MiB body bound and socket timeout
+remain enforced.
+
+Two actual local HTTP fixtures reproduced the previous redirect and environment
+proxy escapes before the fix. Eight new transport tests now cover direct POST
+reads on all three ports, every redirect status, proxy/global-opener isolation,
+HTTP/RPC envelope rejection, exact response-size boundaries and method/port
+admission. All 68 offline package checks pass locally with resource warnings
+treated as errors. These are local synthetic HTTP servers, not Agave nodes,
+actual chain requests, host admission or consensus evidence. See
+[the scoped transport verification](../evidence/mainnet-rpc-boundary-local.json).
+
+## One network deadline per private RPC read
+
+The private observer now uses a single three-second monotonic network budget
+for connection, request send, response headers and response body. Each socket
+read or send uses only the remaining budget. Sending small pieces repeatedly
+cannot reset that budget. A completed buffered response is checked again before
+it can supply an observation. Redirect, proxy, read-method, port, HTTP/RPC and
+2 MiB response checks remain unchanged.
+
+Four new local HTTP test groups reproduce slow headers, ordinary bodies and
+chunked bodies; verify a shared header/body budget, closed sockets after normal
+completion, invalid JSON and a silent peer; and accept a complete chunked reply.
+The timing fixtures use a shortened 180 ms budget. All 83 offline package checks
+pass locally with resource warnings treated as errors. The deadline bounds
+network I/O; it is not a real-time scheduling guarantee, a JSON processing
+budget or a deadline for the whole rehearsal. These fixtures start no Agave
+validators and make no actual chain requests. Actual consensus and recovery
+still require the suitable host. See
+[the scoped deadline verification](../evidence/mainnet-rpc-network-deadline-local.json).
 
 ## Acceptance still required
 
@@ -148,3 +219,89 @@ hashing genesis with an exact synthetic budget, replays slot0 on two fresh
 copies with normal verification, and requires matching bank/shred outputs.
 The current host refuses before private preparation. Read
 [the preparation procedure](GENESIS_PREPARATION.md).
+
+## Visible process admission
+
+Preparation and launch share the read-only `process_admission.py` census before
+creating a new rehearsal attempt. Linux truncates `comm` names to15 bytes, so
+matching only the full test-validator name can miss a running process. The
+shared guard recognizes both full and truncated names, executable `argv[0]`
+and the kernel executable link, including a removed executable still running.
+Mentions in unrelated arguments do not count as validator execution.
+
+State parsing handles spaces and parentheses in process names. Zombie and
+exited records are excluded; disappearing PIDs are tolerated. A missing Linux
+process filesystem, unreadable live record, unknown state or incomplete live
+identity refuses execution with a redacted error. Run with sufficient authorized
+visibility; do not bypass the check.
+
+The census observes visible processes at admission time. It is not an atomic
+lock against later starts, proof of hidden host processes or a security boundary
+against a malicious host. A dedicated host and serialized operator workflow
+remain required. No live validator or host limit is changed by this check.
+
+Ten regression groups cover these boundaries. The Linux-only fixture names an
+ordinary bounded Python child like a test validator and verifies the kernel's
+actual truncated name; it starts no Agave process. Synthetic lifecycle fixtures
+explicitly model an admitted process census, separately from refusal tests.
+
+## Optional owned warm restart
+
+On an admitted host, append `--restart-node 0` (or1/2) to a new private
+`--run --ack fresh-private-three-validators` attempt. It first creates the three
+fresh ledgers and completes the normal all-node consensus/progress checks.
+It never attaches to an earlier retained run. The default and read-only modes
+do not perform a restart; reports explicitly distinguish requested and verified
+warm restart. Invalid node selection refuses before bundle access.
+
+The optional stage stops exactly one owned process and requires its exit to
+be observed with code0 or SIGINT, without a forced kill. Its selected RPC must
+then refuse the connection; a timeout, malformed reply, other transport error
+or continuing listener does not prove absence. The other two processes must
+remain alive and report the original genesis/identities.
+
+Before replacement, the launcher rechecks the selected bundle, validator bytes
+and original ledger genesis. It uses the identical normal startup command on
+that original ledger, with no reset, copy, changed identity, new genesis or
+host/PoH bypass. The replacement is registered immediately in the outer
+launcher's owned process list, so failure/cancellation retains cleanup ownership.
+A successful warm-restart attempt has four process starts in total, while all
+three current children must stop in the outer cleanup. Earlier ledgers and
+attempts remain untouched.
+
+Within a180-second progress-poll budget, all three nodes must recover advancing
+finality, all nine vote/root views with unchanged stake and the same earlier
+finalized block. The budget is checked between already-bounded RPC observation
+sequences; it is not a hard real-time bound on the entire restart, preparation
+or process shutdown. Missing progression, a child exit, changed artifact/ledger
+or cleanup failure prevents an overall pass.
+
+This is a warm process restart, not cold restoration, hard crash, competing
+fork, physical-host loss, independent operators or a quorum-outage policy test.
+Three equally staked nodes leave only two-thirds when one stops; this stage
+does not promise continued finality during that outage. No transaction workload
+is generated by the restart helper. Actual execution remains blocked on the
+current host, and no real recovery acceptance is claimed by synthetic checks.
+
+## Readiness retries and integrity failures
+
+Initial startup and the optional warm restart share a narrow observation retry
+policy. Failed connection reads, resets and network deadlines may be retried
+inside their existing budgets. Explicitly incomplete startup progress may also
+retry: a low finalized slot, selected votes not rooted yet, a partial set of
+otherwise correctly identified selected votes, or votes/finality not yet
+advancing beyond the retained checkpoint.
+
+Wrong genesis, identity or version, changed supply/inflation/stake, unexpected
+or duplicate vote identities, malformed fields, changed finalized blocks and
+unavailable retained history stop the attempt. Redirects, unexpected HTTP/RPC
+replies and unknown exceptions cannot become readiness simply because a later
+request succeeds. Supply and vote identity are checked before returning the
+low-slot readiness classification. Initial and restart failure paths retain
+the failed attempt and clean up the owned current children.
+
+A synthetic wrong-genesis episode previously retried into a later pass. Six
+new regression groups reproduce that case and cover permanent observation and
+continuity failures, explicit readiness, typed runtime policy and complete
+launcher cleanup. These are synthetic observations/processes; actual network
+consensus and restart still require suitable hosting and separate execution.

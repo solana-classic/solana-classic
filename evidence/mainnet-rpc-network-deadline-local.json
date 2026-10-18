@@ -1,0 +1,51 @@
+{
+  "schemaVersion": 1,
+  "at": "2026-10-15T18:52:21.324602+00:00",
+  "state": "local-checks-passed",
+  "scope": "Actual local synthetic HTTP fixtures around the private rehearsal observer; no Agave validators, real chain requests or host admission",
+  "networkDeadlineSeconds": 3,
+  "fixtureDeadlineSeconds": 0.18,
+  "deadlineScope": "One monotonic network I/O budget across connect, request send, response headers and body; not a real-time scheduling, JSON-processing or whole-rehearsal guarantee",
+  "newTransportTestGroups": 4,
+  "totalTransportTestGroups": 12,
+  "totalOfflinePackageTests": 83,
+  "preFixFailuresReproduced": [
+    "Slow response headers completed beyond the selected request budget",
+    "Slow ordinary response body completed beyond the selected request budget",
+    "Slow chunked response body completed beyond the selected request budget"
+  ],
+  "checks": [
+    "Three slow-response modes refuse before a complete valid result can supply an observation",
+    "Headers and body share one budget rather than receiving separate timeouts",
+    "Owned sockets close after success, invalid JSON and a silent peer timeout",
+    "Complete chunked response within the budget succeeds",
+    "Existing direct-node, redirect/proxy, envelope and 2 MiB response-boundary checks still pass"
+  ],
+  "validation": {
+    "command": "python3 -W error::ResourceWarning -m unittest discover -s mainnet -p '*_test.py'",
+    "tests": 83,
+    "exitCode": 0,
+    "fixtureHttpOnly": true
+  },
+  "sourceHashes": {
+    "mainnet/consensus.py": "70fc48ca26a43df926d55d6bee6896ca6c00e1e6c5b642b9416cdbade4df74a4",
+    "mainnet/rpc_transport_test.py": "9a35f9f93d010d64c78eb6533373062f91708d3764f31d3d7407b703d3ef56ef",
+    "mainnet/consensus_test.py": "f6fc96aac5fc0e4d88d31cb1f50746538f90a7bcf78a2417464b83b1aaeb9030",
+    ".github/workflows/mainnet-preparation.yml": "e2e29d9beb6454f0b801b5b6a49cafbd87ecb8e95caf51679e4670ce58c15809"
+  },
+  "fullValidatorsStarted": 0,
+  "actualChainRequests": 0,
+  "createdKeys": false,
+  "createdGenesis": false,
+  "canonicalNetworkChanged": false,
+  "hostLimitsChanged": false,
+  "actualConsensusVerified": false,
+  "actualForkRecoveryVerified": false,
+  "independentOperatorsVerified": false,
+  "productionReady": false,
+  "remainingRequirements": [
+    "Capable authorized Linux host with unchanged resource requirements",
+    "Actual fresh hashing genesis, slot-zero replays and full-validator consensus/recovery",
+    "Independent operators, funded backing, reviewed custody and external security review"
+  ]
+}

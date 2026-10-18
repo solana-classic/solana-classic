@@ -62,4 +62,89 @@ class OfflineProcess(unittest.TestCase):
   with self.assertRaisesRegex(ValueError,'STDERR_LIMIT'):
    m.run_tool([sys.executable,'-c',"import os;os.write(2,b'x'*2048)"],log,stderr_limit=1024)
   self.assertLessEqual(len(log.getvalue()),1024)
+
+class OfflineInput(unittest.TestCase):
+ execute=OfflineProcess.execute
+ def test_default_and_explicit_empty_input_both_deliver_eof(self):
+  for options in [{},{'input_bytes':b''}]:
+   with self.subTest(options=options):
+    out,err=self.execute("import sys;print(len(sys.stdin.buffer.read()))",timeout=2,**options)
+    self.assertEqual(out,b'0\n');self.assertEqual(err,b'')
+ def test_exact_maximum_binary_input_is_delivered_without_logging(self):
+  import hashlib
+  data=bytes(range(256))*(m.STDIN_LIMIT//256)
+  out,err=self.execute("import hashlib,sys;print(hashlib.sha256(sys.stdin.buffer.read()).hexdigest())",input_bytes=data,timeout=5)
+  self.assertEqual(out.decode().strip(),hashlib.sha256(data).hexdigest());self.assertEqual(err,b'')
+ def test_input_and_both_full_output_pipes_progress_without_deadlock(self):
+  data=b'i'*(1024*1024)
+  code="import os,sys\nfor _ in range(128):\n os.write(1,b'o'*4096);os.write(2,b'e'*4096)\ndata=sys.stdin.buffer.read()\nassert data==b'i'*(1024*1024)"
+  out,err=self.execute(code,input_bytes=data,timeout=5)
+  self.assertEqual(out,b'o'*(128*4096));self.assertEqual(err,b'e'*(128*4096))
+ def test_invalid_input_does_not_start_a_process(self):
+  for data in ['text',bytearray(b'x'),memoryview(b'x'),False,b'x'*(m.STDIN_LIMIT+1)]:
+   with self.subTest(kind=type(data).__name__),patch.object(m.subprocess,'Popen') as start,self.assertRaisesRegex(ValueError,'^BOUNDED_OFFLINE_INPUT_REQUIRED$'):
+    self.execute('raise Exception()',input_bytes=data)
+   start.assert_not_called()
+ def test_explicit_32_mib_bound_streams_exact_bytes_without_logging(self):
+  import hashlib
+  data=bytes(range(256))*(32*1024**2//256)
+  out,err=self.execute("import hashlib,sys;print(hashlib.sha256(sys.stdin.buffer.read()).hexdigest())",input_bytes=data,stdin_limit=32*1024**2,environment={},timeout=10)
+  self.assertEqual(out.decode().strip(),hashlib.sha256(data).hexdigest());self.assertEqual(err,b'')
+ def test_selected_bound_refuses_overflow_before_start_and_allows_exact_size(self):
+  for data,options in [(b'abc',{'stdin_limit':2}),(b'x'*(32*1024**2+1),{'stdin_limit':32*1024**2}),(b'x'*(16*1024**2+1),{})]:
+   with self.subTest(length=len(data),options=options),patch.object(m.subprocess,'Popen') as start,self.assertRaisesRegex(ValueError,'^BOUNDED_OFFLINE_INPUT_REQUIRED$'):
+    self.execute('raise Exception()',input_bytes=data,**options)
+   start.assert_not_called()
+  out,err=self.execute("import sys;sys.stdout.buffer.write(sys.stdin.buffer.read())",input_bytes=b'ab',stdin_limit=2)
+  self.assertEqual(out,b'ab');self.assertEqual(err,b'')
+ def test_invalid_selected_input_limits_refuse_even_without_input(self):
+  for limit in [0,-1,True,False,1.0,'32',None,32*1024**2+1]:
+   with self.subTest(limit=limit),patch.object(m.subprocess,'Popen') as start,self.assertRaisesRegex(ValueError,'^BOUNDED_OFFLINE_INPUT_REQUIRED$'):
+    self.execute('raise Exception()',stdin_limit=limit)
+   start.assert_not_called()
+ def test_child_closing_stdin_is_reaped_without_input_in_error(self):
+  started=[];real=m.subprocess.Popen
+  def start(*args,**kwargs):
+   p=real(*args,**kwargs);started.append(p);return p
+  with patch.object(m.subprocess,'Popen',side_effect=start),self.assertRaisesRegex(ValueError,'^OFFLINE_TOOL_STDIN_CLOSED$'):
+   self.execute('import os,time;os.close(0);time.sleep(60)',input_bytes=b'PRIVATE INPUT'*(128*1024),timeout=2)
+  self.assertIsNotNone(started[0].returncode)
+  with self.assertRaises(ChildProcessError):os.waitpid(started[0].pid,os.WNOHANG)
+ def test_nonreading_child_times_out_and_is_reaped(self):
+  started=[];real=m.subprocess.Popen
+  def start(*args,**kwargs):
+   p=real(*args,**kwargs);started.append(p);return p
+  with patch.object(m.subprocess,'Popen',side_effect=start),self.assertRaisesRegex(ValueError,'^OFFLINE_TOOL_TIMEOUT$'):
+   self.execute('import time;time.sleep(60)',input_bytes=b'x'*(1024*1024),timeout=0.15)
+  self.assertEqual(started[0].returncode,-signal.SIGKILL)
+  with self.assertRaises(ChildProcessError):os.waitpid(started[0].pid,os.WNOHANG)
+
+class OfflineEnvironment(unittest.TestCase):
+ execute=OfflineProcess.execute
+ def test_explicit_environment_replaces_inherited_values(self):
+  code="import os;print(os.environ.get('PRIVATE_PARENT_MARKER','absent'));print(os.environ.get('SELECTED_TOOL_MODE','absent'))"
+  with patch.dict(os.environ,{'PRIVATE_PARENT_MARKER':'private-parent-value'}):
+   out,err=self.execute(code,environment={'SELECTED_TOOL_MODE':'selected'})
+   self.assertEqual(out,b'absent\nselected\n');self.assertEqual(err,b'')
+   out,err=self.execute(code,environment={})
+   self.assertEqual(out,b'absent\nabsent\n');self.assertEqual(err,b'')
+ def test_omitted_environment_preserves_existing_inheritance_contract(self):
+  with patch.dict(os.environ,{'SELECTED_TOOL_MODE':'inherited'}):
+   out,_=self.execute("import os;print(os.environ['SELECTED_TOOL_MODE'])")
+  self.assertEqual(out,b'inherited\n')
+ def test_invalid_environment_refuses_before_process_start_without_echoing_values(self):
+  class Derived(dict):pass
+  bad=[[],Derived(),{'':'value'},{'a=b':'value'},{'a\0b':'value'},{'name':'private\0value'},{'name':b'bytes'},{1:'value'},{'name':'\ud800'},dict.fromkeys([str(i) for i in range(65)],'x'),{'name':'x'*16384}]
+  for environment in bad:
+   with self.subTest(kind=type(environment).__name__),patch.object(m.subprocess,'Popen') as start,self.assertRaisesRegex(ValueError,'^BOUNDED_OFFLINE_ENVIRONMENT_REQUIRED$'):
+    self.execute('raise Exception()',environment=environment)
+   start.assert_not_called()
+ def test_environment_is_snapshotted_and_exact_byte_limit_is_allowed(self):
+  selected={'X':'x'*16381};real=m.subprocess.Popen
+  def start(*args,**kwargs):
+   self.assertIsNot(kwargs['env'],selected);selected.clear()
+   return real(*args,**kwargs)
+  with patch.object(m.subprocess,'Popen',side_effect=start):out,_=self.execute("import os;print(len(os.environ['X']))",environment=selected)
+  self.assertEqual(out,b'16381\n');self.assertEqual(selected,{})
+
 if __name__=='__main__':unittest.main()

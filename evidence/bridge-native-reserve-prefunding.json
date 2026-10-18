@@ -1,0 +1,72 @@
+{
+  "schemaVersion": 1,
+  "at": "2026-10-16T07:23:05.298877+00:00",
+  "state": "compiled-sbf-prefunding-scenarios-passed",
+  "scope": "Three selected synthetic in-memory VM groups on a separate Linux compiler worker using unchanged reviewed SBF; not genesis construction, Agave consensus, funded backing or production custody",
+  "compiler": "rustc 1.89.0",
+  "defaultCompilerUnchanged": true,
+  "dependencyLockfileUnchanged": true,
+  "compiledSBFTestGroups": 3,
+  "olderRuntimeScenariosFiltered": 9,
+  "selectedScenarioTransactions": {
+    "successfulInitializations": 1,
+    "refusals": 7,
+    "syntheticFixtureSetupExcluded": true
+  },
+  "assertedPrefundedReserveNativeUnits": "1900000000",
+  "assertions": [
+    "Derived off-curve vault retains its exact balance through authorized native initialization",
+    "Initialized vault owner, V2 bytes and actual rent floor match; counters remain zero and both pause flags remain set",
+    "Unsigned direct System withdrawal refuses before and after initialization",
+    "Wrong authority, wrong PDA and reinitialization refuse with selected state unchanged",
+    "Foreign owner and allocated account refuse; partial configuration allocation rolls back"
+  ],
+  "retainedPreExecutionFailures": [
+    {
+      "reason": "Locked LiteSVM unavailable in offline cache",
+      "runtimeScenariosExecuted": 0
+    },
+    {
+      "reason": "Locked dependencies require Rust1.89; default1.86 refused",
+      "runtimeScenariosExecuted": 0
+    }
+  ],
+  "artifacts": {
+    "bridgeSBF": {
+      "sha256": "556adf3132c6d102458c0c3b13e22457401bd748b6c3a37a422fb7a339a68e53",
+      "bytes": 203920,
+      "implementationSourceUnchanged": true
+    },
+    "token2022SHA256": "a794161408080f690dac00832f45b3c3e2b71f1339586667ad1f979cf91d5b68"
+  },
+  "existingRuntimeBinariesAndOriginalArtifactsUnchanged": true,
+  "publicSourcesUnchanged": true,
+  "privateValidatorCensusClear": true,
+  "ephemeralVMKeysOnly": true,
+  "retainedPrivateKeyFilesRead": 0,
+  "validatorProcessesStarted": 0,
+  "ledgerFilesCopied": 0,
+  "chainRequests": 0,
+  "externalSubmissions": 0,
+  "actualGenesisConstructed": false,
+  "completeGenesisInventoryVerified": false,
+  "protectedBootstrapFloorVerified": false,
+  "fundedBackingVerified": false,
+  "upgradeCustodyVerified": false,
+  "independentOperatorsVerified": false,
+  "canonicalNetworkChanged": false,
+  "mainnetActivated": false,
+  "productionReady": false,
+  "ciScope": "Compile-only runtime scenario source check; artifact execution is the separate worker result",
+  "sourceHashes": {
+    "bridge/program/Cargo.toml": "b96d287180548bf607fecde0a3c3244d90be62aa55dd4eb629a1545eb28c7335",
+    "bridge/program/Cargo.lock": "533e7be81be8541a427c3423066eb5aa77b18be8f47edc1ecd55f56a38fb3bb8",
+    "bridge/program/src/lib.rs": "ede30cfc36212cafd05da1bde9e65462b7864078eba8e57de60b5fcd4d3388d6",
+    "bridge/program/src/state.rs": "d63c19450d022eee686c855195e8e71340cacbc1547c2b8db6fa1e1ae6d6163a",
+    "bridge/program/tests/runtime.rs": "7a4a79d5f4540747520708f44e0e12c2388f15478d6e606bc8755f39f361a221",
+    "mainnet/offline_process.py": "bc7013b43537bf272b08e37122035f9e647f18496a01121424dd322dd1d06c7f",
+    "mainnet/process_admission.py": "0c8b9bfa15ab908c2f21bac1cc53d8a785dc1ddbae764eeaa41fe6f6cbbb95fd",
+    "mainnet/RESERVE_PREFUNDING.md": "9df7d7dc15d40268af602f0612aadb5a6f47e99c706a40624160326f96c539bd",
+    ".github/workflows/bridge-runtime-review.yml": "73cc6a7cc0d113c391eb85f5c8d0653fa5b041e4f44ffc49d2aa5da742ba350e"
+  }
+}

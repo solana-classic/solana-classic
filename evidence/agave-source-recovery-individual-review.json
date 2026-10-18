@@ -1,0 +1,131 @@
+{
+  "schemaVersion": 1,
+  "at": "2026-10-17T03:32:58.593838+00:00",
+  "scope": "remote exact source-candidate cold-restore evidence review and explicit monitoring/rollback gaps; no new restore or live mutation",
+  "passed": true,
+  "genesis": "7TAUSfTzQeocodtVee2qsftsCYnJu2eCM1ALdADbHNon",
+  "candidate": {
+    "apiOrigin": "https://network-release-production.up.railway.app",
+    "frontendOrigin": "https://solana-classic-soc.vercel.app",
+    "frontendDeploymentId": "dpl_3aWWzKDohr4SrgijgrB8dWgHHS5r",
+    "frontendCommit": "35f0eaf1dede45452c9cdf9e6403669e966c427d",
+    "apiCommit": "119f25e225540be78b64b19bdb6cb300a1f47c10",
+    "networkConfigSha256": "0eea489e8cf0753b2b0cf0b91b6949566044e50c20bd4d02eea814490f64fe0e",
+    "dependencyManifestSha256": "e6da27717e6a84ca7b29d707ff63591b2ff0cfc38892d3b4667f8615bdf7bbc0"
+  },
+  "freezeSha256": "55b668e56a946ec94f0195b03530aba23593bd71d7fd52493d5403b21882757f",
+  "checklistSha256": "e2fb4b2f53e9aa10f21ec5ffcf708cc2749b456a39703c9228a7fce7fc574f73",
+  "proofs": [
+    {
+      "path": "evidence/agave-source-recovery-completed.json",
+      "sha256": "be5633983d7c597c408a3e687f468b5a654a7e825b1f4421a696077e48734561"
+    },
+    {
+      "path": "evidence/agave-source-monitoring-review.json",
+      "sha256": "b547b69d56f99f04cc81ddd4922bdc3641a5687001e8c477047df1bb23419cbf"
+    },
+    {
+      "path": "evidence/agave-source-frontend-rollback.json",
+      "sha256": "31b5ec394480997c0826b51e21df3610dc28a4ce64b68adfe175f28a88b9af9b"
+    },
+    {
+      "path": "evidence/agave-source-stability-replacement-started.json",
+      "sha256": "6581bb62dad92808ac77caa8eb8a6f590c04d87bf28bf6ce0dda20ee43f5fdcf"
+    }
+  ],
+  "requirements": {
+    "G5.09": {
+      "claim": "An isolated cold-backup restore recovers the selected archive genesis, balances, assets, metadata and database records.",
+      "basis": "The selected complete-bank review covers 2163 accounts; user/programme accounts are unchanged, with named protocol updates and the validator net vote-fee movement separately reconciled. Held application hashes match 996 asset rows, 617 gallery rows, 45 faucet records, 120 counters and 1992 immutable files. Actual isolated HTTPS checks verify all 617 gallery entries, 1234 associated files and 452 NFT owners. The archived faucet request returns its original receipt and leaves the observed balance unchanged.",
+      "scopeLimit": "Accepts restoration of the recorded archive into the isolated target using current-candidate executables. It does not claim that this archive contains transactions created later or authorize a canonical restore."
+    }
+  },
+  "reviewMethod": {
+    "selectedBackupChecksum": "be5633983d7c597c408a3e687f468b5a654a7e825b1f4421a696077e48734561",
+    "publicRecoveryEqualsSelectedRaw": true,
+    "supportingProofChecksumsVerified": {
+      "bank": {
+        "path": "recovery-final-complete-bank-review-20261015.json",
+        "sha256": "d17df873c37cacbdc53623cc67bebfc64e00104ab514a141724125160f900009"
+      },
+      "application": {
+        "path": "recovery-final-held-application-review-20261015.json",
+        "sha256": "3abbb93b43f0f25b07f7162d8999fbdcd8f9ffa1bea8f82cf0f1450066e6f549"
+      },
+      "canonical": {
+        "path": "recovery-canonical-unchanged-20261015.json",
+        "sha256": "0dd94135a58eb5739aa0ce4332c53fcca54903f84132aed2b1be76f2246a1e14"
+      },
+      "http": {
+        "path": "recovery-final-http-verification-20261015.json",
+        "sha256": "482a557d47d9a834ccddf70bcbc93c2ad97d928c3f89f512ef8e5c9bc9a9151a"
+      }
+    },
+    "supportingResultsCrossChecked": true,
+    "canonicalRuntimeMatchesFreeze": true,
+    "isolatedRuntimeSourceCoreEngineAndGenesisMatchFreeze": true,
+    "isolatedBeforeAfterRuntimeUnchanged": true,
+    "isolatedAttemptMatchesExtractionAndBank": true,
+    "restoredFinalizedSlots": [
+      349398,
+      351917
+    ],
+    "voteFeeArithmetic": {
+      "passed": true,
+      "fromExclusiveSlot": 348492,
+      "throughSlot": 348604,
+      "blocks": 112,
+      "transactions": 111,
+      "totalFees": "1110000",
+      "feeRewards": "555000",
+      "netLamportDelta": "-555000",
+      "voteFeeMovementReconciled": true,
+      "allInstructionsAreVotes": true
+    },
+    "databaseRows": {
+      "assets": 996,
+      "gallery": 617,
+      "faucet": 45,
+      "counters": 120
+    },
+    "immutableFileCount": 1992,
+    "httpAssociatedFileCount": 1234,
+    "nftOwnersVerified": 452,
+    "selectedMonitoringAndRollbackReportsRehashed": true,
+    "newChainReads": false,
+    "newTransactions": false,
+    "newRestores": false,
+    "newRestarts": false,
+    "newAlertTests": false,
+    "newRollbacks": false
+  },
+  "unacceptedRequirements": {
+    "G5.07": {
+      "status": "partial retained evidence; unreviewed",
+      "established": "Current-candidate healthy progression and saved provider monitor thresholds/routing are recorded. Earlier operator-confirmed delivery remains historical.",
+      "missing": "Complete current-candidate attribution for disk, memory, stalled-slot and upstream-health probe behavior and destination delivery.",
+      "nextAction": "Review retained controlled probe/delivery records and deployed monitor source identity together. Do not infer fault handling from healthy samples or fill disks to test."
+    },
+    "G5.08": {
+      "status": "partial retained evidence; unreviewed",
+      "established": "Provider process/container restart continuity is individually accepted under G2.07.",
+      "missing": "A separately bound fresh-deployment state-preservation review for this requirement.",
+      "nextAction": "Review the retained migration deployment and complete continuity records before considering any new maintenance; do not restart the canonical service to fill a checkbox."
+    },
+    "G5.12": {
+      "status": "partial retained evidence; unreviewed",
+      "established": "The selected frontend record demonstrates an actual prior-deployment rollback followed by restoration of the frozen deployment, with matching entries and unchanged backend runtime.",
+      "missing": "Complete review of production API/status freshness and environment separation from preview deployments.",
+      "nextAction": "Inspect existing deployment/environment scope metadata read-only and review response freshness; keep values and credentials private. No additional rollback is needed to establish the already-recorded portion."
+    }
+  },
+  "limitations": [
+    "This is an audit of retained checksum-bound reports and their internal agreement, not a new account enumeration, ledger replay, archive extraction or HTTP recovery run.",
+    "The HTTP sub-report explicitly does not grant aggregate backup acceptance by itself; the complete bank, vote-fee, application and extraction records are required together.",
+    "The old archive is not a current backup of subsequent workload and browser transactions.",
+    "The three partial requirements remain outside the accepted inventory; no whole-release or monetary activation is implied."
+  ],
+  "releaseAccepted": false,
+  "mainnetAccepted": false,
+  "bridgeAccepted": false
+}

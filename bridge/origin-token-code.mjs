@@ -21,6 +21,8 @@ function normalize(value){
  if(!Number.isSafeInteger(p.elfBytes)||p.elfBytes<4||p.elfBytes>MAX_DATA-45)throw Error('Bounded token ELF length required');
  digest(p.elfSHA256);digest(p.programDataSHA256);if(p.upgradeAuthority!==null)identity(p.upgradeAuthority);return p;
 }
+// Pure normalization for an explicitly selected private observation policy.
+export function checkedOriginTokenCodePins(value){return normalize(value);}
 // Only for the reviewed fixture's slot-zero genesis installation, not an upgrade.
 // Artifact digest/length and authority must be independently selected by caller.
 export function genesisTokenCodePins({genesis,artifact,upgradeAuthority,expectedSHA256,expectedBytes}){

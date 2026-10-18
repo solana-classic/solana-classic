@@ -1,0 +1,55 @@
+{
+  "schemaVersion": 1,
+  "at": "2026-10-15T19:24:48.338983+00:00",
+  "state": "local-checks-passed",
+  "scope": "Offline synthetic source-run terminal-report admission; no new stability execution, actual terminal acceptance or independent chain replay",
+  "newRegressionGroups": 3,
+  "preFixInvalidFixtureCasesAccepted": 11,
+  "invalidFixtureCases": [
+    "Payer reused as transfer recipient",
+    "Mint reused as its transfer recipient",
+    "Recipient reused across journeys",
+    "Payer reused as a mint",
+    "Recipient reused as a different journey mint",
+    "Float-form completed-journey count",
+    "Float-form smoke interval",
+    "Float-form observation interval",
+    "Boolean zero-faucet count",
+    "Boolean runner exit code",
+    "Float-form runner exit code"
+  ],
+  "checks": [
+    "Distinct recorded recipient for all 288 frozen-runner journeys",
+    "Payer, recipient and mint roles remain separate throughout the inventory",
+    "Recorded workload scalars and runner exit code require integer types",
+    "Complete synthetic report passes without release, mainnet, bridge or cutover approval",
+    "Existing incomplete-run, candidate, activation, prerequisite, timing, receipt and health regressions still pass"
+  ],
+  "validation": {
+    "command": "python3 -W error::ResourceWarning -m unittest discover -s engine/migration -p '*review_test.py'",
+    "tests": 37,
+    "exitCode": 0,
+    "syntheticReportsOnly": true
+  },
+  "sourceHashes": {
+    "engine/migration/source_terminal_review.py": "bff597959422cbc3fb513fbcc20c20b1f77ad2ec74b3c0b95c1d3d51e7210eee",
+    "engine/migration/source_terminal_review_test.py": "efb63731e49e3f41d466e51b8452eef6250f84e5684b4a0400481cdc2d19a2a7",
+    "engine/migration/terminal_review.py": "5baa1eaafbf4c91afc922c79107957c0bbb84edeffea8715efe8bef4d09b3afd",
+    "engine/migration/load_review.py": "1a9dc744aea2f60b38fbd666194af240481443d4a8523c4619a6c5bc9a8abdf6",
+    "scripts/soak.ts": "865846851985253a1830f46be683286b675442926ebb9197dc65cd259f45305b",
+    ".github/workflows/source-stability-review.yml": "395c17f06cd42d5259abc0dd37446905bfa23f552d009eded7f79b3c688dffce"
+  },
+  "frozenRuntimeOrWorkloadChanged": false,
+  "startedNewStabilityRun": false,
+  "actualTerminalReportReviewed": false,
+  "independentTransactionReplayVerified": false,
+  "releaseAccepted": false,
+  "mainnetAccepted": false,
+  "bridgeAccepted": false,
+  "cutoverAccepted": false,
+  "remainingRequirements": [
+    "Actual complete selected full-day terminal report and fresh final runtime/health review",
+    "Candidate-specific final browser regression, remaining release gates and operator handoff",
+    "Separate full-validator, backing, custody, independence and security admission before production"
+  ]
+}

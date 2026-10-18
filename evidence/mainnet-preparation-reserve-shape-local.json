@@ -1,0 +1,42 @@
+{
+  "schemaVersion": 1,
+  "at": "2026-10-17T09:03:20.353932+00:00",
+  "scope": "local offline preparation orchestration with supplied audit responses and disposable files; no compiled genesis or chain execution",
+  "passed": true,
+  "sourceHashes": {
+    "mainnet/prepare-consensus.py": "0ed27e9d1b68a4f9b7560c19924cd2b8b4677cd0ea44f5b234e8e7d44b9c6e36",
+    "mainnet/prepare_consensus_test.py": "4002009e7f8cbef8dc7206ac97b1a7d212e9cb6bb95e5077840cd0c39dfd7cb9"
+  },
+  "change": "Require zero integer data length and an explicit false executable flag on the final synthetic reserve before bundle copy or ledger replay. Existing exact address, System owner and balance checks remain.",
+  "validation": {
+    "focusedTests": 21,
+    "focusedPassed": 21,
+    "packageTests": 150,
+    "packagePassed": 149,
+    "packageSkipped": 1,
+    "skipReason": "Existing Linux-only process-name truncation check on a non-Linux development host.",
+    "preFixRun": {
+      "tests": 1,
+      "subcaseFailures": 9,
+      "basis": "All nine supplied malformed reserve reports reached prepared rather than the expected failed state."
+    },
+    "checks": [
+      "Nonzero, negative, boolean, floating-point, string and null data lengths refuse.",
+      "True, numeric zero and null executable flags refuse.",
+      "Refusals retain the failed attempt and partial compiler output; bundle genesis, manifest and ledger-tool calls are absent.",
+      "The existing successful synthetic driver still completes both separate replay copies with an empty non-executable reserve."
+    ]
+  },
+  "limitations": [
+    "Supplied reports are not proof of compiled-tool execution, actual account bytes, rent epoch, reserve custody or funded backing.",
+    "No real key generator, compiler, auditor, ledger tool or validator is executed by this fixture.",
+    "Full account-byte comparison and reserve-byte adapter integration remain outstanding; this guard does not alter host admission, binary pins or the frozen devnet candidate."
+  ],
+  "canonicalNetworkChanged": false,
+  "runtimeBinariesChanged": false,
+  "validatorsStarted": 0,
+  "mainnetActivated": false,
+  "releaseAccepted": false,
+  "mainnetAccepted": false,
+  "bridgeAccepted": false
+}

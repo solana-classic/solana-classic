@@ -1,0 +1,93 @@
+{
+  "schemaVersion": 1,
+  "at": "2026-10-17T18:40:18.503693+00:00",
+  "scope": "local offline reserve adapter repeatable bundle builder and transport fixtures; no runtime admission or preparer invocation",
+  "passed": true,
+  "sourceFiles": {
+    "mainnet/build-reserve-bundle.mjs": "897699a6dc745f1a2e83100a729d85e4fdaabd65b801f657652c63af1490dec1",
+    "mainnet/reserve-bundle.test.mjs": "d25edaff4b61f29f7b28795ff70ffb5f8817dd96f01433926bd3bd720bda66c6",
+    "mainnet/reserve-byte-input.test.mjs": "85b22fb63c77ddccc825f6939e8e3cd340ac950e177f5effe30bfa0f5b639f4d",
+    ".github/workflows/mainnet-preparation.yml": "bea5900ccf56ae055b06ff6ea0d46f8c92ddef2b9a668e6d56b8a2156548dfa0"
+  },
+  "artifact": {
+    "file": "reserve-byte-stdio.mjs",
+    "bytes": 688386,
+    "sha256": "9091ca58a4767e40678fd069ae76712ad7d5eb5c6f140d41feb882bbb0a565c3"
+  },
+  "build": {
+    "node": "v24.19.0",
+    "esbuild": "0.28.2",
+    "esbuildModuleSHA256": "61ec0ba144ff93f4bf0e96ad6fab6f430ede0aa13e27ace8063ed63ba416b3cd",
+    "platform": "node",
+    "target": "node24",
+    "format": "esm",
+    "mainFields": [
+      "browser",
+      "module",
+      "main"
+    ],
+    "defines": {
+      "process.env.WS_NO_BUFFER_UTIL": "\"1\"",
+      "process.env.WS_NO_UTF_8_VALIDATE": "\"1\""
+    },
+    "localRebuildIdentical": true
+  },
+  "inputCount": 90,
+  "staticExternalImports": [
+    "buffer",
+    "crypto",
+    "events",
+    "http",
+    "https",
+    "net",
+    "node:assert/strict",
+    "node:crypto",
+    "node:fs",
+    "node:module",
+    "node:path",
+    "node:url",
+    "stream",
+    "tls",
+    "url",
+    "util",
+    "zlib"
+  ],
+  "manifestSHA256": "85c52c57ac28128cc053648252ea51a5beda1676a7db6b4bb3792795024fc0a7",
+  "validation": {
+    "relatedNodeTests": 79,
+    "relatedNodePassed": 79,
+    "finalBuilderTests": 3,
+    "finalBuilderPassed": 3,
+    "nestedAdapterFixtureChecks": 23,
+    "unchangedPureAdapterFixtureChecks": 14,
+    "bundledTransportFixtureChecks": 9,
+    "finalChange": "Added refusal on bundler warnings, then reran all three builder checks including the 23 nested adapter checks.",
+    "checks": [
+      "Two builds must produce identical bytes and source/dependency fingerprints; static external imports must be builtin.",
+      "Build graph excludes node-gyp-build, bufferutil and utf-8-validate after disabling optional native websocket helpers.",
+      "Generated CommonJS guard accepts a builtin and refuses package names, absolute/relative file names and invalid values before loading them. This test exposes the actual guard through a separate derived fixture.",
+      "Actual bundled CLI runs outside the checkout with PATH only, no installed dependency directory and strict stderr checks.",
+      "Existing output directories and invalid arguments refuse with exit 78 and a fixed diagnostic; retained bytes remain unchanged."
+    ],
+    "ciConfiguredToBuildAndTest": true
+  },
+  "limits": {
+    "artifactAdmitted": false,
+    "preparerIntegrated": false,
+    "hostAdmitted": false,
+    "actualFreshGenesisCompiled": false,
+    "fullValidatorConsensusVerified": false,
+    "canSign": false,
+    "canBroadcast": false,
+    "mainnetActivated": false,
+    "productionReady": false
+  },
+  "limitations": [
+    "Local evidence does not claim independent cross-platform reproducibility or admitted Linux/runtime artifacts.",
+    "The manifest hashes the esbuild JavaScript API file, not its native executable; Node version is checked but its executable is not independently pinned.",
+    "Builtin-only imports are not a network sandbox. This guard does not prove the absence of every dynamic ESM resolution path.",
+    "The source and lockfile are selected locally; package dependency selection and runtime admission still require review.",
+    "No compiler, key generator, validator, RPC mutation, canonical deployment or retained stability attempt was invoked or changed.",
+    "Prior failed packaging prototypes and test logs remain retained."
+  ]
+}

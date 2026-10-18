@@ -1,0 +1,96 @@
+{
+  "state": "passed",
+  "startedAt": "2026-10-17T15:11:45.398147+00:00",
+  "scope": "Current allocation executable and preparer comparison helper against retained synthetic genesis; no fresh compilation or preparation run",
+  "sourceHashes": {
+    "mainnet/prepare-consensus.py": "df3c77856d223845441254c49d3f09d6242d83249db9c593a6ff58e7974d6214",
+    "mainnet/consensus.py": "94f53b69c6e6787f94e42bf9d012cc70157fffed3e9f6d0c85187f2631c590a2",
+    "mainnet/host-preflight.py": "c8c993e5811e3087c2b19ab787ab99a6718eac4e0c52531aef4a49164a92b25c",
+    "mainnet/genesis_archive.py": "f09d71c5bc6e0e09924602daa89148ae1a55727ce3de7a45e6380a3efddeb079",
+    "mainnet/offline_process.py": "eb5868795c9184a1fc8c8d01bbd29692de18acceeed3fab3c2b73b8351168743",
+    "mainnet/cgroup_limits.py": "9223e108adfd57d5476180143fd69b2f17e33abb3496d12d4c3c4044d7f4828c",
+    "mainnet/process_admission.py": "0c8b9bfa15ab908c2f21bac1cc53d8a785dc1ddbae764eeaa41fe6f6cbbb95fd",
+    "mainnet/validator_restart.py": "4f55845c30848a16a57e4b6439c14cfbdb91b707383f040e498533a2f8112625",
+    "mainnet/allocation-decoder-artifact.json": "da23b3a92c560883ba6c92b055c62925dc078ae543e2071a61ca88ba07952d83"
+  },
+  "validatorsStarted": 0,
+  "ledgerReplays": 0,
+  "chainRequests": 0,
+  "privateKeysRead": 0,
+  "newKeysCreated": 0,
+  "signatures": 0,
+  "submissions": 0,
+  "newGenesisCompiled": false,
+  "fullPreparationExecuted": false,
+  "fullHostAdmitted": false,
+  "hostChecksWeakened": false,
+  "mainnetActivated": false,
+  "productionReady": false,
+  "artifact": {
+    "name": "classic-genesis-allocation-bytes",
+    "profile": "debug",
+    "sha256": "36a48973dd65ab636534306a76e6b4550caba4f5843533f9a370dbf5af0db496",
+    "bytes": 15308568,
+    "rustVersion": "rustc 1.86.0 (05f9846f8 2025-03-31)",
+    "sourceHashes": {
+      "Cargo.toml": "647c90fcc99883ecda89ee5be9adf14064495866283564d9657a2e60e76e5150",
+      "Cargo.lock": "1dc604aaa101af8ded20883d1de6030d54542fcf48c2c7c0f455c6b6dd4d1940",
+      "src/main.rs": "7119cbbf204b81cf128a02f125bd0129a5c26df8cce644ad1d821835d463b752"
+    }
+  },
+  "actualAccountCount": 249,
+  "totalNativeUnits": "1000000000000",
+  "actualGenesisBytesDecoded": true,
+  "preparerComparisonAcceptedActualBaseline": true,
+  "priorCompleteDecoderOutputIdentical": true,
+  "negativeControls": [
+    {
+      "name": "nonreserve-full-fingerprint",
+      "result": "comparison-differs"
+    },
+    {
+      "name": "nonreserve-data-digest",
+      "result": "comparison-differs"
+    },
+    {
+      "name": "nonreserve-rent-epoch",
+      "result": "comparison-differs"
+    },
+    {
+      "name": "nonaccount-parameters",
+      "result": "comparison-differs"
+    },
+    {
+      "name": "reserve-rent-epoch",
+      "result": "refused"
+    },
+    {
+      "name": "permission-promotion",
+      "result": "refused"
+    }
+  ],
+  "selectedInputsUnchanged": true,
+  "priorAttemptsUnchanged": true,
+  "runtimeArtifactsUnchanged": true,
+  "publicSourcesUnchanged": true,
+  "privateValidatorCensusClear": true,
+  "proposedFreshOutputCompared": false,
+  "completedAt": "2026-10-17T15:11:49.476980+00:00",
+  "schemaVersion": 1,
+  "at": "2026-10-17T15:12:38.626485+00:00",
+  "auditDriverSHA256": "a5f640a86bf2a418caa96757db1593a646824a4c8c3e243177642621f038597f",
+  "canonicalRuntimeMatchesFreeze": true,
+  "retainedCandidateFilesMatched": 45,
+  "canonicalNetworkChanged": false,
+  "stabilityCandidateChanged": false,
+  "releaseAccepted": false,
+  "mainnetAccepted": false,
+  "bridgeAccepted": false,
+  "limitations": [
+    "The current executable decoded an existing retained synthetic genesis; no new genesis was compiled.",
+    "Only the preparer comparison helper was invoked against this actual report; the complete preparation command and its two replays were not run.",
+    "Negative controls modify report copies in memory. They do not alter genesis, execute new chain transactions or authenticate a freshly compiled proposed output.",
+    "The six runtime artifacts, selected genesis and metadata, prior attempt records and previous decoded output remained unchanged.",
+    "Host admission, reserve-address adapter integration, fresh compilation and replays, three-validator consensus, custody, backing and independent review remain outstanding."
+  ]
+}

@@ -1,0 +1,50 @@
+{
+  "schemaVersion": 1,
+  "at": "2026-10-17T13:03:50.082553+00:00",
+  "scope": "Local offline orchestration with supplied compiler/auditor responses and disposable files; no real genesis compilation or ledger replay",
+  "passed": true,
+  "sourceHashes": {
+    "mainnet/prepare-consensus.py": "5f569d2bab94c65c0a3127885da6a20510f095e89d01c4ec9b3c151d62ce4fe2",
+    "mainnet/prepare_consensus_test.py": "cfebb78583961b70d31d0b0434a3c624f51edbe41ae138099f2be73740707e47",
+    "mainnet/genesis-audit-v2/src/main.rs": "cecf21530e57e5d595ebd1c496e67b88471a2c726c000ab6addc624fe50ea774"
+  },
+  "change": "Require complete audited account metadata to match the budget probe except the intended synthetic reserve balance, before bundle copy or either replay.",
+  "boundAccountFields": [
+    "address",
+    "owner",
+    "lamports",
+    "dataBytes",
+    "executable"
+  ],
+  "allowedDifference": "The selected empty non-executable System reserve changes from one unit to the exact remaining synthetic budget.",
+  "validation": {
+    "focusedTests": 27,
+    "focusedPassed": 27,
+    "newTestGroups": 3,
+    "finalDriftCases": 8,
+    "malformedInventoryCases": 14,
+    "packageTests": 165,
+    "packagePassed": 164,
+    "packageSkipped": 1,
+    "skipReason": "Existing Linux-only process-name check on a non-Linux development host.",
+    "preFixOutcome": "All eight new drift subcases failed the expected early-refusal test. Balanced redistribution and some metadata changes reached prepared; other changes failed only in later validation after simulated replay.",
+    "checks": [
+      "Balanced redistribution, address/owner/data-length/executable drift, invalid count, boolean data length and unexpected fields refuse before bundle copy or any replay.",
+      "Probe inventory requires exact schema, bounded counts and sizes, canonical addresses/u64 values, unique rows, matching total and an exact selected one-unit reserve.",
+      "Input order does not matter; only the selected reserve amount is normalized, and input objects are not mutated.",
+      "Unchanged synthetic preparation still completes its two supplied replay responses; failures retain their partial preparation output."
+    ]
+  },
+  "limitations": [
+    "The pinned v2 auditor reports account metadata, not data bytes, rent epochs or complete account fingerprints.",
+    "Full allocation-byte decoder, reserve adapter and complete non-account parameter integration remain outstanding.",
+    "No fresh real genesis, actual bank replay, independent operator custody, backing or three-validator consensus is established by these tests."
+  ],
+  "canonicalNetworkChanged": false,
+  "runtimeBinariesChanged": false,
+  "validatorsStarted": 0,
+  "mainnetActivated": false,
+  "releaseAccepted": false,
+  "mainnetAccepted": false,
+  "bridgeAccepted": false
+}

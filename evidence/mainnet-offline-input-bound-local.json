@@ -1,0 +1,130 @@
+{
+  "schemaVersion": 1,
+  "at": "2026-10-17T22:35:02.971081+00:00",
+  "scope": "local optional process input bound and retained reserve bundle transport compatibility using supplied synthetic reports; no host or runtime admission",
+  "passed": true,
+  "sourceFiles": {
+    "mainnet/offline_process.py": "6e17a75e1269e9a7cd89ad351f9946c386af5f0df345b9891712020b774988ed",
+    "mainnet/offline_process_test.py": "37292f42cdc44df91ddea6eaf91823b7643ff6162f4aa45606eafd016232ad8b"
+  },
+  "validation": {
+    "pythonTests": 180,
+    "pythonPassed": 179,
+    "pythonSkipped": 1,
+    "skipScope": "Existing Linux-only check on the local non-Linux host",
+    "newInputBoundTests": 3,
+    "pythonTestLogSHA256": "1118c5e00ab09f54f139c3034ae014af92517842351fd962307b5c06b1935fe7",
+    "controlReportSHA256": "501abf65332c723ee7cd2b0883bffc89333dd1f4f746db8f72884c05328a0293",
+    "controlDriverSHA256": "a60e010703832cc98161c83ca9ea5605d3d86d5ebab1b029fb9383eee8f94bae",
+    "fixtureGeneratorSHA256": "712165268f3b4dfa7771c5f443292041c49890e8e3fd94f8dd19df7cbbaf157d",
+    "fixtureInputSHA256": "2e9e7e0885778e627c16aadc3a4a0f9ac5b503dfbd9e2c471e3f91f714b21060",
+    "nodeVersion": "v24.19.0",
+    "nodeExecutableSHA256": "d0c6c74401e6a544bb4d4b2a9ded9c43298d4e6dcd5ebac4dd010c4c81774105",
+    "retainedBundleSHA256": "9091ca58a4767e40678fd069ae76712ad7d5eb5c6f140d41feb882bbb0a565c3",
+    "realBundleInvocations": 6,
+    "preStartRefusalControls": 4,
+    "processControls": [
+      {
+        "mode": "prepare",
+        "bytes": 3173,
+        "case": "real-bundle-explicit-bound",
+        "passed": true,
+        "outputSHA256": "4c858b63c00ba394d11a6006996a1bba770752b8d26da9ad760ef9c82836a389",
+        "stderrBytes": 0
+      },
+      {
+        "mode": "prepare",
+        "bytes": 16777217,
+        "case": "real-bundle-explicit-bound",
+        "passed": true,
+        "outputSHA256": "4c858b63c00ba394d11a6006996a1bba770752b8d26da9ad760ef9c82836a389",
+        "stderrBytes": 0
+      },
+      {
+        "mode": "prepare",
+        "bytes": 33554432,
+        "case": "real-bundle-explicit-bound",
+        "passed": true,
+        "outputSHA256": "4c858b63c00ba394d11a6006996a1bba770752b8d26da9ad760ef9c82836a389",
+        "stderrBytes": 0
+      },
+      {
+        "mode": "prepare",
+        "bytes": 16777217,
+        "case": "default-bound",
+        "passed": true,
+        "refusedBeforeProcessStart": true,
+        "stderrBytes": 0
+      },
+      {
+        "mode": "prepare",
+        "bytes": 33554433,
+        "case": "explicit-overflow",
+        "passed": true,
+        "refusedBeforeProcessStart": true,
+        "stderrBytes": 0
+      },
+      {
+        "mode": "review",
+        "bytes": 4887,
+        "case": "real-bundle-explicit-bound",
+        "passed": true,
+        "outputSHA256": "972c82ecd97fb903d5d3cea37376d9709d7cc803e3b280362df9bf7f99697747",
+        "stderrBytes": 0
+      },
+      {
+        "mode": "review",
+        "bytes": 16777217,
+        "case": "real-bundle-explicit-bound",
+        "passed": true,
+        "outputSHA256": "972c82ecd97fb903d5d3cea37376d9709d7cc803e3b280362df9bf7f99697747",
+        "stderrBytes": 0
+      },
+      {
+        "mode": "review",
+        "bytes": 33554432,
+        "case": "real-bundle-explicit-bound",
+        "passed": true,
+        "outputSHA256": "972c82ecd97fb903d5d3cea37376d9709d7cc803e3b280362df9bf7f99697747",
+        "stderrBytes": 0
+      },
+      {
+        "mode": "review",
+        "bytes": 16777217,
+        "case": "default-bound",
+        "passed": true,
+        "refusedBeforeProcessStart": true,
+        "stderrBytes": 0
+      },
+      {
+        "mode": "review",
+        "bytes": 33554433,
+        "case": "explicit-overflow",
+        "passed": true,
+        "refusedBeforeProcessStart": true,
+        "stderrBytes": 0
+      }
+    ]
+  },
+  "inputContract": {
+    "defaultMaximumBytes": 16777216,
+    "largestSelectableMaximumBytes": 33554432,
+    "option": "stdin_limit",
+    "validation": "Exact positive integer no greater than 32 MiB, checked before process creation even when input is absent. Input must remain immutable bytes within the selected limit.",
+    "existingPreparer": "Unchanged calls retain the 16 MiB default. No automatic increase or reserve invocation.",
+    "outputAndTimeouts": "Existing independent output limits, lifetime deadline, simultaneous pipe draining and owned process cleanup remain in force."
+  },
+  "limitations": [
+    "The six real bundle invocations use the existing deterministic two-account fixture, padded with valid JSON whitespace to 16 MiB plus one and exactly 32 MiB. They verify transport and unchanged output, not a maximum-account dataset or memory-performance benchmark.",
+    "Four refusal controls intercept process creation and confirm that the default 16 MiB limit and explicit 32 MiB maximum reject overflow before invocation. Real exact-size binary stdin delivery is separately covered by the Python tests.",
+    "Both adapter modes run with an explicit empty environment and 1 MiB stdout, 64 KiB stderr and 30-second lifetime limits. All permission flags and output values match the unpadded fixture. Inputs are not written to tool logs.",
+    "The selected Node executable and retained bundle hashes match before and after these local controls. This observation does not admit either artifact for a Linux deployment, constrain builtin capabilities or provide a sandbox.",
+    "The preparer still needs reviewed runtime selection, environment policy, reserve integration, fresh real compilation and strict replay. Existing genesis snapshot bounds and host admission checks are unchanged."
+  ],
+  "preparerIntegrated": false,
+  "hostAdmitted": false,
+  "runtimeAdmitted": false,
+  "canonicalNetworkChanged": false,
+  "mainnetActivated": false,
+  "productionReady": false
+}

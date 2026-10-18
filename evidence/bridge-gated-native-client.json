@@ -1,0 +1,104 @@
+{
+  "schemaVersion": 1,
+  "at": "2026-10-16T08:58:28.490979+00:00",
+  "state": "unsigned-gated-client-wire-verified",
+  "scope": "Separate unsigned client construction and one fresh in-memory compiled-SBF integration group; not live chain observation, signer/journal migration or production acceptance",
+  "contract": "native-bootstrap-trailer-v3",
+  "selectedArtifact": {
+    "sha256": "19424e0679c8d2d801fcb6ab015860b7b8f487cf0b1c6e2e7b41ca3d40efc16b",
+    "bytes": 217032,
+    "implementationAndCargoInputsUnchanged": true,
+    "rebuiltThisReview": false
+  },
+  "workerToolchain": {
+    "node": "24.19.0",
+    "web3": "1.99.0",
+    "rust": "1.89.0",
+    "existingCompilerCacheUsed": true
+  },
+  "checks": {
+    "newClientGroups": 13,
+    "fullLocalBridgeClientRegressionGroups": 302,
+    "localWorkerAdmissionGroups": 7,
+    "actualNewSBFClientGroups": 1,
+    "olderRuntimeGroupsFiltered": 5
+  },
+  "actualClientWireAssertions": [
+    "Before bootstrap the client refuses native unpause without constructing a transaction",
+    "JavaScript-built unpause, native claim and return execute against selected SBF",
+    "Repeated native claim is refused with the selected reserve unchanged",
+    "Final original escrow and both selected counters reconcile to the roundtrip fixture",
+    "Protected native floor remains exact",
+    "JavaScript-built full pause closes both flags without a bootstrap trailer"
+  ],
+  "constructionChecks": [
+    "Explicit new ABI and selected code size/hash",
+    "Exact configuration policy and external bootstrap record/source selections",
+    "Configured distinct committee, pause/cap/obligation/capacity checks",
+    "Protected account aliases, consumed bootstrap credit and wrong domains refused",
+    "Exact u64 wire values and bounded four-signature legacy message",
+    "Caller buffers/pins/events remain unchanged; output remains a mutable unsigned draft"
+  ],
+  "retainedRefusals": [
+    {
+      "scope": "Initial local snapshot test",
+      "reason": "Snapshot cloning changed Buffer/PublicKey types; corrected test snapshot",
+      "passedBeforeRefusal": 12,
+      "failed": 1
+    },
+    {
+      "scope": "Initial local staging payload",
+      "reason": "Size guard refused before any remote action",
+      "runtimeGroupsExecuted": 0
+    },
+    {
+      "scope": "Initial remote dependency admission",
+      "reason": "Expected version1.98.4 differed from project/worker1.99.0; corrected to the exact repository pin",
+      "clientOrRuntimeGroupsExecuted": 0
+    }
+  ],
+  "selectedInputsVerifiedAfterExecution": 20,
+  "originalV2ArtifactUnchanged": true,
+  "originalRuntimeArtifactsUnchanged": true,
+  "privateValidatorCensusClear": true,
+  "retainedPrivateKeysRead": 0,
+  "retainedLedgerFilesCopied": 0,
+  "validatorProcessesStarted": 0,
+  "chainRequests": 0,
+  "externalSubmissions": 0,
+  "runtimeKeysAndSignaturesAreEphemeralVMFixtures": true,
+  "existingSDKOrJournalsChanged": false,
+  "chainStateVerified": false,
+  "independentSourceFinalityVerified": false,
+  "completeActivationInventoryVerified": false,
+  "fundedBackingVerified": false,
+  "canPrepareJournal": false,
+  "canSign": false,
+  "canBroadcast": false,
+  "canonicalNetworkChanged": false,
+  "productionReady": false,
+  "ciScope": "JavaScript and worker guards execute; Rust scenarios compile only. Actual SBF execution is the retained separate worker result",
+  "sourceHashes": {
+    "bridge/gated-native.mjs": "5f76bd10a5b158126e2068b0b9eea4ca14bd3b172127781c657ea78ed3bddae5",
+    "bridge/gated-native.test.mjs": "a9f1fd5c5aeed6eb6dd32b831336da27642455124183d23c5b791664d1c7997f",
+    "bridge/rehearsal/gated-native-wire.mjs": "8fad1aef679f5d231e3cb461e368514dc0ff41844872c17af68dc0cf5757bb6a",
+    "bridge/gated-program/tests/runtime.rs": "16459f150bbd81630ec807947b50031254acd70cfea742cead052f39a83bd30a",
+    "bridge/gated-program/Cargo.toml": "af31b134c515bfc782e01960f7098c1e6c31516516132cd49ffc038c7dd4e9ec",
+    "bridge/gated-program/Cargo.lock": "4be57142657b023ac5613c81509558e672ac12c8803ab7746fb75430acb42917",
+    "bridge/gated-program/src/lib.rs": "69c380988b755ad26a8d59ced7a65830176e00f9de84476aa851a829449a7823",
+    "bridge/gated-program/artifact-sha256.txt": "15dcd1fe5837525e3c655ab7c08429ef80e95a8cde9a5d963f2c9c967e638822",
+    "bridge/program/src/lib.rs": "ede30cfc36212cafd05da1bde9e65462b7864078eba8e57de60b5fcd4d3388d6",
+    "bridge/program/src/state.rs": "d63c19450d022eee686c855195e8e71340cacbc1547c2b8db6fa1e1ae6d6163a",
+    "bridge/sdk.mjs": "e603242692bedc2457ec9dd3cb144122ca1adb7341506d244ec864943bd8c988",
+    "bridge/bootstrap.mjs": "76303de82557f8ba2a88773ef55bbc5234a88164673f0afe2458f21e46c1d04e",
+    "bridge/program-pins.mjs": "1f72a2007be0d4ebd6b1a3080dc2ad93224177e49ae32e0513beb2e163256d42",
+    "mainnet/bootstrap.mjs": "83eb564446ad5be431f66d931fa61ca9e3d8fd15a5b7420ec87182011cce1beb",
+    "engine/rehearsal/gated_client_runtime.py": "621db453e3ed6f9c347add162c584993510e0a5298ccab59faf52918d930e19e",
+    "engine/rehearsal/gated_client_runtime_test.py": "3a9660eefe1551fa7a67620c71f62dc29aa198d62aa50b22a065938823bd6ce6",
+    "mainnet/offline_process.py": "bc7013b43537bf272b08e37122035f9e647f18496a01121424dd322dd1d06c7f",
+    "mainnet/process_admission.py": "0c8b9bfa15ab908c2f21bac1cc53d8a785dc1ddbae764eeaa41fe6f6cbbb95fd",
+    "bridge/GATED_NATIVE_CLIENT.md": "f2db7c6bb76bdbb302605077c38dc854316b8cda3c0e6d8ceb3d46e9d9b230ee",
+    ".github/workflows/bridge-metadata-review.yml": "41e62bad03c0e157e5cf83faec49850b7ee206a83823694aa563ef30fa042ac5",
+    ".github/workflows/bridge-runtime-review.yml": "5781bde631e90c2e3dc15136bfeb6540d632b33bb3fb9e24077da48de27eceb4"
+  }
+}

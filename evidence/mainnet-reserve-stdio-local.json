@@ -1,0 +1,64 @@
+{
+  "schemaVersion": 1,
+  "at": "2026-10-17T16:36:24.914254+00:00",
+  "scope": "local offline reserve-adapter stdin interface with supplied report fixtures; no fresh genesis or preparer invocation",
+  "passed": true,
+  "sourceFiles": {
+    "mainnet/reserve-byte-stdio.mjs": "0795fdb9147076a1edc7c161ad3872d7b5ed2d55eaa1093757d27aec5a623a68",
+    "mainnet/reserve-byte-input.test.mjs": "985a89c10aef3a2c6d7f7d033f9c36eb7462541c3c3bc5cddf6e7d2e9ddf0b5e",
+    "mainnet/reserve-byte-input.mjs": "bd20f041acf01fca961519223ebc0a5b22271a8ca5261cdcca34f74bb53650dd",
+    "mainnet/reserve-prefund-plan.mjs": "18ef32b39b128dd3c37186d34dce8e0d739f8bb54f7f571bb8c1ff628344fac4"
+  },
+  "interface": {
+    "commands": [
+      "prepare",
+      "review"
+    ],
+    "inputLimitBytes": 33554432,
+    "inputDeadlineMs": 30000,
+    "outputLimitBytes": 1048576,
+    "encoding": "strict UTF-8 JSON",
+    "successExitCode": 0,
+    "refusalExitCode": 78,
+    "refusalDiagnostic": "RESERVE_ADAPTER_INPUT_REFUSED",
+    "inputFromArgumentsOrFiles": false,
+    "parentMustBoundProcessLifetime": true,
+    "discardOutputOnNonzeroExit": true
+  },
+  "validation": {
+    "relatedNodeTests": 73,
+    "relatedNodePassed": 73,
+    "adapterTests": 22,
+    "adapterPassed": 22,
+    "newTransportTests": 8,
+    "checks": [
+      "Actual child processes execute prepare and review against synthetic externally selected reports; output equals the existing pure adapter and preserves all disabled permission flags.",
+      "Exact u64 reserve balance digits survive the JSON transport without conversion to a floating-point amount.",
+      "Missing, extra or unsupported command arguments, malformed or empty input and wrong external selectors refuse with no report or supplied private marker in diagnostics.",
+      "The reader accepts split chunks and refuses empty, oversized, failed and stalled input streams; the deadline test uses a bounded shortened fixture timeout.",
+      "Oversized buffers and invalid UTF-8 refuse before JSON selection; invalid reader bounds are rejected.",
+      "Output and diagnostic pipe failures retain refusal status without exposing underlying errors."
+    ]
+  },
+  "limits": {
+    "actualFreshGenesisCompiled": false,
+    "actualAccountBytesDecoded": false,
+    "preparerIntegrated": false,
+    "hostAdmitted": false,
+    "reserveInitialized": false,
+    "backingVerified": false,
+    "custodyVerified": false,
+    "fullValidatorConsensusVerified": false,
+    "canSign": false,
+    "canBroadcast": false,
+    "mainnetActivated": false,
+    "productionReady": false
+  },
+  "limitations": [
+    "This exposes the existing pure adapter to a bounded subprocess transport. It does not connect reserve replacement to the genesis preparer.",
+    "Inputs and reports are supplied fixtures. Their hashes select bytes but do not independently establish execution, custody, backing or history.",
+    "The 30-second deadline bounds input collection. Callers must independently bound the entire process, drain stdout/stderr and discard stdout on any nonzero exit, including output-pipe failure.",
+    "Runtime/dependency artifact admission, external planning selectors, fresh compilation, output comparison and two strict slot-zero replays remain integration requirements.",
+    "No compiler, key generator, replay, validator, RPC or deployment was invoked by the adapter tests."
+  ]
+}

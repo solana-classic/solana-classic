@@ -6,11 +6,11 @@ The founder operates this devnet service. Automated tooling supplies implementat
 
 Vercel team `trenchfun1`, project `solana-classic`, project ID `prj_mjv3k9UcoPgxoNvDl2foOIC8R3V9`. Public origin https://solana-classic-soc.vercel.app. Frozen frontend deployment `dpl_3aWWzKDohr4SrgijgrB8dWgHHS5r`, immutable URL https://solana-classic-imbi46jmv-trenchfun1.vercel.app.
 
-Railway project `356bcb0b-49c4-4bd3-bf10-bff7db8f33fe`, production environment `3367b373-2332-4702-8cce-c12b8f03949e`. Network service `d0a1de40-bd9c-47eb-a7fc-477f1c55b2d6`, volume `080bf785-50e7-4dda-893b-4d613aa5e9a8` at `/data`. HTTPS API https://network-release-production.up.railway.app. Keep one always-on replica, four CPU /16,000,000,000-byte memory cap, 50,000MB volume ceiling and port3000 ingress. Private validator RPC stays at loopback8899; do not create a TCP proxy or expose raw RPC/WebSocket/faucet.
+Railway project `356bcb0b-49c4-4bd3-bf10-bff7db8f33fe`, production environment `3367b373-2332-4702-8cce-c12b8f03949e`. Network service `d0a1de40-bd9c-47eb-a7fc-477f1c55b2d6`, volume `080bf785-50e7-4dda-893b-4d613aa5e9a8` at `/data`. HTTPS API https://network-release-production.up.railway.app. Keep one always-on replica, four CPU /16,000,000,000-byte memory cap, currently configured 50,000MB volume and port3000 ingress. Private validator RPC stays at loopback8899; do not create a TCP proxy or expose raw RPC/WebSocket/faucet.
 
-Independent genesis: `7TAUSfTzQeocodtVee2qsftsCYnJu2eCM1ALdADbHNon`. Executable source 35f0eaf1dede45452c9cdf9e6403669e966c427d, core manifest 30697f3e9b441b05a036d0704b42322d723b3998840ed43d88b18a0d7ef7d1dd. Read `/api/runtime` for actual current deployment and process boot IDs. Official Agave3.0.14 and Token-2022v10.0.0 binary hashes are recorded in evidence/active-linux-manifest.json and docs/token-program-release.json.
+Independent genesis: `7TAUSfTzQeocodtVee2qsftsCYnJu2eCM1ALdADbHNon`. The active source-built Agave3.0.14 runtime uses source `119f25e225540be78b64b19bdb6cb300a1f47c10`, core manifest `533950731d4ed6d94b59e71517613be002b6ec416b0ebb3a20a592fe5ec6f22f` and deployment `22e5870a-afb8-4027-89b5-ccb8a39391c2`. The reviewed API boot is `e6ec5d41-8238-48a0-b739-a81f9fea6adf`; validator boot is `2c6a0f79-c6c3-43a4-aa5c-e542efb704d9`. Compare every identity field, including the complete engine-build manifest, with [the current source candidate](../evidence/agave-source-candidate-freeze.json) and `/api/runtime`. Token-2022 remains the reviewed v10.0.0 binary. The older `active-linux-manifest.json` describes the preceding installed release and cannot identify this source-built candidate.
 
-The repository is the local Git checkout on branch `build/six-day-mvp`. Public source is at https://github.com/solana-classic/solana-classic. Root Vercel configuration builds the static web package; API, SQLite and generated assets are not Vercel functions. Public build variables identify the fixed API and genesis; no signer belongs in a VITE variable. The separately verified public frontend is https://solanaclassic.net; the original provider frontend remains the frozen stability candidate.
+Use the existing development checkout and reviewed current branch. Public source is at https://github.com/solana-classic/solana-classic. Root Vercel configuration builds the static web package; API, SQLite and generated assets are not Vercel functions. Public build variables identify the fixed API and genesis; no signer belongs in a VITE variable. The separately verified public frontend is https://solanaclassic.net; the original provider frontend remains the frozen stability candidate.
 
 ## Routine checks and alerts
 
@@ -54,16 +54,25 @@ Preserve failed results, timestamps, signatures and deployment IDs. Record passe
 
 The validator prunes older transaction history. At recovery reconfirmation, first available block72413 exceeded the initial restore verification slot11020, so the original grant could no longer be re-read from RPC. Its persisted confirmed UUID/signature, exact balance and no-double-grant replay remain verified, with historical finality retained in the original proof. Account state and original asset records remain available. Explorer lookup does not provide archival transaction indexing; preserve important signed receipts and evidence separately.
 
+The retained private bridge case with missing native transaction history is
+a separate unresolved investigation. Its missing RPC transaction/block response
+does not establish pruning or prove that settlement failed. Preserve the
+original signature, journal and ledger; do not retry, refund, reset or replace
+the nonce to compensate for absent history. Strict offline inspection remains
+blocked by the current worker host limits. A capable host and reviewed handling
+of the retained private evidence are required before drawing a conclusion.
+
 ## Source-build migration
 
-Read [the reviewed migration and rollback procedure](AGAVE_MIGRATION.md). The pinned source build, mixed-binary rollback rehearsal and volume-free runtime image checks are separate from canonical cutover acceptance. Keep the original stability run untouched until its actual final result passes.
+The reviewed source-built runtime is already active. [Canonical migration continuity](../evidence/agave-canonical-continuity.json) records the retained state comparison; [the migration and rollback procedure](AGAVE_MIGRATION.md) remains a maintenance reference, not an instruction to repeat the cutover. Preserve the original and failed stability attempts. Any future runtime switch requires its own maintenance review and current consistent backup.
 
 
 ## Current public frontend and developer access
 
 The public site is https://solanaclassic.net. The existing .net frontend project
-is `prj_QqX4GVAOEbRthKGERaVqRA5Ks1qv` in team `trenchfun1`; current
-deployment is `dpl_FNyZW8958hhNTgQwSYpKEpDCqkXM`. Its separately built overlay
+is `prj_QqX4GVAOEbRthKGERaVqRA5Ks1qv` in team `trenchfun1`. Resolve its
+current production alias and retain the exact deployment ID at handover; a
+historical deployment ID is not an instruction to roll back. Its separately built overlay
 must use `SC_ENABLE_TRANSACTION_FEED=1 python3 infra/custom-domain/build.py`,
 which verifies all41 original frozen core hashes before generating the ignored
 frontend directory. Keep the original frozen website/deployment above as its
@@ -93,11 +102,25 @@ Railway project/services/backups, DNS and monitoring, and acknowledge the
 restart/backup/recovery/rollback procedures before operator handover can pass.
 No password, private key or credential export is needed in source or chat.
 
-The original full-day test passed with retained exact terminal evidence. The
-source runtime is prepared for a maintenance review, but switching is not
-automatic. Approval of a concrete devnet maintenance window precedes stopping
-writers, a NEW consistent backup after all later developer/browser transactions,
-held-candidate continuity checks, opening writes and the new full-day test.
-Do not use the early cold archive as a current backup of later programme/asset
+The replacement source-built full-day test completed on 17 October at
+01:24:36.808 UTC: 288 journeys and 2,880 observations over 86,400,466ms. Its
+[terminal audit](../evidence/agave-source-stability-replacement-completed.json)
+and [four final browser profiles](../evidence/agave-source-final-browser-review.json)
+passed. The earlier interrupted attempt and the later browser storage-check
+failure remain retained. Do not repeat completed workloads to fill a handover
+checkbox, or infer whole-release approval from these scoped results.
+
+The general `evidence/acceptance-gates.json` still selects the pre-migration
+API commit. Its individual passes are historical; they must not be presented
+as current source-candidate acceptance. Review each requirement against the
+new exact candidate and its selected evidence before producing a new release
+packet. Keep the original attestations and failed attempts available.
+The separate [source-candidate review inventory](../engine/migration/SOURCE_RELEASE_REVIEW.md)
+now records 19 individually reviewed browser and operations requirements; 56 remain unreviewed
+in that inventory. It does not change the frozen evaluator or approve a release.
+
+Approval of any future maintenance window precedes stopping writers and
+creating a NEW consistent backup after subsequent developer/browser transactions.
+Do not use an early cold archive as a current backup of later programme/asset
 state. Mainnet-capable hosting, independent operators, funded complete backing,
 production signing/upgrade custody and external review remain separate gates.

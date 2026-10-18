@@ -134,10 +134,48 @@ cached success. RPC responses are streamed with a2MiB wire limit and1MiB
 per-account decoded limit; noncanonical base64, wrong owners/layouts, public
 or soaking genesi, missing accounts and bad contexts fail closed.
 
-This is a separate read-only component. The existing journal submission API
-does not yet enforce it, and it cannot sign, broadcast, retry or approve a
-withdrawal. A returned observation is a snapshot, not a continuous monitor
-or proof that an upgrade cannot happen immediately afterward. Integrating
-these checks with reviewed signer custody, upgrade controls, fresh source
-finality and independent verifiers remains required. No independent operator
-or production endpoint has been appointed by this implementation.
+The observer is read-only. Version2 and version3 prepared journals now enforce
+retained code and policy pins in every handoff entry point; version3 also
+requires its reviewed mint observations. A separate observer result alone
+cannot approve a withdrawal. A returned observation is a snapshot, not a
+continuous monitor or proof that an upgrade cannot happen immediately afterward.
+Production signer custody, upgrade controls, fresh source finality and
+independently operated verifiers remain required.
+
+Offline authenticated expiry review also requires a caller-selected code-policy
+hash to equal the retained version2/version3 journal hash. Legacy version1
+supplied pins remain explicitly unbound. This does not authorize recovery or
+replace independent code/history observations. See
+[expiry review scope](EXPIRED_RECOVERY.md). No production roster or endpoint has
+been appointed by this implementation.
+
+
+## Metadata-token archive restore
+
+Eight actual checks now pass on new private copies of a completed metadata-token
+native claim and original redemption. After controlled stops, an archive was
+hashed, extracted and copied into separate restored ledgers. Complete stopped
+inventories match before restart. Nineteen selected finalized account records
+retain exact native balances, bytes and owners, immutable mint metadata, code
+and authority pins, both original events and consumed receipts. Both settlement
+replay simulations reject after restore, with zero broadcasts. All four owned
+copy processes stopped; original ledgers and private records are unchanged.
+
+The initial attempt refused an unsafe Number balance before archive creation.
+Its two copy processes stopped and artifacts remain retained. The corrected
+attempt parses raw account JSON digits exactly; it does not round the balance
+or remove the selected account. See [the procedure](METADATA_COLD_RESTORE.md)
+and [aggregate evidence](../evidence/bridge-metadata-cold-restore-agave.json).
+
+This extends controlled-stop test-validator recovery to metadata tokens. It
+cannot establish physical-host recovery, independent backup custody, arbitrary
+unknown landing, competing forks, full-validator consensus, complete funded
+backing or production acceptance.
+
+## Declared committee concentration
+
+The [committee control analyzer](COMMITTEE_CONTROL.md) now measures declared
+operator, signing/recovery and outage concentration against an externally
+selected five-key roster. This is offline declaration review; it does not
+appoint operators or establish identities, custody enforcement or independent
+observations. Passing supplied criteria never grants signing permission.

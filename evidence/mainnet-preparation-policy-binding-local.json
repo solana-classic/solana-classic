@@ -1,0 +1,54 @@
+{
+  "schemaVersion": 1,
+  "at": "2026-10-17T10:33:48.998207+00:00",
+  "scope": "Local offline preparation orchestration using supplied audit responses and disposable files; no compiled genesis or chain execution",
+  "passed": true,
+  "sourceHashes": {
+    "mainnet/prepare-consensus.py": "6dfe227d4770a4bfab583ccbf58cf68845963a0ddcf17feb1704046a6d288d6d",
+    "mainnet/prepare_consensus_test.py": "50bb88fc2eb5b4b6edcabd14bb07ad5c06effa13a7c6e075984ab24cb0ef0528"
+  },
+  "auditorSource": {
+    "path": "mainnet/genesis-audit-v2/src/main.rs",
+    "sha256": "cecf21530e57e5d595ebd1c496e67b88471a2c726c000ab6addc624fe50ea774"
+  },
+  "change": "Bind all five policy objects exposed by the pinned v2 auditor between the budget probe and final genesis, before copying the launch bundle or running either replay.",
+  "boundFields": [
+    "inflation",
+    "feeRateGovernor",
+    "rent",
+    "epochSchedule",
+    "pohConfig"
+  ],
+  "validation": {
+    "focusedTests": 24,
+    "focusedPassed": 24,
+    "packageTests": 153,
+    "packagePassed": 152,
+    "packageSkipped": 1,
+    "skipReason": "Existing Linux-only process-name truncation check on a non-Linux development host.",
+    "preFixRun": {
+      "tests": 1,
+      "subcaseFailures": 11,
+      "basis": "Two epoch-schedule mutations and three false-for-zero substitutions reached prepared. Six other malformed policy cases failed only in later validation, after replay, instead of the required pre-copy policy admission."
+    },
+    "checks": [
+      "Fifteen final-report mutation cases reject changed or missing objects, boolean substitutions and policy drift with unchanged burn/initial-inflation fields.",
+      "Refusals retain the failed attempt and partial compiler output without a bundle genesis, manifest or ledger-tool invocation.",
+      "All five policy objects must be nonempty JSON objects. Non-finite values refuse; key ordering does not affect comparison.",
+      "The unchanged synthetic driver still calibrates once, selects the exact numeric hash count and completes two separate replay copies."
+    ]
+  },
+  "limitations": [
+    "Supplied reports are not proof of real compiler, auditor, ledger-tool or validator execution.",
+    "Only the five policy objects emitted by the pinned v2 auditor are compared; unexposed GenesisConfig fields and all account bytes remain separate requirements.",
+    "This checks equality to the probe, not complete independent policy-schema validation. Existing final supply and policy admission remains required.",
+    "Reserve-byte adapter integration, fresh compiled genesis, two real strict replays, suitable Linux hosting, independent operators and funded backing remain open."
+  ],
+  "canonicalNetworkChanged": false,
+  "runtimeBinariesChanged": false,
+  "validatorsStarted": 0,
+  "mainnetActivated": false,
+  "releaseAccepted": false,
+  "mainnetAccepted": false,
+  "bridgeAccepted": false
+}

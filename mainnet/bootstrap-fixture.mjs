@@ -3,7 +3,7 @@
 import { readFileSync } from 'node:fs';
 import { createHash } from 'node:crypto';
 import { PublicKey } from '@solana/web3.js';
-import { auditBootstrap } from './bootstrap.mjs';
+import { auditBootstrap } from './bootstrap-core.mjs';
 const bytes=readFileSync(new URL('../evidence/mainnet-validator-rehearsal.json',import.meta.url));
 const previous=JSON.parse(bytes),genesisAudit=previous.genesisAudit;
 const reserve=genesisAudit.accounts.find(a=>a.lamports===previous.budget.reserveNativeUnits);
@@ -18,7 +18,7 @@ const input={schemaVersion:1,environment:'isolated-rehearsal',genesisAudit,
   declaredOriginCounterUnits:'0',declaredNativeCounterUnits:'0'};
 const zeroCounterProjection=auditBootstrap(input);
 const expectedCounterProjection=auditBootstrap({...input,declaredOriginCounterUnits:locked.toString(),declaredNativeCounterUnits:locked.toString()});
-const paths=['mainnet/bootstrap.mjs','mainnet/bootstrap.test.mjs','mainnet/bootstrap-fixture.mjs','mainnet/plan.mjs','mainnet/plan.test.mjs','bridge/program/src/lib.rs'];
+const paths=['mainnet/bootstrap.mjs','mainnet/bootstrap-core.mjs','mainnet/bootstrap.test.mjs','mainnet/bootstrap-fixture.mjs','mainnet/plan.mjs','mainnet/plan.test.mjs','bridge/program/src/lib.rs'];
 console.log(JSON.stringify({schemaVersion:1,at:new Date().toISOString(),scope:'Offline exact accounting against retained real genesis inventory; original mint/supply/backing are hypothetical fixtures, not real escrow or production parameters',
   accountingPassed:true,productionReady:false,activationEnabled:false,canonicalNetworkChanged:false,
   sourceGenesisEvidenceSHA256:createHash('sha256').update(bytes).digest('hex'),

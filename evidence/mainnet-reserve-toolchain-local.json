@@ -1,0 +1,66 @@
+{
+  "schemaVersion": 1,
+  "at": "2026-10-17T19:04:11.916094+00:00",
+  "scope": "local offline reserve builder executable provenance and binary override refusal; no runtime admission",
+  "passed": true,
+  "sourceFiles": {
+    "mainnet/build-reserve-bundle.mjs": "b1962874d2b0872144cc4f9db3d391c7743d48d3332859de1d2f72e7a168f534",
+    "mainnet/reserve-bundle.test.mjs": "122122ecc35e4d00d50cac34a83659c8b478f0758476d88ea9976c73efe84192"
+  },
+  "artifact": {
+    "file": "reserve-byte-stdio.mjs",
+    "bytes": 688386,
+    "sha256": "9091ca58a4767e40678fd069ae76712ad7d5eb5c6f140d41feb882bbb0a565c3"
+  },
+  "toolchain": {
+    "node": {
+      "version": "v24.19.0",
+      "platform": "darwin",
+      "arch": "arm64",
+      "bytes": 121304480,
+      "sha256": "d0c6c74401e6a544bb4d4b2a9ded9c43298d4e6dcd5ebac4dd010c4c81774105"
+    },
+    "bundler": {
+      "package": "@esbuild/darwin-arm64",
+      "version": "0.28.2",
+      "bytes": 10590882,
+      "sha256": "10b6243df618d374bb2d5c9cfbe7052e1405f6aa4e53a6164f11a91b9f2e1384"
+    }
+  },
+  "manifestSHA256": "2b805d67e8069db419d6e1d14521d16c3e24e8328054a3a23eb1a41a0f833856",
+  "validation": {
+    "preFixRegression": {
+      "tests": 1,
+      "passed": 0,
+      "failed": 1,
+      "observed": "A harmless unselected executable wrote its invocation marker before the build refused."
+    },
+    "postFixRelatedTests": 80,
+    "postFixPassed": 80,
+    "builderTests": 4,
+    "nestedAdapterFixtureChecks": 23,
+    "checks": [
+      "A supplied executable path, the special default-looking override and an empty override all refuse before invocation or output creation.",
+      "Actual Node and installed native bundler byte counts and hashes are recorded without private executable paths. Tests independently compare those hashes with selected local files.",
+      "Both executable fingerprints and resolved paths are rechecked after two matching builds. The native package version must match the selected bundler API.",
+      "The native package must resolve from the installed dependency graph; a missing package cannot use the bundler downloader fallback."
+    ],
+    "localRebuildIdentical": true
+  },
+  "limits": {
+    "artifactAdmitted": false,
+    "preparerIntegrated": false,
+    "hostAdmitted": false,
+    "canSign": false,
+    "canBroadcast": false,
+    "mainnetActivated": false,
+    "productionReady": false
+  },
+  "limitations": [
+    "These are observed build-time fingerprints, not independently trusted allowlist entries, executable-origin attestations or runtime admission.",
+    "Matching bytes before and after a build do not prove continuous process identity or eliminate replacement races. Node dynamic libraries and host integrity remain outside this review.",
+    "Builtin-only imports remain capable of network access; full dependency/dynamic-resolution review and fresh compiler/replay integration remain open.",
+    "Local build support is restricted to little-endian Linux/macOS x64/arm64; local evidence does not claim every supported host was exercised.",
+    "Previously retained artifacts, manifests and failed attempts remain unchanged. No canonical runtime, ledger, configuration or alert was changed."
+  ]
+}

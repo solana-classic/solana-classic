@@ -1,0 +1,42 @@
+{
+  "schemaVersion": 1,
+  "at": "2026-10-17T12:03:50.555620+00:00",
+  "scope": "local real child-process transport tests with synthetic bytes; no genesis decoding, compilation, ledger replay or network execution",
+  "passed": true,
+  "sourceHashes": {
+    "mainnet/offline_process.py": "eb5868795c9184a1fc8c8d01bbd29692de18acceeed3fab3c2b73b8351168743",
+    "mainnet/offline_process_test.py": "5aa336d1b33eb52f3598668361fd642201a05bd8a457734b0ffaa555cfc802bb"
+  },
+  "change": "Add optional bounded immutable stdin while draining stdout and stderr, deliver EOF by default, and retain existing owned-group cleanup and deadlines.",
+  "inputLimitBytes": 16777216,
+  "validation": {
+    "focusedTests": 16,
+    "focusedPassed": 16,
+    "newInputTestGroups": 6,
+    "packageTests": 159,
+    "packagePassed": 158,
+    "packageSkipped": 1,
+    "skipReason": "Existing Linux-only process-name truncation check on a non-Linux development host.",
+    "checks": [
+      "Absent and explicitly empty input produce EOF without inherited terminal input.",
+      "Exactly 16 MiB of synthetic binary bytes arrive with the expected SHA256; the helper does not copy them into private stderr.",
+      "A child fills both output pipes before reading 1 MiB of input; all three streams complete without deadlock.",
+      "Oversized input, text and mutable/non-byte containers refuse before process creation.",
+      "An early-closed stdin produces a path-free failure and the owned child is reaped.",
+      "A child that never reads stdin hits the deadline and is killed/reaped; existing cancellation, descendant and output-bound tests still pass."
+    ]
+  },
+  "limitations": [
+    "The helper writes bytes to a pipe; semantic consumption and report authenticity remain the pinned decoder and caller responsibility.",
+    "Executable fingerprint and file-selection checks remain caller requirements; this helper grants no host or tool admission.",
+    "The allocation-byte decoder and reserve input are not yet integrated into fresh genesis preparation.",
+    "Tests start only local synthetic Python children, not actual chain tools. No selected raw genesis or private key material is used."
+  ],
+  "canonicalNetworkChanged": false,
+  "runtimeBinariesChanged": false,
+  "validatorsStarted": 0,
+  "mainnetActivated": false,
+  "releaseAccepted": false,
+  "mainnetAccepted": false,
+  "bridgeAccepted": false
+}

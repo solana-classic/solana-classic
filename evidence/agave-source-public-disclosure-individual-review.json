@@ -1,0 +1,137 @@
+{
+  "schemaVersion": 1,
+  "at": "2026-10-17T08:03:44.861630+00:00",
+  "scope": "remote anonymous publication and source-candidate disclosure review; read-only HTTP and retained browser evidence",
+  "passed": true,
+  "genesis": "7TAUSfTzQeocodtVee2qsftsCYnJu2eCM1ALdADbHNon",
+  "candidate": {
+    "apiOrigin": "https://network-release-production.up.railway.app",
+    "frontendOrigin": "https://solana-classic-soc.vercel.app",
+    "frontendDeploymentId": "dpl_3aWWzKDohr4SrgijgrB8dWgHHS5r",
+    "frontendCommit": "35f0eaf1dede45452c9cdf9e6403669e966c427d",
+    "apiCommit": "119f25e225540be78b64b19bdb6cb300a1f47c10",
+    "networkConfigSha256": "0eea489e8cf0753b2b0cf0b91b6949566044e50c20bd4d02eea814490f64fe0e",
+    "dependencyManifestSha256": "e6da27717e6a84ca7b29d707ff63591b2ff0cfc38892d3b4667f8615bdf7bbc0"
+  },
+  "freezeSha256": "55b668e56a946ec94f0195b03530aba23593bd71d7fd52493d5403b21882757f",
+  "checklistSha256": "e2fb4b2f53e9aa10f21ec5ffcf708cc2749b456a39703c9228a7fce7fc574f73",
+  "proofs": [
+    {
+      "path": "evidence/agave-source-candidate-freeze.json",
+      "sha256": "55b668e56a946ec94f0195b03530aba23593bd71d7fd52493d5403b21882757f"
+    },
+    {
+      "path": "evidence/agave-source-load-completed.json",
+      "sha256": "f913ea39443c1b9c867cffdc9600cf88313da2fc06f65fa861484a00049b4405"
+    },
+    {
+      "path": "evidence/agave-source-stability-replacement-completed.json",
+      "sha256": "f84bd7ffe13c946e8e772145893154af9da38df25ad331f9616a2de6bc4ea54c"
+    },
+    {
+      "path": "evidence/agave-source-final-browser-review.json",
+      "sha256": "51bff09bfdedcbb736132d87f8cf7c5d20fa684bb2e4d8ea595273b838f76b07"
+    }
+  ],
+  "requirements": {
+    "G6.11": {
+      "claim": "The selected published load and stability results are bounded single-validator experiments, not Solana-wide throughput or decentralisation benchmarks.",
+      "basis": "The publicly accessible source-candidate load report explicitly limits its 20 SDK sessions and 200 operations to one validator and disclaims chain-wide capacity. The terminal report describes one source-built test validator with a bounded valueless browser workload and excludes mainnet approval. The published README identifies the single project-operated validator and separates the completed stability run from remaining release requirements.",
+      "scopeLimit": "Review of the selected published workload disclosures and README, not an audit of every external communication or a new performance measurement."
+    },
+    "G7.03": {
+      "claim": "The public frontend URLs, actual genesis, software manifest, single operator count and experimental limitations are anonymously accessible.",
+      "basis": "Both network-page URLs returned HTTP 200 without credentials. The canonical network endpoint returned the frozen genesis, remote experimental mode, operatorCount 1 and hasMonetaryValue false. The public dependency manifest exactly matches the candidate hash; the current runtime endpoint matches the complete frozen identity including the source-built engine manifest. Published README bytes identify one validator and valueless test assets. Retained final-browser evidence separately establishes the earlier rendered production journeys.",
+      "scopeLimit": "Current checks establish HTTP access, published bytes and identity fields. They do not re-render the application, verify every link or certify accessibility; prior rendered-browser results retain their own observation times."
+    }
+  },
+  "reviewMethod": {
+    "observedAt": "2026-10-17T08:02:52.884533+00:00",
+    "sourceReference": "ab627385eed88aa65bcbda6d3f5282df0d421171",
+    "publishedFiles": [
+      {
+        "path": "README.md",
+        "url": "https://raw.githubusercontent.com/solana-classic/solana-classic/ab627385eed88aa65bcbda6d3f5282df0d421171/README.md",
+        "httpStatus": 200,
+        "bytes": 16514,
+        "sha256": "e41d6320b0fbf9e94989eeec81fc8726e945144f04634bc7cd38701fe7cef296",
+        "matchesSelectedCheckout": true
+      },
+      {
+        "path": "docs/dependency-manifest.json",
+        "url": "https://raw.githubusercontent.com/solana-classic/solana-classic/ab627385eed88aa65bcbda6d3f5282df0d421171/docs/dependency-manifest.json",
+        "httpStatus": 200,
+        "bytes": 2451,
+        "sha256": "e6da27717e6a84ca7b29d707ff63591b2ff0cfc38892d3b4667f8615bdf7bbc0",
+        "matchesSelectedCheckout": true
+      },
+      {
+        "path": "evidence/agave-source-load-completed.json",
+        "url": "https://raw.githubusercontent.com/solana-classic/solana-classic/ab627385eed88aa65bcbda6d3f5282df0d421171/evidence/agave-source-load-completed.json",
+        "httpStatus": 200,
+        "bytes": 4840,
+        "sha256": "f913ea39443c1b9c867cffdc9600cf88313da2fc06f65fa861484a00049b4405",
+        "matchesSelectedCheckout": true
+      },
+      {
+        "path": "evidence/agave-source-stability-replacement-completed.json",
+        "url": "https://raw.githubusercontent.com/solana-classic/solana-classic/ab627385eed88aa65bcbda6d3f5282df0d421171/evidence/agave-source-stability-replacement-completed.json",
+        "httpStatus": 200,
+        "bytes": 6002,
+        "sha256": "f84bd7ffe13c946e8e772145893154af9da38df25ad331f9616a2de6bc4ea54c",
+        "matchesSelectedCheckout": true
+      }
+    ],
+    "publicEndpoints": [
+      {
+        "url": "https://solana-classic-soc.vercel.app/network",
+        "httpStatus": 200,
+        "bytes": 517,
+        "sha256": "448312a1f5170de0767b742309fad4861cc0e0a80e15d0a39d839fd1f2de2454",
+        "matchesFrozenEntry": true
+      },
+      {
+        "url": "https://solanaclassic.net/network",
+        "httpStatus": 200,
+        "bytes": 559,
+        "sha256": "b01673aad0665d9cf0458412d6086b3bf60bd6bc97338d5dfeaf0d2ef7651804",
+        "scope": "supplemental branded frontend shell"
+      },
+      {
+        "url": "https://network-release-production.up.railway.app/api/network",
+        "httpStatus": 200,
+        "bytes": 472,
+        "sha256": "beb286c5f7655d53025e6151906aad41138ca08c1fb186277710023e241f93d4",
+        "matchesFrozenConfiguration": true
+      },
+      {
+        "url": "https://network-release-production.up.railway.app/api/runtime",
+        "httpStatus": 200,
+        "bytes": 2249,
+        "sha256": "f64303004986c5b1684c27fe748ad95cde3f5d83568a4ab6ae04138c370c271d",
+        "matchesFullFrozenIdentityExceptObservationTime": true
+      }
+    ],
+    "networkFacts": {
+      "expectedGenesisHash": "7TAUSfTzQeocodtVee2qsftsCYnJu2eCM1ALdADbHNon",
+      "mode": "remote",
+      "operatorCount": 1,
+      "hasMonetaryValue": false
+    },
+    "frozenFilesVerified": 45,
+    "qaState": "completed",
+    "soakAccepted": true,
+    "credentialsSent": false,
+    "newBrowserSessions": false,
+    "newTransactions": false,
+    "newWorkloads": false
+  },
+  "limitations": [
+    "These HTTP observations are point-in-time access and byte checks, not continuous monitoring or a new rendered browser regression.",
+    "The dependency manifest is the frozen application dependency record; the runtime endpoint separately binds the current source-built engine binaries.",
+    "No old-candidate acceptance is carried over. Deadline compliance, machine specification publication and other unreviewed requirements are not inferred."
+  ],
+  "releaseAccepted": false,
+  "mainnetAccepted": false,
+  "bridgeAccepted": false
+}

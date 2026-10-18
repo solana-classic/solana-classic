@@ -29,3 +29,19 @@ export function parseNativeTransactionRPC(raw) {
   if(meta.preBalances.length!==meta.postBalances.length)throw new Error('Native metadata account counts differ');
   return decoded;
 }
+
+// Complete selected-account balances, retaining raw digits before Number rounding.
+export function parseNativeAccountsRPC(raw){
+  if(!supported)throw new Error('Node24 raw JSON number source support is required');
+  if(typeof raw!=='string'||Buffer.byteLength(raw)>2*1024*1024)throw new Error('Bounded raw account RPC JSON required');
+  const decoded=JSON.parse(raw,function(k,v,context){
+    if(k!=='lamports')return v;
+    const source=context?.source;
+    if(typeof v!=='number'||typeof source!=='string'||source.length>20||! /^(0|[1-9][0-9]*)$/.test(source))throw new Error('Canonical account native u64 JSON number required');
+    const amount=BigInt(source);if(amount>U64)throw new Error('Account native balance exceeds u64');return amount;
+  });
+  const result=decoded?.result;
+  if(decoded?.jsonrpc!=='2.0'||decoded.id!==1||Object.hasOwn(decoded,'error')||!result||!Number.isSafeInteger(result.context?.slot)||result.context.slot<0||!Array.isArray(result.value)||result.value.length<1||result.value.length>256)throw new Error('Exact account RPC response required');
+  if(result.value.some(row=>row!==null&&(!row||Array.isArray(row)||typeof row!=='object'||typeof row.lamports!=='bigint')))throw new Error('Account native balance missing');
+  return decoded;
+}

@@ -1,0 +1,69 @@
+{
+  "schemaVersion": 1,
+  "at": "2026-10-18T02:38:53.760167+00:00",
+  "scope": "Local selected-reserve preparation orchestration using supplied compiler, decoder, inspection and adapter responses plus disposable private files; no real genesis execution",
+  "passed": true,
+  "sourceFiles": {
+    "mainnet/prepare-consensus.py": "8e1d53dc0557b5e3c590e434f7d38f49aad48a84ca1706e671382352b7502ed8",
+    "mainnet/reserve_preparation.py": "741dfc4c46cbbd61587c999be81615c3e6f77155180aca12e3c9339461e0777c",
+    "mainnet/reserve_preparation_test.py": "a44b93f96582e98116b0326a1bc5fcdfc8a7f29d7d06221c8b48b84fdfcb5c36",
+    "mainnet/reserve-runtime-artifacts.json": "76eddcef96e58a7ad257fc35613d2e1f3e2cbd4ad099172d86533a63951cc2f9",
+    "mainnet/reserve_adapter_process.py": "dc71737d866f04c340f14749b636f3915192218ec9c200816f163ef0df364389",
+    "mainnet/reserve_adapter_result.py": "f00b86265c5e44e3070e2fac867d3034d71c0050fe22aca5f1884076836426b8",
+    "mainnet/offline_process.py": "6e17a75e1269e9a7cd89ad351f9946c386af5f0df345b9891712020b774988ed"
+  },
+  "validation": {
+    "pythonTests": 220,
+    "passed": 219,
+    "skipped": 1,
+    "skipReason": "Existing Linux-only process check on the local host",
+    "resourceWarningsAreErrors": true,
+    "newOrchestrationGroups": 15,
+    "testLogSHA256": "9d79ed7763c75bf5986e61a44d3bf9c9343051de7e86d2f457e8b9ab26d03f5c",
+    "checks": [
+      "Canonical and insufficient-host refusal before private inputs or tools",
+      "Paired selection path/digest and explicit prepare acknowledgment; original CLI route preserved",
+      "Selected baseline manifest hash, genesis, total and full actual audit comparison",
+      "Malformed selection, duplicate fields, wrong hashes, unsafe permissions, aliases and hardlinks refused",
+      "Fixed reviewed Linux Node and retained adapter bundle selected independently of output",
+      "Prepare input from the bounded freshly decoded baseline; compiler input only from validated adapter output",
+      "One reserve address replacement, unchanged serialized fingerprints, non-account parameters and stake/vote summaries",
+      "Calibrated baseline PoH and full audited policy preserved",
+      "Review refusal, changed genesis, policy, decoded bytes and fingerprints prevent replay",
+      "Two fresh normal slot-zero replay commands agree before manifest publication",
+      "Baseline mutation withholds the final manifest; successful baseline remains byte-identical",
+      "Retained attempts refuse reuse; cancellation retains failure and restores process umask"
+    ]
+  },
+  "limits": {
+    "actualCompilerExecuted": false,
+    "actualDecoderExecuted": false,
+    "actualAdapterExecutedInThisReview": false,
+    "actualSlotZeroReplayExecuted": false,
+    "newKeysGenerated": false,
+    "validatorsStarted": 0,
+    "hostAdmissionPassed": false,
+    "dynamicDependenciesIndependentlyVerified": false,
+    "freshCompiledReserveIntegrationAccepted": false,
+    "fullValidatorConsensusVerified": false,
+    "backingVerified": false,
+    "custodyVerified": false,
+    "canSign": false,
+    "canBroadcast": false,
+    "mainnetActivated": false,
+    "productionReady": false
+  },
+  "candidate": {
+    "runtimeMatchesFreeze": true,
+    "frozenCoreFilesMatched": 45,
+    "replacementStabilityState": "completed",
+    "replacementStabilityAccepted": true,
+    "newStabilityRunStarted": false
+  },
+  "remaining": [
+    "Review and admit a Linux execution host without weakening resource or security checks",
+    "Prepare and independently select a new synthetic baseline, plan and private selection envelope",
+    "Run actual selected reserve compilation, byte review and two strict slot-zero replays on that admitted host",
+    "Complete separate three-validator rehearsal, custody, backing, operators, monitoring fault delivery and security review"
+  ]
+}

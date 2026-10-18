@@ -22,6 +22,8 @@ fn account(svm:&mut LiteSVM,key:Pubkey,owner:Pubkey,data:Vec<u8>,executable:bool
 }
 fn install(svm:&mut LiteSVM,program:Pubkey,authority:Pubkey)->Pubkey{
     let elf=std::fs::read(Path::new(env!("CARGO_MANIFEST_DIR")).join("../../.tools/bridge-bootstrap-artifacts/classic_bridge_program.so")).expect("Build the separate bootstrap SBF artifact before runtime tests");
+    let checksum=solana_program::hash::hash(&elf).to_bytes().iter().map(|b|format!("{b:02x}")).collect::<String>();
+    assert_eq!(checksum,"556adf3132c6d102458c0c3b13e22457401bd748b6c3a37a422fb7a339a68e53","Runtime tests require the reviewed V2 artifact");
     let program_data=Pubkey::find_program_address(&[program.as_ref()],&bpf_loader_upgradeable::ID).0;
     let mut bytes=bincode::serialize(&UpgradeableLoaderState::ProgramData{slot:0,upgrade_authority_address:Some(authority)}).unwrap();
     bytes.resize(UpgradeableLoaderState::size_of_programdata_metadata(),0);bytes.extend_from_slice(&elf);
@@ -244,4 +246,57 @@ fn boot_fixture(payer:&Keypair,members:&[Keypair;5])->(Side,Side,Keypair,Pubkey,
     let mut state=Mint::unpack(&data).unwrap();state.mint_authority=COption::Some(payer.pubkey());Mint::pack(state,&mut data).unwrap();account(&mut s.svm,mint,spl_token_2022::ID,data,false);
     let accounts=init_accounts(&s,&payer);assert!(!call(&mut s.svm,&payer,s.program,accounts,BridgeInstruction::Initialize(s.config.clone()),&[]));
     assert!(s.svm.get_account(&s.state).is_none());assert!(s.svm.get_account(&s.escrow).is_none());
+}
+
+
+// Synthetic pre-initialization account injection models a future genesis
+// reserve at the selected PDA; it does not generate or accept a real genesis.
+fn prefunded_native(payer:&Keypair,members:&[Keypair;5])->Side{
+    let mut s=side(NATIVE,Pubkey::new_unique(),Pubkey::new_unique(),Pubkey::new_unique(),payer,members);
+    assert!(!s.vault.is_on_curve());
+    s.svm.set_account(s.vault,Account{lamports:1_900_000_000,owner:system_program::ID,..Account::default()}).unwrap();
+    s
+}
+fn assert_same_account(actual:Account,expected:&Account){
+    assert_eq!(actual.lamports,expected.lamports);assert_eq!(actual.owner,expected.owner);
+    assert_eq!(actual.data,expected.data);assert_eq!(actual.executable,expected.executable);assert_eq!(actual.rent_epoch,expected.rent_epoch);
+}
+fn unsigned_vault_drain(s:&mut Side,payer:&Keypair){
+    let before=s.svm.get_account(&s.vault).unwrap();
+    s.svm.expire_blockhash();
+    let ix=solana_system_interface::instruction::transfer(&s.vault,&payer.pubkey(),1);
+    let mut tx=Transaction::new_with_payer(&[ix],Some(&payer.pubkey()));
+    tx.partial_sign(&[payer],s.svm.latest_blockhash());
+    assert!(s.svm.send_transaction(tx).is_err(),"A transaction without the PDA signature cannot withdraw its reserve");
+    assert_same_account(s.svm.get_account(&s.vault).unwrap(),&before);
+}
+#[test] fn sbf_prefunded_native_vault_preserves_balance_and_starts_paused(){
+    let payer=Keypair::new();let members=std::array::from_fn(|_|Keypair::new());let mut s=prefunded_native(&payer,&members);
+    unsigned_vault_drain(&mut s,&payer);
+    initialize(&mut s,&payer);
+    let vault=s.svm.get_account(&s.vault).unwrap();assert_eq!(vault.lamports,1_900_000_000);assert_eq!(vault.owner,s.program);assert!(!vault.executable);
+    assert_eq!(vault.data.len(),16);assert_eq!(&vault.data[..8],b"SCVLT002");assert_eq!(u64::from_le_bytes(vault.data[8..16].try_into().unwrap()),s.svm.minimum_balance_for_rent_exemption(16));
+    let c=Config::try_from_slice(&s.svm.get_account(&s.state).unwrap().data).unwrap();assert!(c.new_locks_paused&&c.settlement_paused);assert_eq!(c.outstanding,0);assert_eq!(c.daily_settled,0);
+    unsigned_vault_drain(&mut s,&payer);
+    let accounts=init_accounts(&s,&payer);assert!(!call(&mut s.svm,&payer,s.program,accounts,BridgeInstruction::Initialize(s.config.clone()),&[]));
+    assert_same_account(s.svm.get_account(&s.vault).unwrap(),&vault);
+    assert_eq!(borsh::to_vec(&Config::try_from_slice(&s.svm.get_account(&s.state).unwrap().data).unwrap()).unwrap(),borsh::to_vec(&c).unwrap());
+}
+#[test] fn sbf_prefunded_native_vault_rejects_wrong_authority_and_address_atomically(){
+    let payer=Keypair::new();let members=std::array::from_fn(|_|Keypair::new());let mut s=prefunded_native(&payer,&members);
+    let before=s.svm.get_account(&s.vault).unwrap();let attacker=Keypair::new();s.svm.airdrop(&attacker.pubkey(),1_000_000_000).unwrap();
+    let accounts=init_accounts(&s,&attacker);assert!(!call(&mut s.svm,&attacker,s.program,accounts,BridgeInstruction::Initialize(s.config.clone()),&[]));
+    assert!(s.svm.get_account(&s.state).is_none());assert_same_account(s.svm.get_account(&s.vault).unwrap(),&before);
+    let wrong=Pubkey::new_unique();s.svm.set_account(wrong,before.clone()).unwrap();let mut accounts=init_accounts(&s,&payer);accounts[2]=AccountMeta::new(wrong,false);
+    assert!(!call(&mut s.svm,&payer,s.program,accounts,BridgeInstruction::Initialize(s.config.clone()),&[]));
+    assert!(s.svm.get_account(&s.state).is_none());assert_same_account(s.svm.get_account(&s.vault).unwrap(),&before);assert_same_account(s.svm.get_account(&wrong).unwrap(),&before);
+}
+#[test] fn sbf_prefunded_native_vault_rejects_foreign_or_initialized_accounts(){
+    for foreign in [false,true]{
+        let payer=Keypair::new();let members=std::array::from_fn(|_|Keypair::new());let mut s=prefunded_native(&payer,&members);
+        let mut before=s.svm.get_account(&s.vault).unwrap();if foreign{before.owner=Pubkey::new_unique();}else{before.data=vec![0;16];}
+        s.svm.set_account(s.vault,before.clone()).unwrap();let accounts=init_accounts(&s,&payer);
+        assert!(!call(&mut s.svm,&payer,s.program,accounts,BridgeInstruction::Initialize(s.config.clone()),&[]));
+        assert!(s.svm.get_account(&s.state).is_none());assert_same_account(s.svm.get_account(&s.vault).unwrap(),&before);
+    }
 }

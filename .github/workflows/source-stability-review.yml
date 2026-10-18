@@ -1,0 +1,38 @@
+name: Source stability evidence review
+on:
+  pull_request:
+    paths:
+      - 'engine/migration/source_terminal_review*'
+      - 'engine/migration/source_inventory_review*'
+      - 'engine/migration/SOURCE_RELEASE_REVIEW.md'
+      - 'evidence/agave-source-*.json'
+      - 'evidence/agave-canonical-continuity.json'
+      - 'evidence/acceptance-gates.json'
+      - 'evidence/source-inventory-review-local.json'
+      - 'engine/migration/replacement_source_terminal_review*'
+      - 'engine/migration/terminal_review*'
+      - 'engine/migration/load_review*'
+      - 'engine/migration/runtime_http_*'
+      - 'engine/migration/qa_state*'
+      - 'engine/migration/RUNTIME_HTTP_DIAGNOSTICS.md'
+      - 'evidence/runtime-http-diagnostics-local.json'
+      - 'engine/migration/SOURCE_TERMINAL_REVIEW.md'
+      - 'evidence/source-terminal-role-admission-local.json'
+      - 'evidence/source-replacement-terminal-review-local.json'
+      - '.github/workflows/source-stability-review.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  offline-review:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - name: Offline source inventory, terminal and load evidence checks
+        run: python3 -W error::ResourceWarning -m unittest discover -s engine/migration -p '*review_test.py'
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: '24.19.0'
+      - name: Passive runtime HTTP diagnostics
+        run: node --test engine/migration/runtime_http_diagnostics.test.mjs engine/migration/runtime_http_preload.test.mjs engine/migration/qa_state.test.mjs

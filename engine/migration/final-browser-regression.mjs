@@ -21,6 +21,15 @@ export function targetFor(name) {
   if (!Object.hasOwn(targets, name)) throw Error('Unknown fixed devnet target');
   return targets[name];
 }
+export function checkBrowserStorage(name, snapshot) {
+  targetFor(name);
+  if (!snapshot || !Array.isArray(snapshot.localKeys) || snapshot.sessionLength !== 0) throw Error('Unexpected browser storage');
+  const empty = snapshot.localKeys.length === 0 && snapshot.panelPreference === null;
+  const panelOnly = snapshot.localKeys.length === 1 && snapshot.localKeys[0] === 'classic.wallet.panel' &&
+    ['open', 'closed'].includes(snapshot.panelPreference);
+  if (name === 'frozen' ? !empty : !panelOnly) throw Error('Unexpected browser storage');
+  return { localStorageEmpty: empty, sessionStorageEmpty: true, onlyPanelPreference: panelOnly };
+}
 export function viewportFor(profile) {
   if (profile === 'desktop') return { width: 1440, height: 1000, isMobile: false, hasTouch: false };
   if (profile === 'mobile') return { width: 360, height: 844, isMobile: true, hasTouch: true };
@@ -248,15 +257,18 @@ export async function run(name, profile = 'desktop') {
       await discovery.screenshot({ path: '/tmp/soc-final-' + name + '-' + profile + '-' + width + '.png', fullPage: true });
     }
     stage = 'secret persistence and continuity';
+    report.storageChecks = [];
     for (const p of [page, recipientPage]) {
-      if (!await p.evaluate(() => localStorage.length === 0 && sessionStorage.length === 0)) throw Error('Unexpected browser storage');
+      const snapshot = await p.evaluate(() => ({ localKeys: Object.keys(localStorage), sessionLength: sessionStorage.length,
+        panelPreference: localStorage.getItem('classic.wallet.panel') }));
+      report.storageChecks.push(checkBrowserStorage(name, snapshot));
     }
     if (pageErrors || consoleErrors || sensitivePayload || unexpectedDestination) throw Error('Browser integrity check failed');
     report.runtimeAfter = await identity(); report.frontendAfter = await bundle(target.web);
     if (JSON.stringify(report.frontendBefore) !== JSON.stringify(report.frontendAfter)) throw Error('Frontend changed during regression');
     if (new Set(report.receipts.map(row => row.signature)).size !== report.receipts.length) throw Error('Duplicate logical receipts');
     report.pageErrors = 0; report.consoleErrors = 0; report.finalizedReceipts = report.receipts.length;
-    report.browserStorageEmpty = true; report.walletSecretsPersisted = false; report.sensitivePayloadObserved = false;
+    report.browserStorageEmpty = report.storageChecks.every(check => check.localStorageEmpty); report.walletSecretsPersisted = false; report.sensitivePayloadObserved = false;
     report.unexpectedAPIDestination = false; report.passed = true;
   } catch (error) {
     report.issues.push('Regression stopped during ' + stage + '; no release acceptance. Preserve partial receipts and investigate.');

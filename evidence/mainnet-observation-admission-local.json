@@ -1,0 +1,52 @@
+{
+  "schemaVersion": 1,
+  "at": "2026-10-15T21:54:06.000914+00:00",
+  "state": "local-checks-passed",
+  "scope": "Offline private-validator startup and warm-restart observation admission with synthetic process/RPC fixtures; no actual Agave execution",
+  "regressionReproducedBeforeFix": {
+    "wrongGenesisEpisodeRetriedToPass": true,
+    "syntheticObservations": 2,
+    "actualValidatorsStarted": 0
+  },
+  "newObservationAdmissionGroups": 6,
+  "localValidation": {
+    "testsDiscovered": 115,
+    "passed": 114,
+    "skipped": 1,
+    "skipReason": "Real Linux process-name fixture requires Linux",
+    "command": "python3 -B -W error::ResourceWarning -m unittest discover -s mainnet -p *_test.py",
+    "resourceWarningsObserved": false
+  },
+  "checks": [
+    "Named readiness and failed connection reads may retry within the existing deadline",
+    "Wrong genesis/identity/version, supply/inflation/stake or finalized-history failures abort",
+    "Malformed or unknown observations, redirects and unexpected HTTP/RPC replies refuse",
+    "Partial selected vote sets and unrooted/low-slot progress remain explicit readiness only after identity and supply checks",
+    "Synthetic later healthy responses cannot hide a preceding integrity failure",
+    "Both complete startup and post-restart failure fixtures clean every owned child; explicit startup readiness can still recover",
+    "Low-slot and partial-vote readiness cannot mask a simultaneous supply or vote-identity mismatch"
+  ],
+  "sourceHashes": {
+    "mainnet/consensus.py": "6dbe6721ba08d79609343a494dc7988b83f71d9b37a4f5f0752738c4d8a104e7",
+    "mainnet/validator_restart.py": "4f55845c30848a16a57e4b6439c14cfbdb91b707383f040e498533a2f8112625",
+    "mainnet/validator_restart_test.py": "0ba4b41ee83ca294ca555eff37eb6baf51c2d3b6773a30a8b1068fef6f54e1df",
+    "mainnet/observation_admission_test.py": "19bd453a12af559b73c05711ca807363b359426ca10ac549b996c39f9e33f2f4"
+  },
+  "actualValidatorsStarted": 0,
+  "actualKeysGenerated": false,
+  "actualGenesisCreated": false,
+  "actualChainRequests": 0,
+  "canonicalNetworkChanged": false,
+  "hostChecksWeakened": false,
+  "actualConsensusVerified": false,
+  "actualWarmRestartVerified": false,
+  "actualForkRecoveryVerified": false,
+  "independentOperatorsVerified": false,
+  "mainnetActivated": false,
+  "productionReady": false,
+  "remainingRequirements": [
+    "Capable Linux host, actual fresh hashing genesis and startup replay",
+    "Actual full-validator consensus/restart and separate failure/recovery drills",
+    "Independent operators, funded backing/custody, bridge security and explicit release decision"
+  ]
+}

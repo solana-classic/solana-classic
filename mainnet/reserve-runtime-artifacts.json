@@ -1,0 +1,7 @@
+{
+  "schemaVersion": 1,
+  "scope": "Reviewed offline Linux reserve adapter artifacts; host and dynamic dependencies require separate admission",
+  "node": {"sha256": "bc17c508ffeed0ec622934f9b7fa72f8e78da65350e63c3eceb56fa688aa5e12", "bytes": 125989464},
+  "bundle": {"sha256": "9091ca58a4767e40678fd069ae76712ad7d5eb5c6f140d41feb882bbb0a565c3", "bytes": 688386},
+  "provenance": ["evidence/mainnet-reserve-node-signature.json", "evidence/mainnet-reserve-node-upstream.json", "evidence/mainnet-reserve-caller-linux.json"]
+}

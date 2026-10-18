@@ -33,6 +33,8 @@ def review(bundle,freeze_raw,admission,proofs,now=None):
   at=terminal.milliseconds(proof['at']);require(at<terminal.milliseconds(START),'SOURCE_PREREQUISITE_AFTER_START');expected_times[name]=proof['at']
  result=bundle.get('soak',{});qa=bundle.get('qa',{});status=bundle.get('status',{});progress=bundle.get('progress',{})
  require(result.get('passed') is True and result.get('startedAt')==START and qa.get('state')=='completed' and qa.get('soakAccepted') is True,'SOURCE_RUN_NOT_COMPLETED')
+ require(type(qa.get('exitCode')) is int,'SOURCE_RUNNER_EXIT_TYPE_INVALID')
+ require(all(type(result.get(field)) is int for field in ['completedJourneys','smokeEveryMs','observationEveryMs','faucetCalls']),'SOURCE_WORKLOAD_SCALAR_TYPES_INVALID')
  require(qa.get('inputChecksums')==pins,'TERMINAL_RUNNER_INPUTS_DIFFER')
  observed=terminal.milliseconds(status['fetchedAt']);now_ms=round((now or datetime.datetime.now(datetime.timezone.utc)).timestamp()*1000)
  require(-10_000<=now_ms-observed<90_000,'TERMINAL_OBSERVATION_STALE_OR_FUTURE')
@@ -46,11 +48,13 @@ def review(bundle,freeze_raw,admission,proofs,now=None):
  for journey in result['journeys']:
   require(journey['scheduleDelayMs']<=5000,'FROZEN_FIVE_SECOND_CADENCE_EXCEEDED')
   for field,size in [('mint',32),('recipient',32),('transferSignature',64)]:load_review.identifier(journey[field],size)
+ recipients={journey['recipient'] for journey in result['journeys']};mints={journey['mint'] for journey in result['journeys']}
+ require(len(recipients)==288 and not recipients.intersection(mints) and result['payer'] not in recipients|mints,'SOURCE_JOURNEY_KEY_ROLES_INVALID')
  # The pinned public reader intentionally exposes a bounded summary, not receipts.
  reader=progress['result'];fields={'genesis','candidate','passed','durationMs','startedAt','at','completedJourneys'}
  require(set(reader)==fields and all(reader[field]==result[field] for field in fields),'BOUNDED_TERMINAL_READER_DIFFERS')
  require(terminal.milliseconds(result['at'])<=now_ms+5_000,'TERMINAL_RESULT_FROM_FUTURE')
- report.update({'scope':'remote source-built devnet terminal evidence review; recorded complete report and receipts, not independent chain replay or release acceptance','sourceBuildActive':True,'exactActivationBound':True,'prerequisiteHashesVerified':8,'base58ReceiptLengthsVerified':True,'boundedReaderSummaryMatches':True,'fullReportInventoryReviewed':True,'fundingReceiptStructureReviewed':True,'fiveSecondCadenceBoundVerified':True,'activationSHA256':hashlib.sha256(json.dumps(admission,sort_keys=True,separators=(',',':')).encode()).hexdigest(),'limitations':['One source-built test validator and a bounded valueless browser workload.','Recorded receipts are checked for identity, structure and uniqueness; no independent replay of pruned transaction history.','This audit does not approve final browser regression, remaining release gates, mainnet, custody or a bridge.']})
+ report.update({'scope':'remote source-built devnet terminal evidence review; recorded complete report and receipts, not independent chain replay or release acceptance','sourceBuildActive':True,'exactActivationBound':True,'prerequisiteHashesVerified':8,'base58ReceiptLengthsVerified':True,'boundedReaderSummaryMatches':True,'fullReportInventoryReviewed':True,'fundingReceiptStructureReviewed':True,'fiveSecondCadenceBoundVerified':True,'uniqueRecipients':len(recipients),'distinctJourneyKeyRolesVerified':True,'workloadScalarTypesVerified':True,'activationSHA256':hashlib.sha256(json.dumps(admission,sort_keys=True,separators=(',',':')).encode()).hexdigest(),'limitations':['One source-built test validator and a bounded valueless browser workload.','Recorded receipts are checked for identity, structure and uniqueness; no independent replay of pruned transaction history.','This audit does not approve final browser regression, remaining release gates, mainnet, custody or a bridge.']})
  return report
 
 def main():

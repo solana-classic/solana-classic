@@ -1,0 +1,72 @@
+{
+  "schemaVersion": 1,
+  "at": "2026-10-16T06:15:46.838Z",
+  "state": "offline-metadata-review-completed",
+  "scope": "Offline review of the already published synthetic genesis inventory and local regressions; no new genesis decoding or private chain execution",
+  "localNodeTests": 39,
+  "newCustodyGroups": 11,
+  "localPythonTestsRun": 121,
+  "localPythonTestsSkipped": 1,
+  "localPythonTestsFailed": 0,
+  "sourceEvidenceSHA256": "e0b82f1e20fec4697273560befc3290f19ab8bbf26a645066ab74610100fb23e",
+  "retainedProjection": {
+    "accountCount": 249,
+    "totalNativeUnits": "1000000000000",
+    "groups": {
+      "protocol-controls-unreviewed": {
+        "accounts": 239,
+        "nativeUnits": "228399360"
+      },
+      "stake-authorities-unread": {
+        "accounts": 3,
+        "nativeUnits": "300000000000"
+      },
+      "system-signature-metadata": {
+        "accounts": 4,
+        "nativeUnits": "699690377440"
+      },
+      "vote-authorities-unread": {
+        "accounts": 3,
+        "nativeUnits": "81223200"
+      }
+    },
+    "reserveNativeUnits": "669690377440",
+    "reserveSystemOwned": true,
+    "reserveOnCurveAddress": true,
+    "reserveMetadataMatches": false,
+    "findings": [
+      "RESERVE_IS_NOT_SELECTED_BRIDGE_VAULT",
+      "RESERVE_NOT_OWNED_BY_SELECTED_BRIDGE",
+      "RESERVE_V2_LAYOUT_LENGTH_DIFFERS",
+      "SYSTEM_RESERVE_REQUIRES_SEPARATE_CUSTODY",
+      "STAKE_AUTHORITIES_UNREAD",
+      "VOTE_AUTHORITIES_UNREAD",
+      "PROTOCOL_CONTROLS_UNREVIEWED"
+    ]
+  },
+  "actualGenesisDecoded": false,
+  "allAccountAuthoritiesVerified": false,
+  "reserveCustodyVerified": false,
+  "actualBackingVerified": false,
+  "independentVerification": false,
+  "selectedProductionBridge": false,
+  "validatorsStarted": 0,
+  "newKeysCreated": 0,
+  "chainRequests": 0,
+  "signatures": 0,
+  "submissions": 0,
+  "canonicalNetworkChanged": false,
+  "mainnetActivated": false,
+  "productionReady": false,
+  "sourceHashes": {
+    "mainnet/genesis-custody.mjs": "2c7cbfef5048e78e98c3632ff72a4527a312718f1e4b984f43ef814cb8857069",
+    "mainnet/genesis-custody.test.mjs": "a98c03f9fc77e613ef062991d299565f41539ee3a91e6b0df6aa1b501a38990e",
+    "mainnet/GENESIS_CUSTODY.md": "38abc4181b3d4150d2a594ae01b86e8a659652f4cfed52bb5826cd10c90d4f3d",
+    "mainnet/BOOTSTRAP.md": "3f07b8c63787141af35273821ca0e0e8988afdb4e745b34a4a2a4a2a089d1c63",
+    "mainnet/bootstrap.mjs": "83eb564446ad5be431f66d931fa61ca9e3d8fd15a5b7420ec87182011cce1beb",
+    "mainnet/bootstrap.test.mjs": "e295e3d1bdad1364af2d1e2bd767d4c1247e4c60fe89cab4f171d9f8aa1ba3be",
+    "mainnet/plan.mjs": "db873691716674e96743807e9f2bd9ca0181d4018d374d05dfe6927c28efdbb8",
+    "mainnet/plan.test.mjs": "afb841263b409e8a6b807628e467dbc7a9b1ce98c6b21e1cbcf4d9dc23dc37f1",
+    ".github/workflows/mainnet-preparation.yml": "d4e39ca73d1cc840893a445deb0fb50cdc8e540fcb68f66732b80deb254f595e"
+  }
+}

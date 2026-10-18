@@ -1,0 +1,43 @@
+{
+  "schemaVersion": 1,
+  "scope": "Offline decoding of a finalized-commitment public Solana mint snapshot; no bridge admission or settlement",
+  "contextSlot": 457206519,
+  "mintAccountDataBytes": 415,
+  "mintAccountDataSHA256": "f9d0823c44d1ee19d92b36bf307c5e2078f44d6ae001a0779f3be599879335b7",
+  "owner": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb",
+  "parsed": {
+    "mint": "Nuhksmxq3AZ6ZrzVHshKnQd8QTTRSXCb7a6AU7oMsoc",
+    "supplyUnits": "985686690694525",
+    "decimals": 6,
+    "mintAuthority": null,
+    "freezeAuthority": null,
+    "layout": "immutable-self-metadata-v1",
+    "extensions": [
+      18,
+      19
+    ],
+    "metadata": {
+      "name": "Solana Classic",
+      "symbol": "SOC",
+      "uri": "https://ipfs.io/ipfs/bafkreifjciwtscsskdatmzvyf6lyqpj6bnr2gaedqeruv66nauhanxo6ey",
+      "additionalMetadata": []
+    }
+  },
+  "rpcRequests": 1,
+  "transactionsSubmitted": 0,
+  "productionAdmissionEnabled": false,
+  "tests": {
+    "newOfflineChecks": 12,
+    "relatedRegressionChecks": 34,
+    "totalPassed": 46,
+    "failed": 0
+  },
+  "sourceHashes": {
+    "bridge/mint-metadata.mjs": "402fcf39f298a89d7682e4ab78de9bd2b2f1647f31e9f01dbff027e9fe80b64c",
+    "bridge/mint-metadata.test.mjs": "c80dad3d419aabc8bde7111f3107f25e92f1ec4df26191b1f198d143c61fd12a"
+  },
+  "liveObserverChanged": false,
+  "claimJournalChanged": false,
+  "canonicalNetworkChanged": false,
+  "mainnetActivated": false
+}

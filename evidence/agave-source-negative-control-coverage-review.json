@@ -1,0 +1,81 @@
+{
+  "schemaVersion": 1,
+  "at": "2026-10-17T09:33:03.009542+00:00",
+  "scope": "retrospective current-candidate negative-control coverage review; no new fault injection",
+  "reviewCompleted": true,
+  "passed": false,
+  "candidate": {
+    "apiOrigin": "https://network-release-production.up.railway.app",
+    "frontendOrigin": "https://solana-classic-soc.vercel.app",
+    "frontendDeploymentId": "dpl_3aWWzKDohr4SrgijgrB8dWgHHS5r",
+    "frontendCommit": "35f0eaf1dede45452c9cdf9e6403669e966c427d",
+    "apiCommit": "119f25e225540be78b64b19bdb6cb300a1f47c10",
+    "networkConfigSha256": "0eea489e8cf0753b2b0cf0b91b6949566044e50c20bd4d02eea814490f64fe0e",
+    "dependencyManifestSha256": "e6da27717e6a84ca7b29d707ff63591b2ff0cfc38892d3b4667f8615bdf7bbc0"
+  },
+  "genesis": "7TAUSfTzQeocodtVee2qsftsCYnJu2eCM1ALdADbHNon",
+  "freezeSha256": "55b668e56a946ec94f0195b03530aba23593bd71d7fd52493d5403b21882757f",
+  "checklistSha256": "e2fb4b2f53e9aa10f21ec5ffcf708cc2749b456a39703c9228a7fce7fc574f73",
+  "proofs": [
+    {
+      "path": "evidence/agave-source-candidate-freeze.json",
+      "sha256": "55b668e56a946ec94f0195b03530aba23593bd71d7fd52493d5403b21882757f"
+    },
+    {
+      "path": "evidence/agave-source-negative-controls.json",
+      "sha256": "968809f06a9333683d0a04ce11b55d7ffac9492f62dbc9a4b2b83041375f9da6"
+    }
+  ],
+  "retainedObservations": {
+    "at": "2026-10-15T02:15:28.768Z",
+    "all36RecordedChecksPassed": true,
+    "requests": 189,
+    "quotaRequests": 151,
+    "metadataRecordsCreated": 150,
+    "faucetGrantsRequested": 0,
+    "submittedSignedTransactions": 0,
+    "runtimeBeforeAndAfterMatchesFreeze": true,
+    "retainedReportBytesMatchPublicCopy": true
+  },
+  "unacceptedRequirements": {
+    "G4.02": {
+      "observed": "An unknown issuance signature was denied with NOT_FINALIZED; a mismatched mint was denied with ASSET_MISMATCH; the selected existing gallery proof remained unchanged.",
+      "missing": "This report does not exercise validly shaped wrong metadata, a wrong token program or wrong-genesis gallery registration.",
+      "nextReview": "Locate exact-source isolated gallery controls for each missing rejection and verify absence of insertion; do not repeat finalized issuance."
+    },
+    "G5.02": {
+      "observed": "A malformed faucet key was denied and the report explicitly states no valid faucet request was sent.",
+      "missing": "Concurrent valid-request atomicity and post-restart limit persistence are not covered by this report.",
+      "nextReview": "Review retained faucet concurrency and restart state against the exact frozen store/route source; isolate any new fault checks from the canonical service."
+    },
+    "G5.03": {
+      "observed": "Zero faucet grants were requested in this bounded negative-control run.",
+      "missing": "No timed-out grant or pending-signature recovery was exercised.",
+      "nextReview": "Use exact-source isolated lost-response/pending-signature evidence with a counted send boundary; preserve original signatures and never retry a finalized grant."
+    },
+    "G5.04": {
+      "observed": "After an observed LIMIT_REACHED response, two spoofed forwarding-header requests also returned 429.",
+      "missing": "The error does not identify the exhausted quota bucket. Global exhaustion could mask a changed per-client identity, so denial continuity alone is insufficient.",
+      "nextReview": "Establish exact ingress trust and per-client counter attribution with global capacity available in an isolated controlled configuration; do not exhaust or reset canonical counters."
+    },
+    "G5.05": {
+      "observed": "Production-origin preflight was allowed; unapproved/null origins and unknown preflight were denied; no-Origin RPC admission rejected forbidden methods.",
+      "missing": "No before/after faucet reservation or mutation inventory accompanies OPTIONS. Approved-preview behavior is not established by these selected requests.",
+      "nextReview": "Review exact-source preflight side-effect assertions and the selected production/preview origin policy; explicitly record if no preview is approved."
+    },
+    "G5.06": {
+      "observed": "Asset body bounds and idempotent existing document responses passed. 151 quota requests created 150 metadata records before a 429.",
+      "missing": "This does not establish the precise exhausted bucket, all generated-file/global/storage limits, or enforcement from first exposure.",
+      "nextReview": "Bind retained startup and isolated storage/file/global-limit controls to the exact candidate; keep the first-exposure chronology separate from current behavior."
+    }
+  },
+  "reviewLimits": [
+    "The retained 36-check run remains passed within its original bounded scope. This review accepts no additional requirement and does not change its report.",
+    "Missing coverage in this selected report is not a claim that the implementation fails or that no other evidence exists. Each next review requires its own exact-source and candidate binding.",
+    "The currently retained driver was inspected for request intent; it is not one of the 45 freeze-pinned core files, so this review does not invent an immutable executed-driver attestation.",
+    "No new browser, workload, HTTP abuse probe, faucet request, transaction, service fault or restart was performed."
+  ],
+  "releaseAccepted": false,
+  "mainnetAccepted": false,
+  "bridgeAccepted": false
+}

@@ -1,0 +1,75 @@
+{
+  "schemaVersion": 1,
+  "at": "2026-10-15T20:56:14.917376+00:00",
+  "state": "offline-checks-passed",
+  "scope": "Offline private mainnet preparation and launch admission; synthetic process records plus actual Linux kernel-name fixture using one ordinary Python child",
+  "regressionReproducedBeforeFix": "Preparation accepted a synthetic active test-validator record with the Linux-truncated comm name",
+  "newProcessAdmissionTestGroups": 10,
+  "validation": {
+    "local": {
+      "testsDiscovered": 93,
+      "passed": 92,
+      "skipped": 1,
+      "skipReason": "Actual Linux comm fixture requires Linux"
+    },
+    "privateLinux": {
+      "testsDiscovered": 93,
+      "passed": 93,
+      "skipped": 0,
+      "actualLinuxTruncatedCommFixturePassed": true,
+      "publicSourceClosureFilesVerified": 17,
+      "sourceBytesUnchanged": true
+    },
+    "command": "python3 -B -W error::ResourceWarning -m unittest discover -s mainnet -p *_test.py"
+  },
+  "checks": [
+    "Both private preparation and launch use the shared visible process census",
+    "Full and truncated validator comm names refuse",
+    "Executable argv[0] and kernel executable links refuse even when comm differs",
+    "Unrelated argument mentions do not become false validator detections",
+    "Spaces and parentheses in stat names do not confuse process state",
+    "Zombie/exited records are ignored; disappearing PIDs are tolerated",
+    "Missing process filesystem, malformed state and incomplete/unreadable live evidence refuse",
+    "An active-validator refusal occurs before creating the launch ledger or starting a process",
+    "Actual Linux truncation is verified with a bounded ordinary Python child, never Agave"
+  ],
+  "publicSourceHashes": {
+    "mainnet/cgroup_limits.py": "9223e108adfd57d5476180143fd69b2f17e33abb3496d12d4c3c4044d7f4828c",
+    "mainnet/offline_process_test.py": "94c9f3d91c9a59a67e7814254d8c07b3e047b5477bf2ed7e4171974baf7ef6fe",
+    "mainnet/process_admission.py": "0c8b9bfa15ab908c2f21bac1cc53d8a785dc1ddbae764eeaa41fe6f6cbbb95fd",
+    "mainnet/cgroup_limits_test.py": "ff8e3705c795c321dd58937f711821942b771f8e45e75db804ae4d645e259fc4",
+    "mainnet/genesis_archive_test.py": "37f4434b6c2115fcc173c5d893071e8413f2599b22f115e57ca5d62122c07710",
+    "mainnet/offline_process.py": "bc7013b43537bf272b08e37122035f9e647f18496a01121424dd322dd1d06c7f",
+    "mainnet/genesis_archive.py": "f09d71c5bc6e0e09924602daa89148ae1a55727ce3de7a45e6380a3efddeb079",
+    "mainnet/consensus-audit-artifact.json": "8d5d7fbb1c5e295f55a542438197c1331ef8991797a93cdff367f0dc03dcd718",
+    "mainnet/ledger-tool-artifact.json": "78ab91a005349e21ac965ab8ee7ab6bb350a7a76813b8effaded2ff76f3fed7d",
+    "mainnet/rpc_transport_test.py": "9a35f9f93d010d64c78eb6533373062f91708d3764f31d3d7407b703d3ef56ef",
+    "mainnet/host_preflight_test.py": "8d190a1c4dacd9a127a5a7762b90d18f72bfb2e480c0556e6ae41cd8cb74c673",
+    "mainnet/consensus.py": "fa0a54b51fdaec6bf8fa86c27f646be3250c2b28f5253fe843e21677de52f28a",
+    "mainnet/prepare_consensus_test.py": "3f347d1ac326d06f86e84e2822555d250760159d64b6fba40d87aa4a4d27ceb1",
+    "mainnet/host-preflight.py": "11f9fb3131e2462eee021fee3af4a443097ec81c37a09a8ddc3dae5c52eb72f7",
+    "mainnet/prepare-consensus.py": "e9e2f3b5501e745e533434d7814a0a5607d8baa092e31e427ac4dd422911a624",
+    "mainnet/consensus_test.py": "3dc1ca8abeac2ab2c368f1f0f71dfc991020ae3ee5c7961ebbb4238e9101d3e5",
+    "mainnet/process_admission_test.py": "7986ee1c35c0a08a1e5c9980ab8deaee995902b1f3617d2a4a99f6e08d24f594"
+  },
+  "actualValidatorStarts": 0,
+  "actualGenesisCreated": false,
+  "actualKeysGenerated": false,
+  "actualChainRequests": 0,
+  "hostLimitsChanged": false,
+  "canonicalNetworkChanged": false,
+  "hostAdmissionPassed": false,
+  "atomicProcessExclusionVerified": false,
+  "hiddenHostProcessesVerified": false,
+  "actualFullValidatorConsensusVerified": false,
+  "independentOperatorsVerified": false,
+  "fundedBackingVerified": false,
+  "mainnetActivated": false,
+  "productionReady": false,
+  "limitations": [
+    "Visible admission-time census only; a later process start is not atomically excluded",
+    "Not protection against malicious or hidden host processes",
+    "Current host remains below unchanged resource requirements",
+    "Actual fresh hashing genesis, two startup replays, full-validator consensus/recovery and independent operators remain pending"
+  ]
+}

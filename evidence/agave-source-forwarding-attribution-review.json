@@ -1,0 +1,85 @@
+{
+  "schemaVersion": 1,
+  "at": "2026-10-18T01:35:59.177158+00:00",
+  "scope": "Isolated real loopback HTTP with exact candidate API/store source, disposable SQLite and supplied nearest-ingress forwarding chains; no provider-ingress or chain proof",
+  "passed": true,
+  "candidate": {
+    "apiOrigin": "https://network-release-production.up.railway.app",
+    "frontendOrigin": "https://solana-classic-soc.vercel.app",
+    "frontendDeploymentId": "dpl_3aWWzKDohr4SrgijgrB8dWgHHS5r",
+    "frontendCommit": "35f0eaf1dede45452c9cdf9e6403669e966c427d",
+    "apiCommit": "119f25e225540be78b64b19bdb6cb300a1f47c10",
+    "networkConfigSha256": "0eea489e8cf0753b2b0cf0b91b6949566044e50c20bd4d02eea814490f64fe0e",
+    "dependencyManifestSha256": "e6da27717e6a84ca7b29d707ff63591b2ff0cfc38892d3b4667f8615bdf7bbc0"
+  },
+  "genesis": "7TAUSfTzQeocodtVee2qsftsCYnJu2eCM1ALdADbHNon",
+  "freezeSha256": "55b668e56a946ec94f0195b03530aba23593bd71d7fd52493d5403b21882757f",
+  "proofs": [
+    {
+      "path": "evidence/agave-source-candidate-freeze.json",
+      "sha256": "55b668e56a946ec94f0195b03530aba23593bd71d7fd52493d5403b21882757f"
+    },
+    {
+      "path": "evidence/agave-source-negative-control-coverage-review.json",
+      "sha256": "88b760065215c6deec9ff4e5b4a18f9468c8a814e02c9cf7747c00620fe915a1"
+    }
+  ],
+  "testSources": [
+    {
+      "path": "tests/integration/forwarded-client-attribution.test.ts",
+      "sha256": "7c24dbe33cb7e0f5a6953bab1388ca3f06c97a9ff281b57878d27a984b8947ab",
+      "candidateFixtureCopyMatches": true
+    }
+  ],
+  "selectedSource": {
+    "apps/api/src/app.ts": "545c78e932e12f889417a078050fff118f173cc55627e4826c733abc690542a0",
+    "apps/api/src/store.ts": "9ed76044cf292cc20022fac2d17e19baa1c3a2826a8aeab43125a50ddc1457f7",
+    "apps/api/src/settings.ts": "6cab157d2dce520049d8fca4ab1014452d53ac2f22cc74fc1b3ec6df42782af9",
+    "packages/config/src/index.ts": "6f2c81341cb7b9cea9cab806936b2a2e7e36c1eeedd958d7c3745ffa8e6ae545"
+  },
+  "validation": {
+    "candidateTests": 3,
+    "candidatePassed": 3,
+    "currentRepositoryTests": 3,
+    "currentRepositoryPassed": 3,
+    "typecheckPassed": true,
+    "targetedLintPassed": true,
+    "frozenFilesVerifiedBeforeAndAfter": 45,
+    "fullRuntimeMatchesFreezeBeforeAndAfter": true,
+    "httpTransportMocked": false,
+    "chainMethodsMocked": true,
+    "maintenanceAdmissionMocked": true,
+    "syntheticClock": true,
+    "httpRequestsPerSourceContext": 12,
+    "quotaDenialsPerSourceContext": 8,
+    "successfulControlsPerSourceContext": 4,
+    "mockedAirdropsPerSourceContext": 3,
+    "retainedLogSHA256": {
+      "candidate": "55cc7b998b77dd9083fff73a3f81744482cd58b3bab33ed579d664d10b971ab8",
+      "current": "5dfa87832db2398857e0aeceedab32d9de4cecfd76fb8b797c5d60b8ad5dafd3",
+      "typecheck": "ac2303302aa66e6fab9ef006121909eecf906623311fec17ea0b7d6d7530e2ec",
+      "lint": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "checks": [
+      "Asset and faucet cases separately seed only one client counter at its unchanged configured cap, with global capacity unused. Four changing forwarding prefixes, including multiple hops, an invalid prefix and IPv6, all return LIMIT_REACHED. Alternate Forwarded, X-Real-IP and True-Client-IP fields cannot change attribution.",
+      "Every denial preserves all persisted counters, leaves both assets and faucet tables empty, and calls no grant method. The faucet wallet counter is rolled back with the denied transaction.",
+      "The same real HTTP connection path with a different nearest forwarded client succeeds. Its client and global counters become one while the original exhausted client remains unchanged, excluding global exhaustion as the rejection cause.",
+      "Without X-Forwarded-For, two requests with different alternate forwarding fields are attributed to the actual loopback socket peer. Both receipts share that IP counter; no new client bucket is created."
+    ]
+  },
+  "unacceptedRequirements": [
+    "G5.04"
+  ],
+  "limitations": [
+    "Railway hosting mode is selected in the isolated settings, but the actual requests use a loopback listener. Supplied X-Forwarded-For chains model an ingress that appends the real client at the nearest trusted position; this does not prove what the live provider writes or strips.",
+    "Only the maintained asset and faucet IP counters are exercised. The in-memory read/submission buckets, alternate provider paths, external port reachability and hostile direct backend access are not accepted here.",
+    "Exact route and Store behavior run against real disposable SQLite and real HTTP. Genesis and grant methods are mocked; the clock is fixed and migration maintenance admission is replaced only inside the fixture. There is no faucet grant, signed transaction, chain finality, service restart or canonical counter change.",
+    "The full G5.04 requirement remains unreviewed pending independent deployed-ingress attribution. Earlier remote 429 responses alone could have resulted from global exhaustion and are not upgraded by this local test."
+  ],
+  "canonicalNetworkChanged": false,
+  "chainTransactionsSubmitted": 0,
+  "newStabilityRuns": 0,
+  "releaseAccepted": false,
+  "mainnetAccepted": false,
+  "bridgeAccepted": false
+}

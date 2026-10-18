@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "at": "2026-10-16T01:06:33.657645+00:00",
+  "scope": "local Node 24.19.0 loopback HTTP and subprocess diagnostics tests; not a stability result",
+  "passed": true,
+  "tests": 9,
+  "sourceHashes": {
+    "engine/migration/runtime_http_diagnostics.mjs": "be4d6a6c633726f859c15a08f5d7c033ee2f028c9b35732cae97c0d004baabe8",
+    "engine/migration/runtime_http_diagnostics.test.mjs": "d1e3e7e7b95f3536567f232d4769d2b38eedf09ad78d68d9d0b7f71805d2d666",
+    "engine/migration/runtime_http_preload.mjs": "3073b08cc034657818091a5e66ec5fea94c34880f42bcb3f8793527b563c909d",
+    "engine/migration/runtime_http_preload.test.mjs": "57775bab6873429ea13a0b9de9a9442058e0d2a735955520e27406217ab2c633"
+  },
+  "checks": [
+    "Actual HTTP 503 remains unsuccessful with original response body readable.",
+    "Exact GET runtime path and origin filtering; request secrets and response bodies excluded.",
+    "Actual socket failure propagates without retry.",
+    "A failing diagnostic sink does not change the original fetch result.",
+    "Capture limit, trace-field sanitation and idempotent unsubscription.",
+    "Malformed input and invalid diagnostic configuration refuse safely.",
+    "Preloaded observer preserves unsuccessful workload exit and emits a private completion summary.",
+    "Existing diagnostic output is never overwritten.",
+    "Invalid origin refuses before a workload request or output creation."
+  ],
+  "frozenWorkloadChanged": false,
+  "diagnosticsDeployed": false,
+  "stabilityAccepted": false,
+  "releaseAccepted": false,
+  "mainnetAccepted": false,
+  "bridgeAccepted": false
+}

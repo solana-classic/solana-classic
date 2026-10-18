@@ -1,0 +1,86 @@
+{
+  "schemaVersion": 1,
+  "at": "2026-10-17T10:05:33.347934+00:00",
+  "scope": "local isolated Fastify injection and real disposable SQLite; mocked genesis RPC, grant sender, status responses and maintenance admission",
+  "passed": true,
+  "candidate": {
+    "apiOrigin": "https://network-release-production.up.railway.app",
+    "frontendOrigin": "https://solana-classic-soc.vercel.app",
+    "frontendDeploymentId": "dpl_3aWWzKDohr4SrgijgrB8dWgHHS5r",
+    "frontendCommit": "35f0eaf1dede45452c9cdf9e6403669e966c427d",
+    "apiCommit": "119f25e225540be78b64b19bdb6cb300a1f47c10",
+    "networkConfigSha256": "0eea489e8cf0753b2b0cf0b91b6949566044e50c20bd4d02eea814490f64fe0e",
+    "dependencyManifestSha256": "e6da27717e6a84ca7b29d707ff63591b2ff0cfc38892d3b4667f8615bdf7bbc0"
+  },
+  "genesis": "7TAUSfTzQeocodtVee2qsftsCYnJu2eCM1ALdADbHNon",
+  "freezeSha256": "55b668e56a946ec94f0195b03530aba23593bd71d7fd52493d5403b21882757f",
+  "proofs": [
+    {
+      "path": "evidence/agave-source-candidate-freeze.json",
+      "sha256": "55b668e56a946ec94f0195b03530aba23593bd71d7fd52493d5403b21882757f"
+    },
+    {
+      "path": "evidence/agave-source-negative-control-coverage-review.json",
+      "sha256": "88b760065215c6deec9ff4e5b4a18f9468c8a814e02c9cf7747c00620fe915a1"
+    }
+  ],
+  "testSource": {
+    "path": "tests/integration/faucet-reconciliation.test.ts",
+    "sha256": "d0b7f49c8fb8202d664c63816890bf062be51114a7ac905ddb0b24ce4e8493c4",
+    "candidateFixtureCopyMatches": true
+  },
+  "selectedSource": {
+    "apps/api/src/app.ts": "545c78e932e12f889417a078050fff118f173cc55627e4826c733abc690542a0",
+    "apps/api/src/store.ts": "9ed76044cf292cc20022fac2d17e19baa1c3a2826a8aeab43125a50ddc1457f7",
+    "apps/api/package.json": "abe47ab3a0462b995e80c52f7bf3225876a7b3e9b53a108c4c96c0d9cbf9dba1",
+    "packages/config/src/index.ts": "6f2c81341cb7b9cea9cab806936b2a2e7e36c1eeedd958d7c3745ffa8e6ae545",
+    "packages/chain/src/index.ts": "e9d9822a428e92eef96b35155a3cf6b34191d3ae117d385e96b3f0a5b2c5ef0c"
+  },
+  "validation": {
+    "candidateFixtureTests": 7,
+    "candidateFixturePassed": 7,
+    "currentRepositoryRelatedTests": 51,
+    "currentRepositoryRelatedPassed": 51,
+    "typecheckPassed": true,
+    "targetedLintPassed": true,
+    "frozenFilesVerifiedBeforeAndAfter": 45,
+    "dependencies": "Existing local API dependencies linked into the retained QA context after its API manifest matched the freeze. No packages installed.",
+    "checks": [
+      "Eight duplicate requests while one mocked grant response is held share one durable reservation and consume one unit in each faucet bucket.",
+      "Closing/reopening the application preserves the original submitted signature; finalized status reconciles without another grant call.",
+      "Overlapping distinct requests admit only the three-wallet daily allowance, reject four extras, and retain the cap after application reopen.",
+      "Missing and processed statuses remain submitted; confirmed/finalized statuses become confirmed; failed status becomes failed. Every lookup selects only the original signature with history enabled and makes zero new grant calls."
+    ],
+    "retainedEarlierAttempts": [
+      {
+        "result": "startup failure",
+        "reason": "Incorrect relative test configuration path; no tests loaded."
+      },
+      {
+        "result": "startup failure",
+        "reason": "Retained QA context lacked API dependency resolution; no tests executed."
+      },
+      {
+        "result": "7 failed assertions",
+        "reason": "Exact candidate maintenance admission correctly returned 503 without protected release-control files. No grant call occurred. The original fixture copy is retained."
+      }
+    ],
+    "correctedFixture": "A new fixture version mocks only migrationHeld to false inside the test module, alongside RPC methods. Frozen source and protected deployed control files are not edited."
+  },
+  "unacceptedRequirements": [
+    "G5.02",
+    "G5.03"
+  ],
+  "limitations": [
+    "This exercises unchanged candidate faucet route/store logic under supplied network and maintenance conditions. It does not validate production ingress, migration admission, real airdrop execution or actual transaction finality.",
+    "Application reopen is not a machine/container restart. Concurrent requests execute inside one process; this does not establish a multiprocess or distributed writer claim.",
+    "The current repository API differs from the frozen API; separate executions are labelled and no current-repository pass substitutes for candidate behavior.",
+    "The seven passing isolated cases narrow the prior evidence gap but do not independently accept a complete release requirement. No live grant, restart, retry of a finalized operation or new stability run occurred."
+  ],
+  "canonicalNetworkChanged": false,
+  "transactionsSubmitted": 0,
+  "newStabilityRuns": 0,
+  "releaseAccepted": false,
+  "mainnetAccepted": false,
+  "bridgeAccepted": false
+}

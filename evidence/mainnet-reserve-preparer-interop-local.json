@@ -1,0 +1,96 @@
+{
+  "schemaVersion": 1,
+  "at": "2026-10-18T03:06:07.639846+00:00",
+  "scope": "Local cross-language selected-preparer test with a newly built offline adapter and real Node subprocesses; compiler, decoder, host and replay responses remain supplied fixtures",
+  "passed": true,
+  "sourceFiles": {
+    "mainnet/reserve_preparation.py": "741dfc4c46cbbd61587c999be81615c3e6f77155180aca12e3c9339461e0777c",
+    "mainnet/reserve_preparation_test.py": "f6dd228f9b3b1e1fceca0ed4a70633201f9782aa70303d49af6a0642d519a220",
+    "mainnet/reserve_preparation_interop_fixture.py": "27a6b13558650d3618c400f7da98f5b8677d58cb8b0c27416d280925008bed34",
+    "mainnet/reserve-bundle.test.mjs": "1600fdf864830c6f4f10cce9a0022f1c3ce9a22fa6dcfa5d2a2e62758c760a69",
+    "mainnet/build-reserve-bundle.mjs": "9b8cdf4e45a347b7094f6eb592ab2646047d687375178818ee71de7e69045126",
+    "mainnet/reserve_adapter_process.py": "dc71737d866f04c340f14749b636f3915192218ec9c200816f163ef0df364389",
+    "mainnet/reserve_adapter_result.py": "f00b86265c5e44e3070e2fac867d3034d71c0050fe22aca5f1884076836426b8",
+    "mainnet/reserve-byte-input.mjs": "bd20f041acf01fca961519223ebc0a5b22271a8ca5261cdcca34f74bb53650dd",
+    "mainnet/reserve-byte-stdio.mjs": "3ac8b5c131c9f5e9967f4f3fe6e239fb2926b8704df346474e8beb16bb534c1b",
+    "mainnet/reserve-prefund-plan.mjs": "4d225d8d33f5837d1475c82e8eeee72467ca6c93eaf219672058e3841f3c8c77",
+    "mainnet/genesis-custody.mjs": "2c7cbfef5048e78e98c3632ff72a4527a312718f1e4b984f43ef814cb8857069",
+    "mainnet/offline_process.py": "6e17a75e1269e9a7cd89ad351f9946c386af5f0df345b9891712020b774988ed"
+  },
+  "validation": {
+    "targetedNodeTests": 1,
+    "targetedNodePassed": 1,
+    "nodeVersion": "v24.19.0",
+    "builderLocalRebuildIdenticalRequired": true,
+    "artifactFingerprintsActuallyCheckedAroundAdapterCalls": true,
+    "productionArtifactManifestChanged": false,
+    "realAdapterInvocations": 5,
+    "sourcePlannerInvocations": 3,
+    "externalExpectationsComputedSeparatelyFromAdapterStdout": true,
+    "cases": [
+      {
+        "case": "complete-synthetic-integration",
+        "adapterModes": [
+          "prepare",
+          "review"
+        ],
+        "adapterResponsesAccepted": 2,
+        "fixtureCompilerCalls": 1,
+        "fixtureReplayCalls": 4,
+        "state": "prepared",
+        "baselineUnchanged": true
+      },
+      {
+        "case": "wrong-external-plan",
+        "adapterModes": [
+          "prepare"
+        ],
+        "adapterResponsesAccepted": 0,
+        "failureCode": "SELECTED_RESERVE_PROCESS_REFUSED",
+        "fixtureCompilerCalls": 0,
+        "fixtureReplayCalls": 0,
+        "state": "failed",
+        "baselineUnchanged": true
+      },
+      {
+        "case": "invalid-proposed-creation-time",
+        "adapterModes": [
+          "prepare",
+          "review"
+        ],
+        "adapterResponsesAccepted": 1,
+        "failureCode": "SELECTED_RESERVE_PROCESS_REFUSED",
+        "fixtureCompilerCalls": 1,
+        "fixtureReplayCalls": 0,
+        "state": "failed",
+        "baselineUnchanged": true
+      }
+    ],
+    "nodeTestLogSHA256": "4fdace78ad05f69dcc1b87941a8ba4cb016b7ae1948f41ab0a158ee2022e20b1",
+    "pythonTests": 220,
+    "pythonPassed": 219,
+    "pythonSkipped": 1,
+    "resourceWarningsAreErrors": true,
+    "pythonTestLogSHA256": "26a37113c1f6b2f0a410187dcb38022784bd64c438f536bfcaa5ed056723376f"
+  },
+  "limits": {
+    "testHostAndToolAdmissionMocked": true,
+    "testRuntimeSelectionIsNotProductionAdmission": true,
+    "syntheticGenesisPayloadsArePlaceholders": true,
+    "actualGenesisCompiled": false,
+    "actualAccountBytesDecoded": false,
+    "actualSlotZeroReplayExecuted": false,
+    "hostAdmitted": false,
+    "validatorsStarted": 0,
+    "backingVerified": false,
+    "custodyVerified": false,
+    "mainnetActivated": false,
+    "productionReady": false
+  },
+  "remaining": [
+    "Admitted Linux host under unchanged resource and security requirements",
+    "Fresh real synthetic baseline, independently reviewed plan and private selection",
+    "Actual reserve compilation, pinned decoder review and two strict slot-zero replays",
+    "Separate full-validator consensus, independent operators, backing, custody, monitoring and security review"
+  ]
+}

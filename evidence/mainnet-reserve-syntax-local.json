@@ -1,0 +1,81 @@
+{
+  "schemaVersion": 1,
+  "at": "2026-10-17T20:34:23.711055+00:00",
+  "scope": "local offline bundle syntax review; no runtime admission or complete dependency isolation claim",
+  "passed": true,
+  "sourceFiles": {
+    "mainnet/reserve-bundle-syntax.mjs": "1c125530d02c0fc6ebe1ce53020e328ca24fdb20f31d38f4283cb9fe70f6c250",
+    "mainnet/build-reserve-bundle.mjs": "9b8cdf4e45a347b7094f6eb592ab2646047d687375178818ee71de7e69045126",
+    "mainnet/reserve-bundle.test.mjs": "7406258ecae20ea83590965a24e8b52c9e6c45f3d06de8be6875fad9d189940f"
+  },
+  "artifact": {
+    "file": "reserve-byte-stdio.mjs",
+    "bytes": 688386,
+    "sha256": "9091ca58a4767e40678fd069ae76712ad7d5eb5c6f140d41feb882bbb0a565c3"
+  },
+  "toolchain": {
+    "node": {
+      "version": "v24.19.0",
+      "platform": "darwin",
+      "arch": "arm64",
+      "bytes": 121304480,
+      "sha256": "d0c6c74401e6a544bb4d4b2a9ded9c43298d4e6dcd5ebac4dd010c4c81774105"
+    },
+    "bundler": {
+      "package": "@esbuild/darwin-arm64",
+      "version": "0.28.2",
+      "bytes": 10590882,
+      "sha256": "10b6243df618d374bb2d5c9cfbe7052e1405f6aa4e53a6164f11a91b9f2e1384"
+    }
+  },
+  "syntaxReview": {
+    "parser": "typescript",
+    "parserVersion": "5.9.3",
+    "bytes": 688386,
+    "noImportExpressions": true,
+    "staticModuleSpecifiers": [
+      "buffer",
+      "crypto",
+      "node:assert/strict",
+      "node:crypto",
+      "node:fs",
+      "node:module",
+      "node:path",
+      "node:url"
+    ],
+    "scope": "Syntax inspection only; does not exclude aliases, generated code, builtin capabilities or arbitrary loader mechanisms",
+    "parserModuleSHA256": "3ae902c92cc44dace175c0e69e13a4b0899f6983c6121d76b9ab8dd5795e7675"
+  },
+  "manifestSHA256": "15a4586e92881c4c165ded71625f8b8a1c2895fedf53d16a6b6238a41f7ab237",
+  "testLogSHA256": "9ae7217ad34cf4ad6de8e2109207876b9cfe01b065135d8d0f972f8ece4488c2",
+  "validation": {
+    "focusedBuilderTests": 6,
+    "focusedPassed": 6,
+    "nestedAdapterFixtureChecks": 23,
+    "localRebuildIdentical": true,
+    "inputFiles": 90,
+    "checks": [
+      "The generated artifact is parsed as JavaScript with the existing pinned TypeScript 5.9.3 parser; syntax errors, invalid UTF-8 and bytes outside the nonempty 4 MiB bound refuse.",
+      "Seven dynamic import forms refuse without evaluating fixture code: literal builtin, variable, template, nested URL, unreachable branch, commented data URL and import options.",
+      "Three external static import/re-export forms refuse. Builtin declarations pass; inert import-like strings, comments and regular expressions do not trigger refusal.",
+      "The actual artifact has zero import expressions, builtin-only static module specifiers and unchanged output bytes. Parser implementation bytes are fingerprinted before loading and rechecked after inspection.",
+      "Existing executable override refusal, exclusive output handling, CommonJS guard and 23 standalone adapter fixtures continue to pass."
+    ]
+  },
+  "limits": {
+    "artifactAdmitted": false,
+    "preparerIntegrated": false,
+    "hostAdmitted": false,
+    "canSign": false,
+    "canBroadcast": false,
+    "mainnetActivated": false,
+    "productionReady": false
+  },
+  "limitations": [
+    "This is syntactic inspection, not proof that arbitrary package resolution or code execution is impossible. Aliases, generated code, alternate loaders and builtin capabilities require separate review.",
+    "The existing CommonJS guard remains a separate control. Builtin modules can access files, processes and networks; no network sandbox is claimed.",
+    "The parser is selected from the existing dependency graph and its observed module hash is recorded. This does not attest its origin or continuously bind execution to file bytes.",
+    "Successful local artifact fixtures do not admit a Linux rehearsal host, replace actual fresh genesis compilation, establish backing or authorize deployment.",
+    "All previous artifacts, failed attempts, runtime identity and canonical ledger remain unchanged."
+  ]
+}

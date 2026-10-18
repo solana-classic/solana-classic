@@ -1,0 +1,69 @@
+{
+  "schemaVersion": 1,
+  "at": "2026-10-18T04:33:43.847364+00:00",
+  "scope": "Read-only inspection of the exact deployed frontend SDK chunk against the literal no-mainnet-destination requirement; no JavaScript execution or RPC traffic",
+  "reviewCompleted": true,
+  "requirement": "G3.06",
+  "requirementAccepted": false,
+  "literalNoMainnetDestinationSatisfied": false,
+  "candidate": {
+    "apiOrigin": "https://network-release-production.up.railway.app",
+    "frontendOrigin": "https://solana-classic-soc.vercel.app",
+    "frontendDeploymentId": "dpl_3aWWzKDohr4SrgijgrB8dWgHHS5r",
+    "frontendCommit": "35f0eaf1dede45452c9cdf9e6403669e966c427d",
+    "apiCommit": "119f25e225540be78b64b19bdb6cb300a1f47c10",
+    "networkConfigSha256": "0eea489e8cf0753b2b0cf0b91b6949566044e50c20bd4d02eea814490f64fe0e",
+    "dependencyManifestSha256": "e6da27717e6a84ca7b29d707ff63591b2ff0cfc38892d3b4667f8615bdf7bbc0"
+  },
+  "freezeSHA256": "55b668e56a946ec94f0195b03530aba23593bd71d7fd52493d5403b21882757f",
+  "compiledArtifact": {
+    "path": "/assets/index.browser.esm-BKUeZO4T.js",
+    "sha256": "7c038d6f6a4b6b70762f8f685e278524630993ed2d2aa946b70d58a578119002",
+    "bytes": 284264,
+    "matchesFreeze": true,
+    "verifiedByCurrentHTTPSRead": true,
+    "redirectsAllowed": false,
+    "maximumReadBytes": 4194304,
+    "timeoutSeconds": 20
+  },
+  "mainnetURLDefaults": [
+    {
+      "url": "http://api.mainnet-beta.solana.com/",
+      "byteOffset": 281262,
+      "occurrences": 1
+    },
+    {
+      "url": "https://api.mainnet-beta.solana.com/",
+      "byteOffset": 281403,
+      "occurrences": 1
+    }
+  ],
+  "compiledBinding": {
+    "lookupTable": "Du",
+    "lookupFunction": "Ou",
+    "export": "clusterApiUrl",
+    "behavior": "The bundled SDK function selects an HTTP or HTTPS default URL by cluster name; both mainnet-beta entries remain in the exact shipped chunk."
+  },
+  "configuredApplication": {
+    "existingReview": "evidence/agave-source-origin-individual-review.json",
+    "existingReviewSHA256": "554b5a0794650c3b824309c441c661c6abcd6b1ad4bbf6ed3a87ea97d0d8cfac",
+    "frozenWalletSource": "apps/web/src/Playground.tsx",
+    "frozenWalletSourceSHA256": "cd7a96fd8589dc8468936a624d5a8bc4a082b1eb612f23375c4ec2e66ffac229",
+    "connectionExpression": "new sdk.Connection(API_BASE + '/api/rpc', ...)",
+    "walletCreationExpression": "sdk.Keypair.generate()",
+    "meaning": "Reviewed application source uses the explicit experimental API and creates a disposable wallet. SDK defaults alone do not establish a mainnet connection or a user-facing private-key import path."
+  },
+  "newBrowserSessions": 0,
+  "newChainRequests": 0,
+  "newTransactions": 0,
+  "canonicalRuntimeChanged": false,
+  "releaseAccepted": false,
+  "mainnetAccepted": false,
+  "bridgeAccepted": false,
+  "limitations": [
+    "Literal absence of mainnet RPC destinations is not satisfied by this frozen SDK chunk. G3.06 remains unreviewed in the overall inventory, with this concrete obstruction now recorded.",
+    "This byte inspection is not whole-program reachability analysis. Existing origin review and retained journey observations support the configured experimental destination, not all possible SDK usage or future code.",
+    "No conclusion that real funds were exposed, a mainnet request occurred, or an import control exists follows from unused SDK defaults. Private-key import coverage requires a separate complete review.",
+    "Addressing the literal bundle requirement would require a reviewed dependency/bundle change and all applicable candidate checks. The frozen frontend and running services were not changed."
+  ]
+}

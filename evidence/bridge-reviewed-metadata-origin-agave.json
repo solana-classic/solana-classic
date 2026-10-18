@@ -1,0 +1,56 @@
+{
+  "schemaVersion": 1,
+  "state": "passed",
+  "scope": "Actual read-only review-bound metadata observation on one new private copied origin; no settlement or journal integration",
+  "actualChecksPassed": 5,
+  "checks": [
+    "Actual mint bytes, selected supply and exact escrow/counter match the preselected private review and code pins",
+    "A different independently selected complete mint digest rejects against actual metadata bytes",
+    "Edited review policy without matching digest rejects before any RPC",
+    "Changed selected token implementation pin rejects against actual deployed code",
+    "Fresh observation retains identical assets and review after all negative checks; only read-only RPC methods used"
+  ],
+  "localRelatedChecksPassed": 70,
+  "localCopyGuardsPassed": 3,
+  "linuxCopyGuardsPassed": 3,
+  "rpcReads": 56,
+  "rpcMethodCounts": {
+    "getGenesisHash": 25,
+    "getMultipleAccounts": 31
+  },
+  "broadcasts": 0,
+  "simulations": 0,
+  "privateProcessStarts": 1,
+  "privateProcessesStopped": true,
+  "stopReturnCode": -2,
+  "applicationGracefulFlushVerified": false,
+  "originalLedgerUnchanged": true,
+  "originalInputsAndTransactionRecordsUnchanged": true,
+  "journalIntegrationEnabled": false,
+  "metadataSettlementSupported": false,
+  "independentVerification": false,
+  "completeGenesisBackingVerified": false,
+  "canSign": false,
+  "canBroadcast": false,
+  "productionReady": false,
+  "canonicalNetworkChanged": false,
+  "sourceHashes": {
+    "bridge/rehearsal/prepare-reviewed-metadata.mjs": "c93826b8ab0a9a850f232bb7340edebe0ac579267cd4bda7fac710e5662a6506",
+    "bridge/rehearsal/reviewed-metadata-origin.mjs": "143f206da6d52cf476198e219031c5b991252aa875b4c4709aff34bb6601f534",
+    "engine/rehearsal/reviewed_metadata_origin.py": "a57a6a3f6acc784df239817755bdceeee951b9adf01e2c253260bd12b940d81b",
+    "engine/rehearsal/reviewed_metadata_origin_test.py": "3d8401a5c758f26c707dc726453a6ed87e66cfeb7aac9c461a9504ed7b1a7d98",
+    "bridge/reviewed-origin-mint.mjs": "0c5c7d538d5643770610ea154981bb6d2c2bc70d8f85946a61e5ed1b7aff5cad",
+    "bridge/origin-token-code.mjs": "22a3449f6ed238283a6b4b809dea45644438d71d71763e3ba1ed451beaaee810",
+    "bridge/origin-assets.mjs": "d455cace59851dbd988e294c41c9add36980bea49a2d89d3c717b82364684ffa",
+    "bridge/mint-metadata.mjs": "402fcf39f298a89d7682e4ab78de9bd2b2f1647f31e9f01dbff027e9fe80b64c",
+    "bridge/program-pins.mjs": "1f72a2007be0d4ebd6b1a3080dc2ad93224177e49ae32e0513beb2e163256d42",
+    "bridge/sdk.mjs": "e603242692bedc2457ec9dd3cb144122ca1adb7341506d244ec864943bd8c988",
+    "engine/rehearsal/bootstrap.py": "200a81128b1dc697b32365ac939d7eef27c6e8b4cf3d48aa51faed4a65164a5c",
+    "engine/rehearsal/cold_copy.py": "42bef261f9f273a1f525b515eabfcda61b8d6a1cbb62fd637ebbdd0f23a95b6d"
+  },
+  "excludedFromPublicRecord": [
+    "Private policy and fixture identities",
+    "Account-data and private inventory digests",
+    "Raw ledgers, signed transactions, keys and private logs"
+  ]
+}

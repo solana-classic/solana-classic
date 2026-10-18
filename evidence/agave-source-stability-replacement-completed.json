@@ -1,0 +1,122 @@
+{
+  "schemaVersion": 1,
+  "at": "2026-10-17T01:34:27.889040+00:00",
+  "scope": "remote replacement source-built devnet terminal evidence review; recorded complete report and receipts, not independent chain replay or release acceptance",
+  "passed": true,
+  "genesis": "7TAUSfTzQeocodtVee2qsftsCYnJu2eCM1ALdADbHNon",
+  "candidate": {
+    "apiOrigin": "https://network-release-production.up.railway.app",
+    "frontendOrigin": "https://solana-classic-soc.vercel.app",
+    "frontendDeploymentId": "dpl_3aWWzKDohr4SrgijgrB8dWgHHS5r",
+    "frontendCommit": "35f0eaf1dede45452c9cdf9e6403669e966c427d",
+    "apiCommit": "119f25e225540be78b64b19bdb6cb300a1f47c10",
+    "networkConfigSha256": "0eea489e8cf0753b2b0cf0b91b6949566044e50c20bd4d02eea814490f64fe0e",
+    "dependencyManifestSha256": "e6da27717e6a84ca7b29d707ff63591b2ff0cfc38892d3b4667f8615bdf7bbc0"
+  },
+  "runtime": {
+    "configured": true,
+    "genesis": "7TAUSfTzQeocodtVee2qsftsCYnJu2eCM1ALdADbHNon",
+    "engineBuild": {
+      "schemaVersion": 1,
+      "scope": "authenticated export of four public source-built binaries only; no ledger or key material",
+      "passed": true,
+      "runId": "40de48b7-6963-429b-ae3e-81a610d81b7d",
+      "archiveBytes": 67933801,
+      "archiveSha256": "1dd3a398821f029f4f1aa53a63b53eda3123b907ef4025f6ab964e35c60d48b4",
+      "binaries": {
+        "agave-validator": {
+          "sha256": "34e468747f1a0d69399b61fd40edc32ce4690ec5a200b5684474aa60a97a6910",
+          "bytes": 74406832,
+          "version": "agave-validator 3.0.14 (src:f516a892; feat:3604001754, client:Agave)"
+        },
+        "solana-test-validator": {
+          "sha256": "3d3140bf93c9bc967220ffd8989d8b0267b723915d32203132ecc36d2c63a49a",
+          "bytes": 73661760,
+          "version": "solana-test-validator 3.0.14 (src:f516a892; feat:3604001754, client:Agave)"
+        },
+        "solana": {
+          "sha256": "6a880f1c79ec0e0d7b3ee972eaa9ad8d75b503616e1f0c29efa587137a129dcd",
+          "bytes": 28209480,
+          "version": "solana-cli 3.0.14 (src:f516a892; feat:3604001754, client:Agave)"
+        },
+        "solana-keygen": {
+          "sha256": "2f00a742ab0d99cad929e7a82b2d80f7c519cab9038ec45844fdbe9c305dea65",
+          "bytes": 2804464,
+          "version": "solana-keygen 3.0.14 (src:f516a892; feat:3604001754, client:Agave)"
+        }
+      },
+      "upstreamCommit": "f516a8927c76c07f0ebc54ca7a4ce8b2046eee86",
+      "upstreamTree": "a4c75a1781d4ca56e7325a39d0614e1faa26030d",
+      "sourceRepositoryCommit": "39b9001cab84e637f2460f2387f2549f32b62ef9",
+      "workerSha256": "ac5937cba2a39336f847f2ce5443ed729146a07462c66074ff448c38d6e995ab",
+      "sourceManifestSha256": "337512bc1df2f382ccfab957347281b1c153353429b77d2695d65aafd29ec081",
+      "migrationId": "ae834e71-fb59-4beb-b26b-4485be3a386f",
+      "genesis": "7TAUSfTzQeocodtVee2qsftsCYnJu2eCM1ALdADbHNon",
+      "preparedAt": "2026-10-14T01:53:01.100713+00:00"
+    },
+    "sourceCommit": "119f25e225540be78b64b19bdb6cb300a1f47c10",
+    "coreSha256": "533950731d4ed6d94b59e71517613be002b6ec416b0ebb3a20a592fe5ec6f22f",
+    "apiBootId": "e6ec5d41-8238-48a0-b739-a81f9fea6adf",
+    "apiStartedAt": "2026-10-15T00:55:25.337Z",
+    "validatorBootId": "2c6a0f79-c6c3-43a4-aa5c-e542efb704d9",
+    "validatorStartedAt": "2026-10-15T00:55:03.665Z",
+    "deploymentId": "22e5870a-afb8-4027-89b5-ccb8a39391c2",
+    "agaveVersion": "3.0.14",
+    "tokenProgramVersion": "10.0.0",
+    "tokenProgramSha256": "a794161408080f690dac00832f45b3c3e2b71f1339586667ad1f979cf91d5b68",
+    "observedAt": "2026-10-15T00:58:56.084Z"
+  },
+  "freezeSha256": "55b668e56a946ec94f0195b03530aba23593bd71d7fd52493d5403b21882757f",
+  "startedAt": "2026-10-16T01:24:36.342Z",
+  "completedAt": "2026-10-17T01:24:36.808Z",
+  "observedAt": "2026-10-17T01:34:27.799Z",
+  "durationMs": 86400466,
+  "completedJourneys": 288,
+  "observations": 2880,
+  "faucetCalls": 0,
+  "uniqueMints": 288,
+  "uniqueTransferSignatures": 288,
+  "maxScheduleDelayMs": 10,
+  "journeyDurationMs": {
+    "minimum": 27333,
+    "maximum": 31554,
+    "p95": 30488
+  },
+  "productionNetworkChanged": false,
+  "cutoverAccepted": false,
+  "releaseAccepted": false,
+  "mainnetAccepted": false,
+  "bridgeAccepted": false,
+  "limitations": [
+    "One source-built test validator and a bounded valueless browser workload.",
+    "Recorded receipts are checked for identity, structure and uniqueness; no independent replay of pruned transaction history.",
+    "This audit does not approve final browser regression, remaining release gates, mainnet, custody or a bridge."
+  ],
+  "sourceBuildActive": true,
+  "exactActivationBound": true,
+  "prerequisiteHashesVerified": 8,
+  "base58ReceiptLengthsVerified": true,
+  "boundedReaderSummaryMatches": true,
+  "fullReportInventoryReviewed": true,
+  "fundingReceiptStructureReviewed": true,
+  "fiveSecondCadenceBoundVerified": true,
+  "uniqueRecipients": 288,
+  "distinctJourneyKeyRolesVerified": true,
+  "workloadScalarTypesVerified": true,
+  "activationSHA256": "183084ae1c32aec9df3a23f297eb02c43c86737f289dd525810e2ffe43c4ecef",
+  "activationFileSHA256": "6581bb62dad92808ac77caa8eb8a6f590c04d87bf28bf6ce0dda20ee43f5fdcf",
+  "frozenFileCount": 45,
+  "inputHashes": {
+    "soak": "5783947f8828148a107629188c3aa5c0c7bc71c614e42c14ff5556b9525cb4aa",
+    "status": "04d5eaadbea5baf9a276aa5ea138dec732de50072dd26370aa0970f46f5f7749",
+    "runtime": "a53c3ff3abfb3ad7f70a55db658c968cf53a1f96ade9ae3c7e3e4f08270a9ce6",
+    "qa": "79042a5fe73388e9412eca24631462c710ff27abb3350cd24a1ebcc45019bb88",
+    "progress": "d124ba70dce664be41943b425c25e817c963dc4a70446dd2166068d0bf20eb1e",
+    "monitor": "255d1198af775b8fbc12a712a2fb5c004ca1f5998372819ec05d3f51c2fe78dc"
+  },
+  "auditorHashes": {
+    "replacement_source_terminal_review.py": "5eb147174d63d6dd3afa1e8f9aee8e8c35e21dc3763674b3b920f348468a1ee5",
+    "terminal_review.py": "5baa1eaafbf4c91afc922c79107957c0bbb84edeffea8715efe8bef4d09b3afd",
+    "load_review.py": "1a9dc744aea2f60b38fbd666194af240481443d4a8523c4619a6c5bc9a8abdf6"
+  }
+}

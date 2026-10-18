@@ -164,3 +164,13 @@ or physical power loss. The synthetic budget still lacks complete funded
 mainnet backing. See `evidence/bridge-hard-crash-v2.json`. Keys/checkpoints/logs
 stay private in the retained `/data/bridge-hard-crash-v2` attempt; future drills
 need a new reviewed root, never replay/reset this driver.
+
+
+## Separate bootstrap-gated prototype
+
+[The separately versioned entrypoint](GATED_BOOTSTRAP.md) requires the bootstrap
+record, consumed receipt and protected vault floor before native unpause, claim
+or return. It retains full emergency pause and the existing escrow contract.
+This is separate source/artifact review: the V2 implementation, old clients and
+retained private ledgers are not upgraded. Committee-attested backing and
+malicious-upgrade risk remain production gates.

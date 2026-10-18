@@ -116,3 +116,37 @@ this verification. The full release remains unaccepted.
 To reproduce only when needed, add `--viewport mobile` to the bounded CLI
 commands above. All normal test transactions require the eventual migration
 backup to be captured after these later receipts.
+
+## Source-runtime final review and panel preference
+
+The separately admitted source-built replacement completed its full-day run on
+17 October; see [the exact terminal audit](../../evidence/agave-source-stability-replacement-completed.json).
+Its final browser runs use the retained source-candidate context and verify all
+45 frozen files and current runtime before transactions. Historical root-context
+commands above must not be used against the newer candidate.
+
+The current branded site persists one UI preference, `classic.wallet.panel`,
+with the value `open` or `closed`. A fresh unsigned browser session confirmed
+that exact entry and empty session storage. The older final driver required
+empty local storage and rejected the first branded desktop run after its six
+transactions finalized. That failed report and its executed driver remain
+retained; it is not relabelled as passed.
+
+The corrected final assertion permits only that exact key and those two values
+on the branded target. It still requires empty session storage, rejects every
+additional local key, and requires empty local storage on the frozen target.
+Two new refusal groups cover unknown values, extra keys, session entries,
+malformed snapshots and invalid targets; all 11 driver checks pass. The
+assertion reads only storage key names and the known panel preference, never
+wallet contents. This is a test-driver correction; no website or validator code
+is changed. The storage check does not establish a complete privacy audit.
+
+The four passing source-runtime runs are now recorded in
+[the scoped final review](../../evidence/agave-source-final-browser-review.json):
+eight demo assets and 24 distinct finalized receipts across desktop and mobile
+journeys on both sites. The separate failed attempt adds two assets and six
+finalized receipts; those are not omitted from the total activity or retried.
+All 45 frozen files, runtime identities and each run's frontend entry bytes
+remained unchanged. Existing mobile navigation clipping on the frozen site is
+recorded; physical devices, other browsers, complete accessibility/security
+review, operator handoff and full release remain outside this acceptance.

@@ -1,0 +1,366 @@
+{
+  "schemaVersion": 1,
+  "at": "2026-10-17T17:34:17.549207+00:00",
+  "scope": "remote read-only exact source-candidate health, finalized progression and executable program identity review",
+  "passed": true,
+  "genesis": "7TAUSfTzQeocodtVee2qsftsCYnJu2eCM1ALdADbHNon",
+  "candidate": {
+    "apiOrigin": "https://network-release-production.up.railway.app",
+    "frontendOrigin": "https://solana-classic-soc.vercel.app",
+    "frontendDeploymentId": "dpl_3aWWzKDohr4SrgijgrB8dWgHHS5r",
+    "frontendCommit": "35f0eaf1dede45452c9cdf9e6403669e966c427d",
+    "apiCommit": "119f25e225540be78b64b19bdb6cb300a1f47c10",
+    "networkConfigSha256": "0eea489e8cf0753b2b0cf0b91b6949566044e50c20bd4d02eea814490f64fe0e",
+    "dependencyManifestSha256": "e6da27717e6a84ca7b29d707ff63591b2ff0cfc38892d3b4667f8615bdf7bbc0"
+  },
+  "freezeSha256": "55b668e56a946ec94f0195b03530aba23593bd71d7fd52493d5403b21882757f",
+  "checklistSha256": "e2fb4b2f53e9aa10f21ec5ffcf708cc2749b456a39703c9228a7fce7fc574f73",
+  "proofs": [
+    {
+      "path": "evidence/agave-source-candidate-freeze.json",
+      "sha256": "55b668e56a946ec94f0195b03530aba23593bd71d7fd52493d5403b21882757f"
+    },
+    {
+      "path": "evidence/agave-source-network-identity-individual-review.json",
+      "sha256": "f58a15be04d0ffab1b9f25d48201c2a0d21318bec3b9e5f229d8dc9a329c70d0"
+    }
+  ],
+  "requirements": {
+    "G1.04": {
+      "claim": "Slot progression, health and executable program IDs are verified on the intended node.",
+      "basis": "Fresh canonical gateway reads report the selected genesis and healthy RPC before and after advancing finalized slots. Finalized account metadata identifies executable Token-2022, associated-token and System programmes. The two configured asset programme IDs match the frozen chain implementation and installed SDK exports. Complete runtime identity and all 45 retained source files match the final freeze before and after.",
+      "scopeLimit": "Current point-in-time single-validator review; not historical H12 compliance, a new benchmark, independent binary-code hashing, upgrade-custody approval or multi-validator consensus."
+    }
+  },
+  "reviewMethod": {
+    "observations": [
+      {
+        "at": "2026-10-17T17:34:01.349125+00:00",
+        "path": "/api/runtime",
+        "httpStatus": 200,
+        "responseSHA256": "5dba0b07462c9c1c276eaa243a87b7e6dbb89426944d72a9227ffb3b1554d017",
+        "response": {
+          "genesis": "7TAUSfTzQeocodtVee2qsftsCYnJu2eCM1ALdADbHNon",
+          "sourceCommit": "119f25e225540be78b64b19bdb6cb300a1f47c10",
+          "coreSha256": "533950731d4ed6d94b59e71517613be002b6ec416b0ebb3a20a592fe5ec6f22f",
+          "apiBootId": "e6ec5d41-8238-48a0-b739-a81f9fea6adf",
+          "validatorBootId": "2c6a0f79-c6c3-43a4-aa5c-e542efb704d9",
+          "deploymentId": "22e5870a-afb8-4027-89b5-ccb8a39391c2"
+        }
+      },
+      {
+        "at": "2026-10-17T17:34:01.871411+00:00",
+        "path": "/api/network",
+        "httpStatus": 200,
+        "responseSHA256": "beb286c5f7655d53025e6151906aad41138ca08c1fb186277710023e241f93d4",
+        "response": {
+          "name": "Solana Classic experimental devnet",
+          "mode": "remote",
+          "expectedGenesisHash": "7TAUSfTzQeocodtVee2qsftsCYnJu2eCM1ALdADbHNon",
+          "denomination": "TEST",
+          "operatorCount": 1,
+          "hasMonetaryValue": false,
+          "tokenProgram": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb",
+          "associatedTokenProgram": "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL",
+          "resetPolicy": "Persistent experimental ledger. No automatic reset. Any deliberate reset will be disclosed; test assets have no monetary value."
+        }
+      },
+      {
+        "at": "2026-10-17T17:34:02.650958+00:00",
+        "path": "/api/rpc",
+        "httpStatus": 200,
+        "responseSHA256": "5a2ad4eb74494f918ee97b0cac91cb26f088c21c046bc4f87671d6779dc4e4a8",
+        "response": {
+          "jsonrpc": "2.0",
+          "result": "7TAUSfTzQeocodtVee2qsftsCYnJu2eCM1ALdADbHNon",
+          "id": 1
+        },
+        "request": {
+          "jsonrpc": "2.0",
+          "id": 1,
+          "method": "getGenesisHash",
+          "params": []
+        }
+      },
+      {
+        "at": "2026-10-17T17:34:03.213119+00:00",
+        "path": "/api/rpc",
+        "httpStatus": 200,
+        "responseSHA256": "897085a2bf2b200c1364e52377a4a243ca87089cacb2f39601bdcd0e48cf0cd1",
+        "response": {
+          "jsonrpc": "2.0",
+          "result": "ok",
+          "id": 2
+        },
+        "request": {
+          "jsonrpc": "2.0",
+          "id": 2,
+          "method": "getHealth",
+          "params": []
+        }
+      },
+      {
+        "at": "2026-10-17T17:34:04.166929+00:00",
+        "path": "/api/rpc",
+        "httpStatus": 200,
+        "responseSHA256": "c4e81fc16375ef4320c77ffb4eb5e3e62e3d787e530cc417bca813d7b24e1d8f",
+        "response": {
+          "jsonrpc": "2.0",
+          "result": 912610,
+          "id": 3
+        },
+        "request": {
+          "jsonrpc": "2.0",
+          "id": 3,
+          "method": "getSlot",
+          "params": [
+            {
+              "commitment": "finalized"
+            }
+          ]
+        }
+      },
+      {
+        "at": "2026-10-17T17:34:06.387326+00:00",
+        "path": "/api/rpc",
+        "httpStatus": 200,
+        "responseSHA256": "930583b9b508ea50f8ea96051ae8420af1ba930c9c5cdf21ce0b67783aebd63b",
+        "response": {
+          "jsonrpc": "2.0",
+          "result": {
+            "context": {
+              "apiVersion": "3.0.14",
+              "slot": 912615
+            },
+            "value": [
+              {
+                "data": [
+                  "",
+                  "base64"
+                ],
+                "executable": true,
+                "lamports": 1141440,
+                "owner": "BPFLoaderUpgradeab1e11111111111111111111111",
+                "rentEpoch": 0,
+                "space": 36
+              },
+              {
+                "data": [
+                  "",
+                  "base64"
+                ],
+                "executable": true,
+                "lamports": 731913600,
+                "owner": "BPFLoader2111111111111111111111111111111111",
+                "rentEpoch": 0,
+                "space": 105032
+              },
+              {
+                "data": [
+                  "",
+                  "base64"
+                ],
+                "executable": true,
+                "lamports": 1,
+                "owner": "NativeLoader1111111111111111111111111111111",
+                "rentEpoch": 0,
+                "space": 14
+              }
+            ]
+          },
+          "id": 4
+        },
+        "request": {
+          "jsonrpc": "2.0",
+          "id": 4,
+          "method": "getMultipleAccounts",
+          "params": [
+            [
+              "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb",
+              "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL",
+              "11111111111111111111111111111111"
+            ],
+            {
+              "encoding": "base64",
+              "commitment": "finalized",
+              "dataSlice": {
+                "offset": 0,
+                "length": 0
+              },
+              "minContextSlot": 912610
+            }
+          ]
+        }
+      },
+      {
+        "at": "2026-10-17T17:34:07.226126+00:00",
+        "path": "/api/status",
+        "httpStatus": 200,
+        "responseSHA256": "4794dfed15856a3699b43ec9fd919efaca5e89094dba4858a26da1ab3157cc67",
+        "response": {
+          "state": "online",
+          "slot": 912652,
+          "genesisMatches": true,
+          "lastProgressAt": "2026-10-17T17:34:07.259Z",
+          "message": "Experimental devnet is responding."
+        }
+      },
+      {
+        "at": "2026-10-17T17:34:13.832186+00:00",
+        "path": "/api/rpc",
+        "httpStatus": 200,
+        "responseSHA256": "36ce8fbb5c5dd2f34e5a46bf2ff51c8fc1825964ac7c78731d3c4c0d3a5e96ce",
+        "response": {
+          "jsonrpc": "2.0",
+          "result": 912634,
+          "id": 5
+        },
+        "request": {
+          "jsonrpc": "2.0",
+          "id": 5,
+          "method": "getSlot",
+          "params": [
+            {
+              "commitment": "finalized",
+              "minContextSlot": 912610
+            }
+          ]
+        }
+      },
+      {
+        "at": "2026-10-17T17:34:15.042736+00:00",
+        "path": "/api/rpc",
+        "httpStatus": 200,
+        "responseSHA256": "b9f344122a0cb7ce78db7ba568c8a49d28edbb85aeaf74698a7268092ba9e767",
+        "response": {
+          "jsonrpc": "2.0",
+          "result": "ok",
+          "id": 6
+        },
+        "request": {
+          "jsonrpc": "2.0",
+          "id": 6,
+          "method": "getHealth",
+          "params": []
+        }
+      },
+      {
+        "at": "2026-10-17T17:34:15.932234+00:00",
+        "path": "/api/rpc",
+        "httpStatus": 200,
+        "responseSHA256": "2cc174226dbe97ee5d0e709124d61445527d939c55f184a9a2c3ce4f63f120c4",
+        "response": {
+          "jsonrpc": "2.0",
+          "result": "7TAUSfTzQeocodtVee2qsftsCYnJu2eCM1ALdADbHNon",
+          "id": 7
+        },
+        "request": {
+          "jsonrpc": "2.0",
+          "id": 7,
+          "method": "getGenesisHash",
+          "params": []
+        }
+      },
+      {
+        "at": "2026-10-17T17:34:16.533374+00:00",
+        "path": "/api/runtime",
+        "httpStatus": 200,
+        "responseSHA256": "d8da7fdee139bf8f41e94475ed06cc61876f70cf3cf82df942e7ec395f95a0c9",
+        "response": {
+          "genesis": "7TAUSfTzQeocodtVee2qsftsCYnJu2eCM1ALdADbHNon",
+          "sourceCommit": "119f25e225540be78b64b19bdb6cb300a1f47c10",
+          "coreSha256": "533950731d4ed6d94b59e71517613be002b6ec416b0ebb3a20a592fe5ec6f22f",
+          "apiBootId": "e6ec5d41-8238-48a0-b739-a81f9fea6adf",
+          "validatorBootId": "2c6a0f79-c6c3-43a4-aa5c-e542efb704d9",
+          "deploymentId": "22e5870a-afb8-4027-89b5-ccb8a39391c2"
+        }
+      }
+    ],
+    "finalizedSlotProgression": {
+      "before": 912610,
+      "after": 912634,
+      "sampleSeparationSeconds": 9.665257
+    },
+    "programs": [
+      {
+        "address": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb",
+        "data": [
+          "",
+          "base64"
+        ],
+        "executable": true,
+        "lamports": 1141440,
+        "owner": "BPFLoaderUpgradeab1e11111111111111111111111",
+        "rentEpoch": 0,
+        "space": 36
+      },
+      {
+        "address": "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL",
+        "data": [
+          "",
+          "base64"
+        ],
+        "executable": true,
+        "lamports": 731913600,
+        "owner": "BPFLoader2111111111111111111111111111111111",
+        "rentEpoch": 0,
+        "space": 105032
+      },
+      {
+        "address": "11111111111111111111111111111111",
+        "data": [
+          "",
+          "base64"
+        ],
+        "executable": true,
+        "lamports": 1,
+        "owner": "NativeLoader1111111111111111111111111111111",
+        "rentEpoch": 0,
+        "space": 14
+      }
+    ],
+    "programDataRequested": false,
+    "accountReadCommitment": "finalized",
+    "emptyDataSlice": {
+      "offset": 0,
+      "length": 0
+    },
+    "fullRuntimeMatchesBeforeAndAfter": true,
+    "frozenSourceFilesVerified": 45,
+    "sdkExportsMatched": [
+      "TOKEN_2022_PROGRAM_ID",
+      "ASSOCIATED_TOKEN_PROGRAM_ID",
+      "SystemProgram.programId"
+    ],
+    "sourceSelection": {
+      "packages/chain/src/index.ts": "e9d9822a428e92eef96b35155a3cf6b34191d3ae117d385e96b3f0a5b2c5ef0c",
+      "packages/chain/package.json": "272aaa0aa998776a0fa8d20d05d52a35b60438d59fb8be136dda683b0047a348",
+      "pnpm-lock.yaml": "3ccff3161ebc9514a32b1e59d699e5d906d4ab6d9ea954205bcbc18a4b300fc4",
+      "config/network.remote.json": "0eea489e8cf0753b2b0cf0b91b6949566044e50c20bd4d02eea814490f64fe0e"
+    },
+    "completedQA": {
+      "state": "completed",
+      "soakAccepted": true,
+      "exitCode": 0,
+      "issues": []
+    },
+    "newSignedTransactions": 0,
+    "newLoadOrStabilityRun": false,
+    "configurationChanged": false
+  },
+  "retainedFailedAttempt": {
+    "failure": "TLS unexpected EOF on the first getHealth read",
+    "acceptance": false,
+    "partialResponseBodiesRetained": false,
+    "resolution": "One fresh read-only attempt completed with incremental response retention and ordinary TLS verification. The failed attempt was preserved."
+  },
+  "limitations": [
+    "Program executable flags, IDs and loader ownership are observed account metadata. This review does not hash the executable data or resolve and approve Token-2022 upgrade custody.",
+    "Raw account data was not requested; the zero-length data slice returns metadata only. No keys, signatures, ledger data or user account rows are included.",
+    "Health and slot observations cover this short interval. The separate completed stability result is preserved without a new workload.",
+    "No new browser journey, mint, transfer, faucet claim, deployment, restart or storage action occurred."
+  ],
+  "releaseAccepted": false,
+  "mainnetAccepted": false,
+  "bridgeAccepted": false
+}

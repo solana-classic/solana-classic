@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "at": "2026-10-16T01:34:01.984200+00:00",
+  "scope": "offline synthetic terminal admission tests for the separately activated source-built replacement; not its completion or independent transaction replay",
+  "passed": true,
+  "combinedReviewTests": 62,
+  "newReplacementTests": 25,
+  "sourceHashes": {
+    "engine/migration/replacement_source_terminal_review.py": "5eb147174d63d6dd3afa1e8f9aee8e8c35e21dc3763674b3b920f348468a1ee5",
+    "engine/migration/replacement_source_terminal_review_test.py": "1764df7ea70385852093408cf16763d10b7e79fd39b08754e5b429a6f529ea09",
+    "engine/migration/source_terminal_review.py": "bff597959422cbc3fb513fbcc20c20b1f77ad2ec74b3c0b95c1d3d51e7210eee",
+    "engine/migration/terminal_review.py": "5baa1eaafbf4c91afc922c79107957c0bbb84edeffea8715efe8bef4d09b3afd",
+    "engine/migration/load_review.py": "1a9dc744aea2f60b38fbd666194af240481443d4a8523c4619a6c5bc9a8abdf6"
+  },
+  "checks": [
+    "The complete original refusal matrix is rerun against the replacement binding.",
+    "The actual selected public activation digest is pinned.",
+    "Prior source start, QA deployment and namespace cannot be selected.",
+    "The retained interrupted 237-journey shape refuses despite new admission or elapsed time.",
+    "Duplicate recorded prerequisites cannot substitute for the complete eight-report set."
+  ],
+  "originalAuditorChanged": false,
+  "stabilityAccepted": false,
+  "releaseAccepted": false,
+  "mainnetAccepted": false,
+  "bridgeAccepted": false
+}

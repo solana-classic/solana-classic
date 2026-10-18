@@ -1,0 +1,105 @@
+{
+  "schemaVersion": 1,
+  "at": "2026-10-17T06:04:15.913230+00:00",
+  "scope": "exact deployed monitor source exercised locally against a synthetic loopback HTTP server",
+  "passed": true,
+  "requirement": "G5.07",
+  "requirementAccepted": false,
+  "status": "partial; local detector behavior verified, hosted fault and delivery attribution remains separate",
+  "genesis": "7TAUSfTzQeocodtVee2qsftsCYnJu2eCM1ALdADbHNon",
+  "candidate": {
+    "apiOrigin": "https://network-release-production.up.railway.app",
+    "frontendOrigin": "https://solana-classic-soc.vercel.app",
+    "frontendDeploymentId": "dpl_3aWWzKDohr4SrgijgrB8dWgHHS5r",
+    "frontendCommit": "35f0eaf1dede45452c9cdf9e6403669e966c427d",
+    "apiCommit": "119f25e225540be78b64b19bdb6cb300a1f47c10",
+    "networkConfigSha256": "0eea489e8cf0753b2b0cf0b91b6949566044e50c20bd4d02eea814490f64fe0e",
+    "dependencyManifestSha256": "e6da27717e6a84ca7b29d707ff63591b2ff0cfc38892d3b4667f8615bdf7bbc0"
+  },
+  "freezeSha256": "55b668e56a946ec94f0195b03530aba23593bd71d7fd52493d5403b21882757f",
+  "checklistSha256": "e2fb4b2f53e9aa10f21ec5ffcf708cc2749b456a39703c9228a7fce7fc574f73",
+  "proofs": [
+    {
+      "path": "evidence/agave-source-monitoring-attribution-review.json",
+      "sha256": "145f94be06f06716129f03d3469405b93cb19d728f1592f6b6cdffa676f27493"
+    }
+  ],
+  "sourceIdentity": {
+    "monitorSha256": "c0232f32d74e6e6c3ee4e1082b96149d452812426f7bd8093db35b3842069c57",
+    "currentDeploymentId": "22f46035-b3fc-4056-aa06-871b6d14869d",
+    "currentDeploymentAndSourceVerifiedByReadOnlySsh": true,
+    "sourceUnchangedDuringTest": true,
+    "historicalFixtureSourceBindingResolved": false
+  },
+  "execution": {
+    "command": "python3 -B scripts/pnpm.py exec node --expose-gc --import tsx scripts/monitor.ts --self-test",
+    "startedAt": "2026-10-17T06:02:37.365252+00:00",
+    "completedAt": "2026-10-17T06:03:38.556568+00:00",
+    "elapsedMs": 61190,
+    "exitCode": 0,
+    "stderrBytes": 0,
+    "rawOutputSha256": "247c5e1280907e8ccbd0326cdcefb0b9acf0c341cb7c6d6c0d74a33f65ffa565",
+    "rawOutputBytes": 1718,
+    "railwayEnvironmentVariablesRemoved": true,
+    "nodeOptionsRemoved": true,
+    "hostedFixtureEnvironmentRemoved": true,
+    "publicSignalDispatchDisabled": true,
+    "existingSelfTestsBeforeStart": 0,
+    "observedStallMs": 60510,
+    "steps": [
+      {
+        "at": "2026-10-17T06:02:37.964Z",
+        "healthy": true,
+        "code": "ONLINE",
+        "finalizedSlot": 100,
+        "lastProgressAt": "2026-10-17T06:02:37.964Z"
+      },
+      {
+        "at": "2026-10-17T06:02:37.981Z",
+        "healthy": false,
+        "code": "UPSTREAM_FAILURE",
+        "finalizedSlot": 100,
+        "lastProgressAt": "2026-10-17T06:02:37.964Z"
+      },
+      {
+        "at": "2026-10-17T06:02:38.001Z",
+        "healthy": true,
+        "code": "ONLINE",
+        "finalizedSlot": 101,
+        "lastProgressAt": "2026-10-17T06:02:38.001Z"
+      },
+      {
+        "at": "2026-10-17T06:03:38.511Z",
+        "healthy": false,
+        "code": "FINALIZED_SLOT_STALLED",
+        "finalizedSlot": 101,
+        "lastProgressAt": "2026-10-17T06:02:38.001Z"
+      },
+      {
+        "at": "2026-10-17T06:03:38.524Z",
+        "healthy": true,
+        "code": "ONLINE",
+        "finalizedSlot": 102,
+        "lastProgressAt": "2026-10-17T06:03:38.524Z"
+      }
+    ]
+  },
+  "continuity": {
+    "canonicalRuntimeMatchesFreeze": true,
+    "runtimeObservedAt": "2026-10-17T06:04:15.538Z",
+    "frozenContextFilesVerified": 45,
+    "qaState": "completed",
+    "soakAccepted": true,
+    "newSoakStarted": false
+  },
+  "limitations": [
+    "Loopback replies and slots are synthetic; this is a component probe test, not an outage of the canonical network.",
+    "The existing self-test exercises probe failures directly; it does not test the hosted polling loop or its consecutive-failure debounce.",
+    "The unchanged detector source is independently matched to the current deployed monitor. The historical hosted fixture source binding remains unresolved.",
+    "No hosted signal request, provider alert evaluation or fresh email/in-app delivery receipt was generated.",
+    "This run does not induce canonical disk or memory pressure, verify every probe error branch, or add an individually accepted requirement."
+  ],
+  "releaseAccepted": false,
+  "mainnetAccepted": false,
+  "bridgeAccepted": false
+}

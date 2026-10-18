@@ -1,0 +1,32 @@
+name: Private validator preparation
+on:
+  pull_request:
+    paths:
+      - 'mainnet/**'
+      - 'evidence/mainnet-consensus-progress-local.json'
+      - '.github/workflows/mainnet-preparation.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  offline-package:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - name: Offline host, genesis, process and consensus-observer checks
+        run: python3 -W error::ResourceWarning -m unittest discover -s mainnet -p '*_test.py'
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: '24.19.0'
+      - run: npm install --global pnpm@10.34.7
+      - run: pnpm install --frozen-lockfile --ignore-scripts
+      - name: Offline genesis accounting and custody metadata checks
+        run: node --test mainnet/plan.test.mjs mainnet/bootstrap.test.mjs mainnet/genesis-custody.test.mjs mainnet/reserve-prefund-plan.test.mjs mainnet/reserve-byte-input.test.mjs mainnet/reserve-bundle.test.mjs
+      - name: Pinned offline genesis authority decoder
+        env:
+          CARGO_TARGET_DIR: ${{ runner.temp }}/genesis-review-target
+        run: |
+          rustup toolchain install 1.86.0 --profile minimal --no-self-update
+          cargo +1.86.0 test --locked --manifest-path mainnet/genesis-authorities/Cargo.toml
+          cargo +1.86.0 test --locked --manifest-path mainnet/genesis-allocation-bytes/Cargo.toml

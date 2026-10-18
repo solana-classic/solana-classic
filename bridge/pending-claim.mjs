@@ -7,6 +7,9 @@ import { PublicKey, Transaction } from '@solana/web3.js';
 import { encodeEvent, decodeEvent, validateEvent, nativeClaimInstruction, originClaimInstruction, TOKEN_2022, exactNativeUnits, observeLocalEvent, PUBLIC_GENESIS } from './sdk.mjs';
 import { parseNativeTransactionRPC } from './lossless-native-rpc.mjs';
 import { observePinnedProgram } from './program-pins.mjs';
+import { checkedReviewedOriginMintPolicy, observeReviewedOriginAssets } from './reviewed-origin-mint.mjs';
+import { inspectImmutableMint } from './mint-metadata.mjs';
+import { claimReviewedMintPolicy, claimMintSnapshot, claimMintAdmission, checkClaimMintAdmission } from './claim-mint-policy.mjs';
 import { claimPinPolicy, checkedClaimPinPolicy, checkClaimPinObservations } from './claim-pin-policy.mjs';
 const soaking='7TAUSfTzQeocodtVee2qsftsCYnJu2eCM1ALdADbHNon';
 const states=new Set(['PREPARED','SUBMISSION_ATTEMPTED','PENDING','EXPIRED_UNRESOLVED','CONSUMED_REVIEW_REQUIRED','FAILED_REVIEW_REQUIRED','FINALIZED']);
@@ -39,7 +42,7 @@ function instruction(record,event) {
   return event.direction===0?nativeClaimInstruction({event,expected:event,payer:record.payer,committee:record.committee}):originClaimInstruction({event,expected:event,payer:record.payer,committee:record.committee,mint:record.originMint,destinationToken:record.destinationToken});
 }
 function verified(record) {
-  if(![1,2].includes(record.schemaVersion)||!['isolated-native-claim','isolated-origin-redemption'].includes(record.scope)||!states.has(record.state))throw new Error('Invalid private claim record');
+  if(![1,2,3].includes(record.schemaVersion)||!['isolated-native-claim','isolated-origin-redemption'].includes(record.scope)||!states.has(record.state))throw new Error('Invalid private claim record');
   if(!Number.isSafeInteger(record.lastValidBlockHeight)||record.lastValidBlockHeight<1||!Number.isSafeInteger(record.minimumDestinationSlot)||record.minimumDestinationSlot<0||!Number.isSafeInteger(record.sourceContextSlot)||record.sourceContextSlot<1)throw new Error('Invalid finality/expiry checkpoint');
   if(record.attempts!==0&&record.attempts!==1)throw new Error('Invalid submission count');
   if((record.state==='PREPARED')!==(record.attempts===0))throw new Error('Submission state/count mismatch');
@@ -53,7 +56,8 @@ function verified(record) {
   if(record.payer===event.recipient||record.committee.includes(record.payer))throw new Error('Rehearsal payer must be separate from recipient/committee');
   exactNativeUnits(event.originAmount,record.originDecimals);
   if(record.schemaVersion===1&&(record.programmePinPolicy!==undefined||record.programmePinAdmission!==undefined))throw new Error('Legacy records cannot declare unenforced programme pins');
-  if(record.schemaVersion===2){
+  if(record.schemaVersion<3&&(record.reviewedMintPolicy!==undefined||record.reviewedMintAdmission!==undefined))throw new Error('Older records cannot declare unenforced reviewed mint admission');
+  if(record.schemaVersion>=2){
     const policy=checkedClaimPinPolicy(record.programmePinPolicy,event,record.originMint);
     if(typeof record.programmePinHandoffAttempted!=='boolean'||!Number.isSafeInteger(record.preparedDestinationSlot)||record.preparedDestinationSlot<0||record.preparedDestinationSlot>record.minimumDestinationSlot)throw new Error('Invalid original pin-admission checkpoint');
     if(!record.programmePinHandoffAttempted&&(record.state==='SUBMISSION_ATTEMPTED'||record.attemptedAt!==undefined))throw new Error('Signed handoff lacks mandatory pin admission');
@@ -64,6 +68,13 @@ function verified(record) {
       if(!admission||admission.schemaVersion!==1||admission.scope!=='isolated-claim-pin-admission-v1'||admission.policySHA256!==policy.sha256||typeof admission.at!=='string'||!Number.isFinite(Date.parse(admission.at)))throw new Error('Pinned attempt admission is missing or changed');
       checkClaimPinObservations(policy,event,{...record,minimumDestinationSlot:record.preparedDestinationSlot},admission.source,admission.destination);
     }
+  }
+  if(record.schemaVersion===3){
+    const programmePolicy=checkedClaimPinPolicy(record.programmePinPolicy,event,record.originMint);
+    const mintPolicy=claimReviewedMintPolicy(record.reviewedMintPolicy,programmePolicy,event,record.originDecimals);
+    if(!record.programmePinHandoffAttempted&&record.state==='FINALIZED')throw new Error('Reviewed finalization lacks mandatory handoff admission');
+    if(record.programmePinHandoffAttempted)checkClaimMintAdmission(record.reviewedMintAdmission,mintPolicy,event,record,record.programmePinAdmission);
+    else if(record.reviewedMintAdmission!==undefined)throw new Error('Unsubmitted reviewed claim cannot have mint handoff admission');
   }
   const ix=instruction(record,event);
   if(record.id!==ix.keys[3].pubkey.toBase58())throw new Error('Wrong receipt-derived operation ID');
@@ -105,9 +116,12 @@ async function admitOriginalAccounts(record,event,ix,config,fetcher) {
     if(a?.owner!==TOKEN_2022||a.executable||a.data?.[1]!=='base64')throw new Error('Original account programme owner is invalid');
     const b=Buffer.from(a.data[0],'base64');if(b.toString('base64')!==a.data[0])throw new Error('Invalid original account encoding');return b;
   });
-  // Initial journal supports plain immutable mints and only the account's
-  // optional ImmutableOwner extension. Other metadata layouts need review.
-  if(mint.length!==82||mint.readUInt32LE(0)!==0||mint.readUInt32LE(46)!==0||mint[44]!==record.originDecimals||mint[45]!==1||mint.readBigUInt64LE(36)<event.originAmount)throw new Error('Original mint is mutable, unsupported or has wrong precision');
+  // Older journals keep plain-mint admission. Version3 additionally requires
+  // the exact committed immutable metadata review; account rules stay strict.
+  if(record.schemaVersion===3){
+    const policy=checkedReviewedOriginMintPolicy(record.reviewedMintPolicy),inspected=inspectImmutableMint(mint,record.originMint);
+    if(inspected.layout!=='immutable-self-metadata-v1'||hash(mint)!==policy.expectedMintDataSHA256||inspected.supplyUnits!==policy.expectedSupplyUnits||inspected.decimals!==record.originDecimals||BigInt(inspected.supplyUnits)<event.originAmount)throw new Error('Original mint differs from reviewed metadata policy');
+  }else if(mint.length!==82||mint.readUInt32LE(0)!==0||mint.readUInt32LE(46)!==0||mint[44]!==record.originDecimals||mint[45]!==1||mint.readBigUInt64LE(36)<event.originAmount)throw new Error('Original mint is mutable, unsupported or has wrong precision');
   for(const [bytes,owner] of [[escrow,ix.keys[2].pubkey],[recipient,key(event.recipient)]]) {
     const layout=bytes.length===165||(bytes.length===170&&bytes[165]===2&&bytes.readUInt16LE(166)===7&&bytes.readUInt16LE(168)===0);
     if(!layout||!bytes.subarray(0,32).equals(key(record.originMint).toBuffer())||!bytes.subarray(32,64).equals(owner.toBuffer())||bytes[108]!==1||bytes.readUInt32LE(72)!==0||bytes.readUInt32LE(109)!==0||bytes.readUInt32LE(129)!==0)throw new Error('Original escrow/recipient account authority or layout mismatch');
@@ -135,7 +149,7 @@ function summary(record) {return {id:record.id,signature:record.signature,eventH
 export function inspectPendingClaim(directory,id) {
   return locked(directory,id,async(record,{event,ix})=>({
     ...summary(record),schemaVersion:record.schemaVersion,scope:record.scope,journalHash:hash(JSON.stringify(record)),
-    sourceChain:event.sourceChain,destinationChain:event.destinationChain,
+    bridge:event.bridge,sourceChain:event.sourceChain,destinationChain:event.destinationChain,
     sourceProgram:event.sourceProgram,destinationProgram:event.destinationProgram,
     sourceEvent:event.sourceEvent,recipient:event.recipient,nonce:event.nonce.toString(),
     epoch:event.epoch.toString(),originAmount:event.originAmount.toString(),
@@ -145,34 +159,46 @@ export function inspectPendingClaim(directory,id) {
     minimumDestinationSlot:record.minimumDestinationSlot,
     lastValidBlockHeight:record.lastValidBlockHeight,
     instructionHash:hash(ix.data),inspectionOnly:true,
-    ...(record.schemaVersion===2?{programmePinsHash:record.programmePinPolicy.sha256}:{}),
+    ...(record.schemaVersion>=2?{programmePinsHash:record.programmePinPolicy.sha256}:{}),
+    ...(record.schemaVersion===3?{reviewedMintPolicySHA256:record.reviewedMintPolicy.sha256}:{}),
   }));
 }
 
-function prepareClaim({directory,sourceRpc,rpc:destinationRpc,event,expected,payer,committee,transaction,lastValidBlockHeight,originDecimals,sourceContextSlot,minimumDestinationSlot=0,originMint=null,destinationToken=null},programmePinPolicy=null) {
+function prepareClaim({directory,sourceRpc,rpc:destinationRpc,event,expected,payer,committee,transaction,lastValidBlockHeight,originDecimals,sourceContextSlot,minimumDestinationSlot=0,originMint=null,destinationToken=null},programmePinPolicy=null,reviewedMintPolicy=null) {
   validateEvent(event,expected);
   const raw=Buffer.from(transaction),tx=Transaction.from(raw);
   const ix=event.direction===0?nativeClaimInstruction({event,expected,payer,committee}):originClaimInstruction({event,expected,payer,committee,mint:originMint,destinationToken});
   const record={schemaVersion:1,scope:event.direction===0?'isolated-native-claim':'isolated-origin-redemption',state:'PREPARED',attempts:0,id:ix.keys[3].pubkey.toBase58(),sourceRpc:endpoint(sourceRpc),rpc:endpoint(destinationRpc),expectedGenesis:event.destinationChain,payer:key(payer).toBase58(),committee:committee.map(k=>key(k).toBase58()),originDecimals,originMint:originMint?key(originMint).toBase58():null,destinationToken:destinationToken?key(destinationToken).toBase58():null,eventBase64:encodeEvent(event).toString('base64'),eventHash:hash(encodeEvent(event)),transactionBase64:raw.toString('base64'),transactionHash:hash(raw),signature:base58(tx.signature),lastValidBlockHeight,sourceContextSlot,minimumDestinationSlot,preparedAt:new Date().toISOString()};
   if(programmePinPolicy){record.schemaVersion=2;record.programmePinPolicy=programmePinPolicy;record.preparedDestinationSlot=minimumDestinationSlot;record.programmePinHandoffAttempted=false;}
+  if(reviewedMintPolicy){record.schemaVersion=3;record.reviewedMintPolicy=reviewedMintPolicy;}
   verified(record);
   const root=privateDirectory(directory);persist(join(root,record.id+'.json'),record,true);
   return summary(record);
 }
-export function preparePendingClaim(args){return prepareClaim(args);}
+export function preparePendingClaim(args){if(Object.hasOwn(args,'reviewedMintPolicy'))throw new Error('Reviewed metadata requires explicit version3 preparation');return prepareClaim(args);}
 export function preparePinnedPendingClaim(args){
+  if(Object.hasOwn(args,'reviewedMintPolicy'))throw new Error('Reviewed metadata requires explicit version3 preparation');
   const policy=claimPinPolicy(args.programmePins,args.event,args.originMint?key(args.originMint).toBase58():null);
   return prepareClaim({...args,originMint:policy.source.originMint},policy);
+}
+
+export function prepareReviewedPendingClaim(args){
+  const policy=claimPinPolicy(args.programmePins,args.event,args.originMint?key(args.originMint).toBase58():null);
+  const reviewed=claimReviewedMintPolicy(args.reviewedMintPolicy,policy,args.event,args.originDecimals);
+  return prepareClaim({...args,originMint:policy.source.originMint},policy,reviewed);
 }
 
 // Returns the existing signed bytes once only. The caller may submit exactly
 // those bytes to the pinned private RPC. A crash before submission remains
 // uncertain; this API never authorizes another attempt or signs replacements.
-function takeAttempt(directory,id,fetcher,pinnedOnly) {
+function takeAttempt(directory,id,fetcher,pinnedOnly,reviewedOnly=false) {
   return locked(directory,id,async(record,{event,raw,ix},save)=>{
     if(record.state!=='PREPARED')throw new Error('An attempt already exists; reconcile it, do not submit again');
-    if(pinnedOnly&&record.schemaVersion!==2)throw new Error('Pinned handoff requires a prepared version2 claim');
-    const policy=record.schemaVersion===2?checkedClaimPinPolicy(record.programmePinPolicy,event,record.originMint):null;
+    if(pinnedOnly&&record.schemaVersion<2)throw new Error('Pinned handoff requires a prepared version2 or version3 claim');
+    if(reviewedOnly&&record.schemaVersion!==3)throw new Error('Reviewed handoff requires a prepared version3 claim');
+    const policy=record.schemaVersion>=2?checkedClaimPinPolicy(record.programmePinPolicy,event,record.originMint):null;
+    const reviewed=record.schemaVersion===3?claimReviewedMintPolicy(record.reviewedMintPolicy,policy,event,record.originDecimals):null;
+    const observeMint=async minimum=>claimMintSnapshot(await observeReviewedOriginAssets({rpc:event.direction===0?record.sourceRpc:record.rpc,policy:reviewed,minimumContextSlot:minimum},fetcher),reviewed,event,minimum);
     const observePins=async(sourceMinimum,destinationMinimum)=>{
       // Sequential fixed private endpoints, while the receipt journal stays locked.
       const source=await observePinnedProgram({rpc:record.sourceRpc,pins:policy.source,minimumContextSlot:sourceMinimum},fetcher);
@@ -181,7 +207,8 @@ function takeAttempt(directory,id,fetcher,pinnedOnly) {
       return {source,destination};
     };
     const initialPins=policy?await observePins(record.sourceContextSlot,record.minimumDestinationSlot):null;
-    const destinationMinimum=Math.max(record.minimumDestinationSlot,initialPins?.destination.contextSlot??0);
+    const initialMint=reviewed?await observeMint(event.direction===0?Math.max(record.sourceContextSlot,initialPins.source.contextSlot):Math.max(record.minimumDestinationSlot,initialPins.destination.contextSlot)):null;
+    const destinationMinimum=Math.max(record.minimumDestinationSlot,initialPins?.destination.contextSlot??0,event.direction===1?initialMint?.finalTokenContextSlot??0:0);
     await admit(record,fetcher);
     const height=await rpc(record,'getBlockHeight',[{commitment:'finalized'}],fetcher);
     if(!Number.isSafeInteger(height)||height<0||height>record.lastValidBlockHeight)throw new Error('Signed transaction expiry is not admissible');
@@ -192,11 +219,12 @@ function takeAttempt(directory,id,fetcher,pinnedOnly) {
     if(!Number.isSafeInteger(config.context?.slot)||config.context.slot<record.minimumDestinationSlot||config.value?.owner!==event.destinationProgram||config.value.executable||c.length!==382||c.subarray(0,8).toString()!=='SCCFG001'||!c.subarray(8,40).equals(key(event.bridge).toBuffer())||!c.subarray(40,72).equals(key(event.destinationChain).toBuffer())||!c.subarray(72,104).equals(key(event.sourceChain).toBuffer())||!c.subarray(104,136).equals(key(event.sourceProgram).toBuffer())||c[328]!==record.originDecimals||c[329]!==9||c[330]!==1-event.direction||c[331]!==3||c.readBigUInt64LE(332)!==event.epoch||c[341]!==0||record.committee.some(member=>![0,1,2,3,4].some(i=>c.subarray(168+i*32,200+i*32).equals(key(member).toBuffer()))))throw new Error('Configuration/precision/quorum differs from signed claim');
     if(policy&&(config.context.slot<destinationMinimum||hash(c.subarray(0,358))!==policy.destination.policySHA256))throw new Error('Current claim configuration differs from pinned policy');
     if(event.direction===1)await admitOriginalAccounts({...record,minimumDestinationSlot:destinationMinimum},event,ix,c,fetcher);
-    const observation=await observeLocalEvent({rpc:record.sourceRpc,expectedGenesis:event.sourceChain,eventAddress:event.sourceEvent,expected:event,minimumContextSlot:Math.max(record.sourceContextSlot,initialPins?.source.contextSlot??0)},fetcher);
+    const observation=await observeLocalEvent({rpc:record.sourceRpc,expectedGenesis:event.sourceChain,eventAddress:event.sourceEvent,expected:event,minimumContextSlot:Math.max(record.sourceContextSlot,initialPins?.source.contextSlot??0,event.direction===0?initialMint?.finalTokenContextSlot??0:0)},fetcher);
     if(!encodeEvent(observation.event).equals(encodeEvent(event)))throw new Error('Source event bytes changed');
+    const finalMint=reviewed?await observeMint(Math.max(initialMint.finalTokenContextSlot,event.direction===0?observation.contextSlot:config.context.slot)):null;
     let finalPins;
     if(policy){
-      finalPins=await observePins(Math.max(observation.contextSlot,initialPins.source.contextSlot),Math.max(config.context.slot,receipt.context.slot,initialPins.destination.contextSlot));
+      finalPins=await observePins(Math.max(observation.contextSlot,initialPins.source.contextSlot,event.direction===0?finalMint?.finalTokenContextSlot??0:0),Math.max(config.context.slot,receipt.context.slot,initialPins.destination.contextSlot,event.direction===1?finalMint?.finalTokenContextSlot??0:0));
       const lateHeight=await rpc(record,'getBlockHeight',[{commitment:'finalized'}],fetcher);
       if(!Number.isSafeInteger(lateHeight)||lateHeight<height||lateHeight>record.lastValidBlockHeight)throw new Error('Signed transaction expired or height regressed during pin admission');
       const lateReceipt=await rpc(record,'getAccountInfo',[record.id,{encoding:'base64',commitment:'finalized',minContextSlot:finalPins.destination.contextSlot}],fetcher);
@@ -204,12 +232,14 @@ function takeAttempt(directory,id,fetcher,pinnedOnly) {
     }
     await admit(record,fetcher);
     if(policy){record.programmePinAdmission={schemaVersion:1,scope:'isolated-claim-pin-admission-v1',policySHA256:policy.sha256,at:new Date().toISOString(),...finalPins};record.programmePinHandoffAttempted=true;}
+    if(reviewed){record.reviewedMintAdmission=claimMintAdmission(reviewed,initialMint,finalMint);checkClaimMintAdmission(record.reviewedMintAdmission,reviewed,event,record,record.programmePinAdmission);}
     record.state='SUBMISSION_ATTEMPTED';record.attempts=1;record.attemptedAt=new Date().toISOString();save(record);
     return {rpc:record.rpc,rawTransaction:raw,signature:record.signature};
   });
 }
 export function takeSubmissionAttempt(directory,id,fetcher=fetch){return takeAttempt(directory,id,fetcher,false);}
 export function takePinnedSubmissionAttempt(directory,id,fetcher=fetch){return takeAttempt(directory,id,fetcher,true);}
+export function takeReviewedSubmissionAttempt(directory,id,fetcher=fetch){return takeAttempt(directory,id,fetcher,true,true);}
 
 export function reconcilePendingClaim(directory,id,fetcher=fetch) {
   return locked(directory,id,async(record,{event,raw,tx,ix},save)=>{
@@ -236,7 +266,8 @@ export function reconcilePendingClaim(directory,id,fetcher=fetch) {
           if(delta(recipient)!==0n||delta(vault)!==0n)throw new Error('Unexpected native movement during original redemption');
           verifyOriginalMovement(record,event,tx,ix,landed.meta);
         }
-        record.finalizedSlot=landed.slot;next='FINALIZED';
+        if(record.schemaVersion===3&&!record.programmePinHandoffAttempted)next='CONSUMED_REVIEW_REQUIRED';
+        else{record.finalizedSlot=landed.slot;next='FINALIZED';}
       }
     } else if(receipt.value)next='CONSUMED_REVIEW_REQUIRED';
     else {

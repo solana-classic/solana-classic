@@ -1,0 +1,75 @@
+{
+  "schemaVersion": 1,
+  "at": "2026-10-17T07:05:33.168116+00:00",
+  "scope": "remote exact source-candidate scheduled browser targeting review of retained evidence; no new workload or chain replay",
+  "passed": true,
+  "genesis": "7TAUSfTzQeocodtVee2qsftsCYnJu2eCM1ALdADbHNon",
+  "candidate": {
+    "apiOrigin": "https://network-release-production.up.railway.app",
+    "frontendOrigin": "https://solana-classic-soc.vercel.app",
+    "frontendDeploymentId": "dpl_3aWWzKDohr4SrgijgrB8dWgHHS5r",
+    "frontendCommit": "35f0eaf1dede45452c9cdf9e6403669e966c427d",
+    "apiCommit": "119f25e225540be78b64b19bdb6cb300a1f47c10",
+    "networkConfigSha256": "0eea489e8cf0753b2b0cf0b91b6949566044e50c20bd4d02eea814490f64fe0e",
+    "dependencyManifestSha256": "e6da27717e6a84ca7b29d707ff63591b2ff0cfc38892d3b4667f8615bdf7bbc0"
+  },
+  "freezeSha256": "55b668e56a946ec94f0195b03530aba23593bd71d7fd52493d5403b21882757f",
+  "checklistSha256": "e2fb4b2f53e9aa10f21ec5ffcf708cc2749b456a39703c9228a7fce7fc574f73",
+  "proofs": [
+    {
+      "path": "evidence/agave-source-candidate-freeze.json",
+      "sha256": "55b668e56a946ec94f0195b03530aba23593bd71d7fd52493d5403b21882757f"
+    },
+    {
+      "path": "evidence/agave-source-stability-replacement-started.json",
+      "sha256": "6581bb62dad92808ac77caa8eb8a6f590c04d87bf28bf6ce0dda20ee43f5fdcf"
+    },
+    {
+      "path": "evidence/agave-source-stability-replacement-completed.json",
+      "sha256": "f84bd7ffe13c946e8e772145893154af9da38df25ad331f9616a2de6bc4ea54c"
+    },
+    {
+      "path": "evidence/agave-source-rollback-individual-review.json",
+      "sha256": "e42ba05a32ee9bd82b56f0d027b22741b0647408ae0b42297f1b2d2f99ba12fb"
+    }
+  ],
+  "requirements": {
+    "G6.07": {
+      "claim": "Scheduled browser smoke checks use the frozen production frontend and Linux API, with both deployed commits, configuration hashes and frontend deployment ID recorded.",
+      "basis": "The exact activation and terminal report select the same candidate and full runtime. The frozen browser driver opens the production frontend playground, performs 288 scheduled NFT issuance/transfer journeys, and rejects observed API requests to another origin. Its serial monitor rechecks all frozen local sources, configuration hashes, complete runtime identity and all five frontend entry/asset hashes. Retained reports record 2880 monitoring observations and successful terminal integrity checks.",
+      "scopeLimit": "Review of the retained successful execution and its exact source assertions, not an independent transaction replay or proof of every possible browser network request. The persistent browser session is not reloaded every five minutes; frontend bytes are separately checked by the monitor."
+    }
+  },
+  "reviewMethod": {
+    "terminalAuditor": "engine/migration/replacement_source_terminal_review.py",
+    "terminalAuditorSha256": "5eb147174d63d6dd3afa1e8f9aee8e8c35e21dc3763674b3b920f348468a1ee5",
+    "retrospectiveAuditorObservationTime": "2026-10-17T01:34:27.799Z",
+    "retrospectiveTerminalFieldsMatch": true,
+    "selectedRawSoakSha256": "5783947f8828148a107629188c3aa5c0c7bc71c614e42c14ff5556b9525cb4aa",
+    "selectedRawInputHashesVerified": 6,
+    "selectedPrerequisiteHashesVerified": 8,
+    "frozenFileCountVerified": 45,
+    "configurationHashesVerified": 2,
+    "frozenControlSources": {
+      "scripts/soak.ts": "865846851985253a1830f46be683286b675442926ebb9197dc65cd259f45305b",
+      "scripts/workload.ts": "b292ba2a902c0899dc6f8e0d0aa7933068a004d09c3f09c6d79ad6303ea2928f"
+    },
+    "browserDriverSourceReviewed": true,
+    "frontendHashObservationSourceReviewed": true,
+    "completedJourneys": 288,
+    "smokeEveryMs": 300000,
+    "observations": 2880,
+    "observationEveryMs": 30000,
+    "newBrowserSessions": false,
+    "newTransactions": false,
+    "newWorkloads": false
+  },
+  "limitations": [
+    "The retained terminal snapshot was re-evaluated at its original observation time; this is explicitly retrospective and not a claim of current snapshot freshness.",
+    "This requirement covers browser targeting and recorded deployment identities only; it does not accept deadline compliance, all release gates, machine-specification disclosure or independently decentralized validators.",
+    "The workload uses one source-built test validator and valueless TEST assets; no chain-wide throughput benchmark or mainnet acceptance."
+  ],
+  "releaseAccepted": false,
+  "mainnetAccepted": false,
+  "bridgeAccepted": false
+}

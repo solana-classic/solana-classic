@@ -1,0 +1,157 @@
+{
+  "schemaVersion": 1,
+  "at": "2026-10-17T19:35:02.682837+00:00",
+  "scope": "remote read-only rendered explorer scope disclosure review on the exact frozen production frontend",
+  "passed": true,
+  "genesis": "7TAUSfTzQeocodtVee2qsftsCYnJu2eCM1ALdADbHNon",
+  "candidate": {
+    "apiOrigin": "https://network-release-production.up.railway.app",
+    "frontendOrigin": "https://solana-classic-soc.vercel.app",
+    "frontendDeploymentId": "dpl_3aWWzKDohr4SrgijgrB8dWgHHS5r",
+    "frontendCommit": "35f0eaf1dede45452c9cdf9e6403669e966c427d",
+    "apiCommit": "119f25e225540be78b64b19bdb6cb300a1f47c10",
+    "networkConfigSha256": "0eea489e8cf0753b2b0cf0b91b6949566044e50c20bd4d02eea814490f64fe0e",
+    "dependencyManifestSha256": "e6da27717e6a84ca7b29d707ff63591b2ff0cfc38892d3b4667f8615bdf7bbc0"
+  },
+  "freezeSha256": "55b668e56a946ec94f0195b03530aba23593bd71d7fd52493d5403b21882757f",
+  "checklistSha256": "e2fb4b2f53e9aa10f21ec5ffcf708cc2749b456a39703c9228a7fce7fc574f73",
+  "proofs": [
+    {
+      "path": "evidence/agave-source-candidate-freeze.json",
+      "sha256": "55b668e56a946ec94f0195b03530aba23593bd71d7fd52493d5403b21882757f"
+    }
+  ],
+  "requirements": {
+    "G4.06": {
+      "claim": "Explorer scope is disclosed as account/transaction lookup and app-known assets, not exhaustive indexing.",
+      "basis": "Fresh anonymous production rendering at desktop and mobile widths visibly states the lookup scope, excludes indexing every chain activity, and distinguishes account programme ownership from NFT holding. The disclosure remains visible after an invalid lookup is refused locally. All five selected frontend files and all 45 retained source files match the freeze; complete API runtime identity matches before and after.",
+      "scopeLimit": "Current disclosure and local validation review only; no actual account or transaction lookup, complete accessibility assessment, mobile navigation review or historical H60 timing claim."
+    }
+  },
+  "reviewMethod": {
+    "flow": "Production explorer -> invalid lookup -> visible disclosure retained and actionable local validation",
+    "browserAvailability": "Browser plugin not available; existing Playwright installation used",
+    "browserVersion": "156.0.8078.4",
+    "anonymousContexts": true,
+    "newBrowserContexts": 2,
+    "profiles": [
+      {
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        },
+        "url": "https://solana-classic-soc.vercel.app/explorer",
+        "title": "Solana Classic \u2014 Memes & NFTs",
+        "disclosure": "This explorer looks up accounts, transactions and app-known assets. It does not index every activity on the chain. An account's program owner is not an NFT holder.",
+        "visible": true,
+        "invalidLookupRefused": true,
+        "urlUnchanged": true,
+        "consoleErrors": [],
+        "consoleWarnings": [],
+        "frameworkOverlay": false,
+        "screenshots": [
+          {
+            "file": "explorer-1440-initial.png",
+            "sha256": "e4365634cceb1de8e5c04330092b2022ef16bfda1e94e40d1fc9bbf3d8e7ca72"
+          },
+          {
+            "file": "explorer-1440-validation.png",
+            "sha256": "7da872487a84a3c2ee04c8fbc6d014002f407fc6dcb7b9b076a7f83d9ee1f012"
+          }
+        ],
+        "requestOrigins": [
+          "https://network-release-production.up.railway.app",
+          "https://solana-classic-soc.vercel.app"
+        ],
+        "requestsWereReadOnly": true
+      },
+      {
+        "viewport": {
+          "width": 360,
+          "height": 800
+        },
+        "url": "https://solana-classic-soc.vercel.app/explorer",
+        "title": "Solana Classic \u2014 Memes & NFTs",
+        "disclosure": "This explorer looks up accounts, transactions and app-known assets. It does not index every activity on the chain. An account's program owner is not an NFT holder.",
+        "visible": true,
+        "invalidLookupRefused": true,
+        "urlUnchanged": true,
+        "consoleErrors": [],
+        "consoleWarnings": [],
+        "frameworkOverlay": false,
+        "screenshots": [
+          {
+            "file": "explorer-360-initial.png",
+            "sha256": "e67a241b373e28347712ea15f9c8a67fb093a6efd435b4fc612686621cc9f3d5"
+          },
+          {
+            "file": "explorer-360-validation.png",
+            "sha256": "833dce3bf2d22f3002bead1b1dfeda827b40a52ee4d1426cf5f289659c7998d0"
+          }
+        ],
+        "requestOrigins": [
+          "https://network-release-production.up.railway.app",
+          "https://solana-classic-soc.vercel.app"
+        ],
+        "requestsWereReadOnly": true
+      }
+    ],
+    "frontendFiles": [
+      {
+        "path": "/",
+        "sha256": "448312a1f5170de0767b742309fad4861cc0e0a80e15d0a39d839fd1f2de2454",
+        "bytes": 517
+      },
+      {
+        "path": "/assets/index-Dpv-W791.js",
+        "sha256": "6c42fffa784f160ed324ac16585e557828aca12f2d53ee1a6ee9d2c0f840f1aa",
+        "bytes": 362256
+      },
+      {
+        "path": "/assets/index-DXgWf3wS.css",
+        "sha256": "854b48b0499bd0f863296e157914bfd43b334ae7e82c4dfc7883d129442feca0",
+        "bytes": 15901
+      },
+      {
+        "path": "/assets/index.browser.esm-BKUeZO4T.js",
+        "sha256": "7c038d6f6a4b6b70762f8f685e278524630993ed2d2aa946b70d58a578119002",
+        "bytes": 284264
+      },
+      {
+        "path": "/assets/src-DkgziyfX.js",
+        "sha256": "701b0cb796501ced6fa2caef2081d4d0618818d6859711dcb6ce09c33a57b8ad",
+        "bytes": 30694
+      }
+    ],
+    "rawReportSHA256": "4d6b0c76560307271d3adc55229db3b65b064ede4bfc16861fe7eeeeb530a580",
+    "executedDriverSHA256": "7335e6a03bef43c53d57d252b33eb90c4697c5346d388ae60196137cef3efcce",
+    "mutationRequestsAttempted": 0,
+    "browserNonGETRequestsBlockedByGuard": true,
+    "thirdPartyOriginsBlockedByGuard": true,
+    "screenshotsVisuallyReviewed": 4
+  },
+  "continuity": {
+    "frozenFilesBefore": 45,
+    "frozenFilesAfter": 45,
+    "runtimeMatchesFreezeBefore": true,
+    "runtimeMatchesFreezeAfter": true,
+    "qa": {
+      "state": "completed",
+      "soakAccepted": true,
+      "exitCode": 0,
+      "issues": []
+    }
+  },
+  "limitations": [
+    "The mobile navigation row extends beyond the initially visible width; navigation scrolling and all links were not reviewed. G7.02 is not accepted by this scoped check.",
+    "No wallet was created, faucet claimed, issuance/transfer repeated, transaction looked up or chain request submitted.",
+    "The full-day stability result remains the separately completed run; these two read-only browser contexts are not a new stability attempt.",
+    "Screenshots and detailed request observations remain in the retained local review context; public evidence includes their hashes and selected non-sensitive results."
+  ],
+  "canonicalNetworkChanged": false,
+  "chainTransactionsSubmitted": 0,
+  "newStabilityRuns": 0,
+  "releaseAccepted": false,
+  "mainnetAccepted": false,
+  "bridgeAccepted": false
+}

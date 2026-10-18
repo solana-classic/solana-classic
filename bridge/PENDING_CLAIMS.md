@@ -35,10 +35,11 @@ address that authority and the integrity of durable storage.
 The prototype restricts the rent/fee payer to an address separate from the
 recipient and committee, uses exactly three distinct configured co-signers,
 and accepts one claim instruction with no extra transfers. Original redemption
-also requires a canonical Token-2022 recipient ATA, a plain 82-byte immutable
-mint, and token accounts that are plain or carry only ImmutableOwner. Shared
-payer accounting, versioned messages, extended mint metadata and extra
-instructions are not supported by this journal yet.
+also requires a canonical Token-2022 recipient ATA and token accounts that are
+plain or carry only ImmutableOwner. Versions1/2 admit only plain82-byte immutable
+mints for original redemption. Explicit version3 adds the narrow reviewed
+metadata policy described below. Shared payer accounting, versioned messages
+and extra instructions remain unsupported.
 
 ## Durable state and uncertainty
 
@@ -314,3 +315,298 @@ match. The10000-origin-unit pending liability is retained. See
 This adds actual authority-change coverage to the earlier wrong-expected-pin
 tests. Programme-code upgrades, competing forks, independent operators,
 production custody and complete funded backing remain separate requirements.
+
+
+## Version3 reviewed metadata claim records
+
+`prepareReviewedPendingClaim(args)` requires both `programmePins` and a separately
+selected `reviewedMintPolicy`. It binds exact mint bytes, original supply and
+precision, complete origin bridge policy/code and Token-2022 code/authority
+pins to the signed event before exclusively writing a version3 record. The
+older preparation APIs refuse this new option rather than silently ignoring it.
+No old record is upgraded or retrospectively granted metadata admission.
+
+`takeReviewedSubmissionAttempt(directory,id)` requires version3. All three
+handoff entry points enforce its retained review. Before returning the existing
+signed bytes once, the journal observes the original mint/escrow/counters twice,
+with complete code checks and nonregressing finalized contexts on the correct
+chain. Selected mint bytes and supply must match, escrow must cover outstanding
+obligations, and obligations must cover the claim. Original-redemption recipient
+and authority checks remain in force. Final programme observations bracket the
+mint checks, followed by late expiry, receipt and genesis checks.
+
+A compact admission record is persisted with the single-attempt marker. Missing
+or altered policy/admission data refuses inspection. Expiry, outage, missing
+history and receipts cannot authorize another attempt. An exact finalized
+transaction found without this reviewed handoff is retained as
+`CONSUMED_REVIEW_REQUIRED`, rather than finalized as reviewed settlement.
+
+16 new synthetic filesystem/transaction/RPC checks cover both directions,
+changed metadata/token code, depleted escrow, old-entry bypass attempts,
+policy mutation, record tampering, recipient controls, concurrency and recovery
+states. Together with existing journal, code-pin, expiry-review and exact-balance
+regressions,145 JavaScript checks pass. Seven existing worker guards also pass.
+The socket-based regression uses an actual loopback HTTP server with synthetic
+responses. These checks do not execute a new Agave metadata settlement or crash.
+See [the scoped local result](../evidence/bridge-reviewed-journal-local.json).
+
+This remains a private prototype. The policy digest is integrity binding, not
+authentication. Trusted durable storage, approved custody/signers, independent
+history/finality/backing verification and external security review remain
+required. Actual two-chain metadata settlement and known-finalized restart
+recovery are recorded separately below; further expiry/fork testing remains pending.
+Earlier read-only and plain-mint proofs retain their original scope and hashes.
+Future private uploads must include every transitive metadata/policy observer
+dependency and record its exact hash. Never patch a retained attempt to update it.
+
+```sh
+node --test bridge/reviewed-pending.test.mjs bridge/pinned-pending.test.mjs
+```
+
+
+## Fresh metadata settlement and restart harness
+
+`rehearsal/metadata-journal.mjs` with
+`../engine/rehearsal/metadata_journal.py` prepares two fresh private, loopback-only
+source-built ledgers. It creates one immutable synthetic metadata mint, selects
+complete genesis code pins, and runs one version3 lock/native-release/return/
+original-redemption round trip. Wrong selected mint digest and token-code pins
+must refuse handoff in both directions while retaining journal/economic state.
+
+Each signed setup/source transaction is retained privately before its sole
+submission attempt; claim bytes are handed out through the existing journal.
+The harness reconciles finalized signatures before stopping each destination
+in turn. With that RPC unavailable, reconciliation must fail without changing
+the saved record or allowing retry. Same-ledger restart must verify the original
+signature, receipt, review admission and exact economic deltas again. This is
+known-finalized restart recovery, not a pre-finality crash or fork test.
+
+The driver reserves the attempt before generating disposable keys. Each client
+phase has an exclusive durable marker; existing results and phases cannot be
+replayed. Both processes must stop. Four local guards verify worker identity,
+new-ledger/restart command separation, finalized readiness and retained-attempt
+refusal. Execution results are recorded separately; source/guards alone do not
+establish actual settlement, recovery or production readiness.
+
+
+Ten actual checks now pass on two fresh source-built Agave3.0.14 private ledgers.
+The immutable metadata mint and setup finalize, followed by one source lock,
+one version3 native release, one native return and one version3 original-token
+redemption. Four wrong reviewed-mint/token-code handoffs refuse against actual
+accounts without changing prepared journals or bridge economics.
+
+Each finalized journal survives an actual destination RPC outage unchanged;
+same-genesis restart then reconciles its original signature, receipt, exact
+movements and retained review admission. Another handoff remains forbidden.
+Tracked escrow, both counters, original token balance, native reserve and floor
+return to their initial values. User event rent and payer fees are separate
+from those bridge-accounting checks. All four process starts stop with SIGINT;
+application-level graceful flushing is not claimed. Four worker guards pass
+locally and on Linux. See [aggregate evidence](../evidence/bridge-metadata-journal-agave.json).
+
+This known-finalized restart result does not verify a metadata claim interrupted
+before finality, a competing fork, physical host loss, independent operators,
+complete genesis backing or production custody/security. No previous private
+ledger or journal was opened, reset or replayed. Private keys, signatures,
+policies, balances and raw ledgers stay out of this public evidence.
+
+
+## Metadata native-claim pre-finality fault harness
+
+`rehearsal/metadata-pending-crash.mjs` and
+`../engine/rehearsal/metadata_pending_crash.py` prepare new cold copies of the
+completed metadata round-trip fixture. Original ledgers, both finalized journals,
+review policy and private inputs must retain their complete hashes. The copied
+client uses the retained version3 code/mint review and an unused source nonce;
+no earlier source event or signed settlement is replayed.
+
+One new source lock must finalize, followed by one reviewed native-claim handoff
+and one submission. The fault harness refuses an already-finalized claim and
+requires the exact copied destination process before SIGKILL. Its last observed
+signature status and processed/finalized slots are retained privately. The
+journal must remain unchanged while RPC is unavailable and must refuse another
+handoff. Recovery may accept only the original finalized signature/economic
+movement or retain `EXPIRED_UNRESOLVED` with no payout, replacement or refund.
+The source obligation and protected reserve floor remain recorded in either case.
+
+Five local guards cover worker identity, completed baseline/code/accounting,
+process/finality selection, nonresetting copied startup and attempt replay.
+Six existing stopped-ledger copy guards also pass. Actual execution is recorded
+separately; source and these guards alone do not verify a real pending fault.
+This harness covers the native-release direction, not pending original redemption,
+a competing fork, physical host loss or production custody/security.
+
+
+Seven actual checks now pass for this metadata native-claim fault. One new
+source lock finalizes on fresh private copies, and one version3 native claim
+is submitted without waiting for destination confirmation. The fault harness
+observes the signature as confirmed above the finalized root, then kills only
+the copied native destination with SIGKILL (exit-9). During the actual outage,
+the attempted journal remains unchanged and another handoff refuses.
+
+After same-genesis restart, the original signature, receipt and exact native
+payout reconcile as `FINALIZED`. The original signed bytes and complete review
+admissions remain intact. Source escrow/obligation and the protected reserve
+floor remain correct. All three copied process starts stop; complete original
+ledger inventories, fixture/review inputs and both previous finalized journals
+remain unchanged. Five worker guards pass locally and on Linux; six local
+cold-copy guards also pass. See
+[the aggregate result](../evidence/bridge-metadata-pending-crash-agave.json).
+
+This attempt exercised successful native-claim recovery after a process kill
+before observed finality. Its expiry branch was not exercised. The separate original-metadata redemption
+fault below now covers that direction. Actual competing forks, physical host loss, independent
+verification, complete funded backing and production custody/security remain
+open. Private addresses, signatures, policies, balances, keys and ledgers remain
+excluded from the public result. Never replay or reset this retained attempt.
+
+
+## Metadata original-redemption pending-fault harness
+
+`rehearsal/metadata-redemption-crash.mjs` with
+`../engine/rehearsal/metadata_redemption_crash.py` prepares new cold copies of
+the completed metadata native-claim recovery fixture. The original complete
+ledgers, review inputs and finalized native-claim journal must stay unchanged.
+An unused native-return nonce funds one new original-token withdrawal. The
+version3 journal retains the previous complete mint/code review; it cannot
+inherit a new policy from the endpoint during submission.
+
+The harness submits once without waiting for withdrawal finality. Its fault
+controller requires the exact copied origin process and refuses an already
+finalized operation before SIGKILL. RPC outage must preserve the attempted
+journal and block another handoff. Same-genesis recovery must either reconcile
+the original signature and exact token movement or retain an expired unresolved
+withdrawal with no token payout, native refund, replacement or attempt reset.
+Native return backing, escrow obligations and the protected floor must remain
+accounted for. Source-event rent is checked separately from returned value.
+
+Five local guards verify the completed baseline, worker/process selection,
+checkpoint/startup controls and retained-attempt refusal. Actual execution is
+recorded separately. These guards alone do not establish pending redemption,
+a competing fork, physical host failure or production custody/security.
+
+
+Seven actual checks now pass for metadata original redemption on new private
+copies of the completed native-claim fault fixture. One native return finalizes
+with its event rent checked separately, then one version3 withdrawal is submitted
+without waiting for destination confirmation. The copied origin is killed with
+SIGKILL (exit-9) before observed withdrawal finality. During the RPC outage,
+the attempted journal stays unchanged and another handoff refuses.
+
+After same-genesis restart, the original signature, receipt and exact token
+escrow debit/recipient credit reconcile as `FINALIZED`. Recipient native balance
+stays unchanged. Original signed bytes and programme/mint review admissions are
+retained. Both counters and escrow return to zero, the original token balance
+is restored and returned native value stays in the reserve above its protected
+floor. All three copied process starts stop; complete original ledger inventories,
+review inputs and the previous finalized native journal remain unchanged. Five
+new guards pass locally and on Linux. See
+[the aggregate redemption result](../evidence/bridge-metadata-redemption-crash-agave.json).
+
+Both metadata settlement directions now have separate successful private
+process-kill recovery cases before observed finality. This redemption attempt's
+expiry branch was not exercised. Deliberate expiry/pruning, actual competing
+forks, physical host loss, independent verification, complete funded genesis
+backing and production custody/security remain open. No private fixture identity,
+signature, policy, balance, key or raw ledger is included in the public record.
+Never replay or reset either retained fault attempt.
+
+
+## Actual-height expiry without submission
+
+`rehearsal/metadata-unsubmitted-expiry.mjs` and
+`../engine/rehearsal/metadata_unsubmitted_expiry.py` use new cold copies of the
+completed metadata original-redemption fixture. An unused source lock finalizes,
+then a fully signed version3 native claim is prepared without a handoff or
+submission. The harness waits for actual destination finalized block height to
+exceed the original signed transaction's last-valid height. It does not change
+expiry, advance a clock, warp the ledger or fetch a replacement blockhash.
+
+Eight actual checks pass. The prepared journal stays byte-identical until
+reconciliation; all three handoff APIs refuse it after expiry. Reconciliation
+retains `EXPIRED_UNRESOLVED` with conservative attempts1, unchanged signed bytes
+and original expiry. No programme or mint handoff admission is fabricated.
+All three APIs refuse again. No claim signature, transaction or receipt lands;
+source escrow and its obligation remain, with no recipient payout, retry,
+replacement or refund. Both copied validators stop; complete original ledgers
+and finalized private records stay unchanged. Five admission guards pass locally
+and on Linux. See [the aggregate expiry result](../evidence/bridge-metadata-unsubmitted-expiry-agave.json).
+
+This is deliberately unsubmitted native-claim expiry, with zero claim handoffs
+or broadcasts. It does not verify unknown landing, original-redemption expiry,
+pruned history, competing forks or a recovery/refund procedure. The unresolved
+source liability must remain retained for review. Earlier process-fault results
+keep their original scope. Production backing, custody and independent security
+verification are still required.
+
+
+## Unsubmitted original redemption at actual expiry
+
+A separate original-token redemption now passes8 actual checks on fresh cold
+copies of the completed metadata native-claim fixture. An unused native-return
+event finalizes with value and event rent checked separately. A signed version3
+original withdrawal stays PREPARED without handoff or submission until actual
+origin finalized block height exceeds its original signed expiry.
+
+All three handoff APIs reject with unchanged prepared bytes. Reconciliation
+retains EXPIRED_UNRESOLVED, original signed bytes/expiry and conservative
+attempts1 without inventing review admissions; all three APIs then refuse again.
+No withdrawal signature, transaction or receipt lands. Original tokens remain
+in escrow with the original obligation, returned native backing remains in the
+reserve, and the recipient's token/native balances do not increase. No retry,
+replacement, token payout or native refund is authorized. Both copied validators
+stop; complete original ledgers and finalized private records remain unchanged.
+Five new guards pass locally and on Linux. Source and aggregate scope are in
+[the original-redemption expiry result](../evidence/bridge-metadata-redemption-expiry-agave.json).
+
+Both deliberately unsubmitted metadata settlement directions now have separate
+actual-height expiry cases. These are refusal tests, not successful redemption
+or unknown-landing recovery. Submitted-but-uncertain expiry, pruned history,
+competing forks, manual recovery, funded backing, custody and independent
+security review remain open. All unresolved private obligations stay retained.
+
+
+## Actual metadata-origin code replacement
+
+A separate8-check private-copy rehearsal now replaces the origin bridge's code
+after preparing an unused metadata native claim. Six one-shot buffer setup
+transactions stage a reviewed small counter ELF for an intentionally incompatible
+replacement. One new source lock finalizes under the original bridge code, then
+its version3 claim retains the selected metadata and two-chain code review.
+One actual Loader-v3 origin upgrade finalizes; the same authority, ProgramData
+capacity and rent remain, while the deployed ELF and complete code data change.
+Native destination code pins still match.
+
+All three handoff APIs reject the old origin code pins while the signed claim
+is still unexpired. Prepared bytes and selected review stay unchanged, attempts
+remain0, no handoff or claim is broadcast, and no destination signature,
+transaction or receipt lands. Complete mint, escrow, token-recipient, both
+configuration and native-reserve snapshots stay unchanged after the upgrade.
+The source obligation remains without payout, refund or retry. Both new copies
+stop; complete original ledgers and private finalized records stay unchanged.
+Five guards pass locally and on Linux; six upgrade-observation checks pass
+locally. See [the aggregate origin-code result](../evidence/bridge-metadata-origin-code-agave.json).
+
+This is rejection of one deliberately incompatible origin replacement in a
+private metadata fixture, not an approved bridge migration. It does not prevent
+an authority from upgrading code or eliminate a change after a signing snapshot.
+Compatible upgrades, rollback governance, forks, funded backing, custody and
+independent security review remain production gates. The replacement is never
+approved for settlement and the retained prepared claim must not be retried.
+
+
+Offline authenticated expiry review now rejects a caller code-policy hash that
+differs from a retained version2/version3 journal, even if synthetic reports are
+otherwise correctly signed. Version3 mint review is bound through verified
+inspection and the journal hash; legacy supplied pins are labelled unbound.
+Three new regressions and six retained-journal offline checks pass, with no RPC,
+validator starts, transactions or enabled retry/refund. See
+[the review boundary](EXPIRED_RECOVERY.md) and
+[the aggregate offline result](../evidence/bridge-metadata-expiry-review-offline.json).
+
+## Selected pending-liability accounting
+
+A separate offline inventory can sum explicitly selected pinned journals in
+both directions while preserving expired, failed and uncertain liabilities.
+It does not save records, enable recovery or prove complete history/backing.
+Read [the exact input contract and limitations](PENDING_INVENTORY.md).

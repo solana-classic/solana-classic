@@ -1,0 +1,32 @@
+name: Bridge runtime scenario compilation
+on:
+  pull_request:
+    paths:
+      - 'bridge/program/**'
+      - 'bridge/gated-program/**'
+      - 'engine/rehearsal/gated_runtime*'
+      - 'engine/rehearsal/gated_client_runtime*'
+      - 'bridge/GATED_BOOTSTRAP.md'
+      - 'evidence/bridge-gated-bootstrap.json'
+      - 'mainnet/RESERVE_PREFUNDING.md'
+      - 'evidence/bridge-native-reserve-prefunding.json'
+      - '.github/workflows/bridge-runtime-review.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  compile-only:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - name: Pinned host compiler
+        run: rustup toolchain install 1.89.0 --profile minimal --no-self-update
+      - name: Compile scenarios without claiming artifact execution
+        run: cargo +1.89.0 check --locked --tests --manifest-path bridge/program/Cargo.toml
+      - name: Compile separate bootstrap-gated prototype scenarios
+        run: cargo +1.89.0 check --locked --tests --manifest-path bridge/gated-program/Cargo.toml
+      - name: Separate VM worker admission and source-integrity guards
+        run: python3 -W error::ResourceWarning -m unittest discover -s engine/rehearsal -p "gated_runtime_test.py"
+      - name: Unsigned client VM admission and source-integrity guards
+        run: python3 -W error::ResourceWarning -m unittest discover -s engine/rehearsal -p "gated_client_runtime_test.py"

@@ -1,0 +1,68 @@
+{
+  "schemaVersion": 1,
+  "state": "passed",
+  "scope": "Fresh private source-built Agave origin with actual valueless metadata mint, bridge initialization and one source lock; no native settlement",
+  "startedAt": "2026-10-15T11:26:15.694Z",
+  "completedAt": "2026-10-15T11:27:08.069Z",
+  "checks": [
+    "Actual Token-2022 metadata mint finalized with exact supply and revoked authorities",
+    "Compiled bridge initialized metadata mint and finalized one source lock with settlement still paused",
+    "Actual metadata mint and exact escrow/counter reconcile under complete bridge and token code pins",
+    "Default plain-mint policy refuses actual extended mint",
+    "Wrong selected supply and precision refuse actual finalized state",
+    "Wrong complete Token-2022 code pin refuses actual state",
+    "Fresh observation after rejected inputs retains exact assets; observer uses read-only RPC only"
+  ],
+  "actualChecksPassed": 7,
+  "localWorkerGuardsPassed": 4,
+  "relatedOfflineChecksPassed": 62,
+  "mint": {
+    "address": "785n1btBbweNdtczfREebiwZNqTg7XrDD7NMvExqEx3j",
+    "bytes": 362,
+    "dataSHA256": "2fa91ff8a4b2bc28b0c9e770fd57a64ac1736b9f112fdfe7b24cbe1fb1dffcd0",
+    "layout": "immutable-self-metadata-v1"
+  },
+  "syntheticAccounting": {
+    "mintSupplyUnits": "2000000",
+    "originEscrowUnits": "100000",
+    "originOutstandingUnits": "100000",
+    "unallocatedEscrowSurplusUnits": "0"
+  },
+  "fixtureTransactions": 4,
+  "allFixtureTransactionsFinalized": true,
+  "settlementBroadcasts": 0,
+  "observerRpcReads": 65,
+  "observerRpcMethods": [
+    "getGenesisHash",
+    "getMultipleAccounts"
+  ],
+  "sourceBinarySHA256": "3d3140bf93c9bc967220ffd8989d8b0267b723915d32203132ecc36d2c63a49a",
+  "bridgeSBF_SHA256": "556adf3132c6d102458c0c3b13e22457401bd748b6c3a37a422fb7a339a68e53",
+  "tokenSHA256": "a794161408080f690dac00832f45b3c3e2b71f1339586667ad1f979cf91d5b68",
+  "tokenCodeAndAuthorityPinsVerified": true,
+  "tokenProgramUpgradeAuthority": "11111111111111111111111111111111",
+  "privateProcessStarts": 1,
+  "privateProcessesStopped": true,
+  "stopReturnCode": -2,
+  "applicationGracefulFlushVerified": false,
+  "existingLedgersOpened": false,
+  "claimJournalChanged": false,
+  "metadataSettlementSupported": false,
+  "completeGenesisBackingVerified": false,
+  "independentVerification": false,
+  "canSign": false,
+  "canBroadcast": false,
+  "productionReady": false,
+  "canonicalNetworkChanged": false,
+  "sourceHashes": {
+    "bridge/rehearsal/metadata-origin.mjs": "695814d76e0d40ff05c839a7ee06b2b54f12281c27ed281e6ff3f1c0a255e9df",
+    "engine/rehearsal/metadata_origin.py": "698d8408b1c99328879982ffe581e99f0b56b5c38dfc517c07f3238260eb9c5d",
+    "engine/rehearsal/metadata_origin_test.py": "94bddd39b6affaad823f4dc4c0b78cc37f8d5b561bc91bd59a4adf0aa8db8704",
+    "bridge/origin-token-code.mjs": "52b1a0479a52e888ba7dfbe85818b82c780c392929bcffb85ff4500338a50738",
+    "bridge/origin-assets.mjs": "7237980f53573ef68587a3d55a81b202b2780f1d1d735aecf12413cb8f1a8e8a",
+    "bridge/mint-metadata.mjs": "402fcf39f298a89d7682e4ab78de9bd2b2f1647f31e9f01dbff027e9fe80b64c",
+    "bridge/program-pins.mjs": "1f72a2007be0d4ebd6b1a3080dc2ad93224177e49ae32e0513beb2e163256d42",
+    "bridge/sdk.mjs": "e603242692bedc2457ec9dd3cb144122ca1adb7341506d244ec864943bd8c988",
+    "engine/rehearsal/bootstrap.py": "200a81128b1dc697b32365ac939d7eef27c6e8b4cf3d48aa51faed4a65164a5c"
+  }
+}

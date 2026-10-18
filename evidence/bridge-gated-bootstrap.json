@@ -1,0 +1,90 @@
+{
+  "schemaVersion": 1,
+  "at": "2026-10-16T08:27:24.765723+00:00",
+  "state": "separate-bootstrap-gated-sbf-scenarios-passed",
+  "scope": "New experimental entrypoint tested in fresh in-memory VMs; not an installed upgrade, actual genesis, independent backing or production security acceptance",
+  "packageVersion": "0.3.0",
+  "artifacts": {
+    "gatedSBF": {
+      "sha256": "19424e0679c8d2d801fcb6ab015860b7b8f487cf0b1c6e2e7b41ca3d40efc16b",
+      "bytes": 217032
+    },
+    "unchangedV2SBF": "556adf3132c6d102458c0c3b13e22457401bd748b6c3a37a422fb7a339a68e53",
+    "token2022SHA256": "a794161408080f690dac00832f45b3c3e2b71f1339586667ad1f979cf91d5b68"
+  },
+  "build": {
+    "scope": "Local separate SBF compilation with cached tools and a private SDK copy",
+    "cliVersion": "3.0.14",
+    "platformTools": "v1.53",
+    "offline": true,
+    "globalRustupOverridesChanged": false
+  },
+  "runtime": {
+    "scope": "Separate Linux compiler worker, fresh synthetic in-memory VMs and disposable keys",
+    "compiler": "Rust1.89.0",
+    "scenarioGroupsPassed": 5,
+    "failed": 0,
+    "ignored": 0,
+    "filtered": 0
+  },
+  "localWorkerGuardGroupsPassed": 6,
+  "assertions": [
+    "Native unpause refuses before bootstrap for all three partially or fully open flag combinations",
+    "A full-pause request remains callable without bootstrap records",
+    "Native claim and return refuse an injected unpaused configuration without bootstrap",
+    "Actual one-time bootstrap followed by lock/claim/return/redemption preserves the protected floor and consumed-backing replay refusal",
+    "Eight marker, receipt and floor corruptions refuse with checked config and vault unchanged",
+    "Valid bootstrap does not bypass insufficient or duplicate quorum or a substituted trailer"
+  ],
+  "newNativeAccountContractRequired": true,
+  "existingV2SourceUnchanged": true,
+  "originalV2ArtifactsUnchanged": true,
+  "originalRuntimeArtifactsUnchanged": true,
+  "publicSourcesUnchanged": true,
+  "privateValidatorCensusClear": true,
+  "retainedFailures": [
+    {
+      "scope": "Local first build",
+      "reason": "Cached platform tools not mounted at SDK location; stopped before compilation",
+      "runtimeGroupsExecuted": 0
+    },
+    {
+      "scope": "First remote staging namespace",
+      "reason": "Transport interruption before dispatch; partial public source files retained",
+      "runtimeGroupsExecuted": 0
+    }
+  ],
+  "ephemeralVMKeysAndSignedTransactionsOnly": true,
+  "retainedPrivateKeysRead": 0,
+  "ledgerFilesCopied": 0,
+  "validatorProcessesStarted": 0,
+  "chainRequests": 0,
+  "externalSubmissions": 0,
+  "existingClientsOrJournalsMigrated": false,
+  "actualGenesisConstructed": false,
+  "completeActivationInventoryVerified": false,
+  "independentSourceFinalityVerified": false,
+  "fundedBackingVerified": false,
+  "upgradeCustodyVerified": false,
+  "externalSecurityReviewCompleted": false,
+  "canonicalNetworkChanged": false,
+  "mainnetActivated": false,
+  "productionReady": false,
+  "ciScope": "Compile-only old and separate gated runtime scenarios plus six worker guards; actual SBF execution is the retained worker result",
+  "sourceHashes": {
+    "bridge/gated-program/Cargo.toml": "af31b134c515bfc782e01960f7098c1e6c31516516132cd49ffc038c7dd4e9ec",
+    "bridge/gated-program/Cargo.lock": "4be57142657b023ac5613c81509558e672ac12c8803ab7746fb75430acb42917",
+    "bridge/gated-program/src/lib.rs": "69c380988b755ad26a8d59ced7a65830176e00f9de84476aa851a829449a7823",
+    "bridge/gated-program/tests/runtime.rs": "d4df6b1edc3640ce780c5054bd2bbc7529f59982a8e8cc47db8b2216e809123e",
+    "bridge/gated-program/artifact-sha256.txt": "15dcd1fe5837525e3c655ab7c08429ef80e95a8cde9a5d963f2c9c967e638822",
+    "bridge/program/Cargo.toml": "b96d287180548bf607fecde0a3c3244d90be62aa55dd4eb629a1545eb28c7335",
+    "bridge/program/src/lib.rs": "ede30cfc36212cafd05da1bde9e65462b7864078eba8e57de60b5fcd4d3388d6",
+    "bridge/program/src/state.rs": "d63c19450d022eee686c855195e8e71340cacbc1547c2b8db6fa1e1ae6d6163a",
+    "engine/rehearsal/gated_runtime.py": "ed87c08bcda25caa6c12cc1ef8d70e9b477783b4e12b1672974c42c3cf713742",
+    "engine/rehearsal/gated_runtime_test.py": "7d2acd50c5fb66118b6a9894a8f0ac1031f89b06bb091ad08294ae96404f6e39",
+    "mainnet/offline_process.py": "bc7013b43537bf272b08e37122035f9e647f18496a01121424dd322dd1d06c7f",
+    "mainnet/process_admission.py": "0c8b9bfa15ab908c2f21bac1cc53d8a785dc1ddbae764eeaa41fe6f6cbbb95fd",
+    "bridge/GATED_BOOTSTRAP.md": "1163105c6ef48a39a64b25d4250572364952534d8c8f88426151252a37c8e769",
+    ".github/workflows/bridge-runtime-review.yml": "d95c8246ea165c060a4184069fcb0201af10f789aed1f5722e6803eb42ac3bf4"
+  }
+}

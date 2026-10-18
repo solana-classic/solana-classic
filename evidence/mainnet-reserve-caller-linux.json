@@ -1,0 +1,83 @@
+{
+  "schemaVersion": 1,
+  "at": "2026-10-18T00:37:26.838042+00:00",
+  "scope": "Completed isolated Linux compatibility of the selected reserve caller; synthetic report fixtures only, no genesis compilation or host admission",
+  "passed": true,
+  "sourceFiles": {
+    "mainnet/offline_process.py": "6e17a75e1269e9a7cd89ad351f9946c386af5f0df345b9891712020b774988ed",
+    "mainnet/reserve_adapter_process.py": "5e75ed4402b71495390697cac5e52387206e2278c594be4fd76e8c38420fb75e",
+    "mainnet/reserve_adapter_process_test.py": "33d8899a0ec4ef825e8e37c628685fdaa9a384c0fa40a6d9fd859bd0a6fe2f7f",
+    "mainnet/reserve_adapter_result.py": "f00b86265c5e44e3070e2fac867d3034d71c0050fe22aca5f1884076836426b8",
+    "mainnet/reserve_adapter_result_test.py": "3a013e33c90176b5488bd5123266e36311af491ae03cbf6d1e46a6eaaa6c23aa",
+    "mainnet/reserve_adapter_validated_test.py": "0413f3d1ce8ee126dc62a8114592daeffb7e6debd09eda06f8a052d60d151f52"
+  },
+  "worker": {
+    "identityMatched": true,
+    "separateFromCanonical": true,
+    "platform": "linux",
+    "machine": "x86_64",
+    "nodeVersion": "v24.19.0",
+    "observedNodeSHA256": "bc17c508ffeed0ec622934f9b7fa72f8e78da65350e63c3eceb56fa688aa5e12",
+    "observedNodeBytes": 125989464,
+    "nodeRecheckedAfterExecution": true,
+    "runtimeProvenanceAdmitted": false
+  },
+  "validation": {
+    "pythonTests": 25,
+    "pythonPassed": 25,
+    "pythonSkipped": 0,
+    "testSelection": "Reserve artifact/process, strict result and combined caller suites only; not the complete Python package",
+    "resourceWarningsAreErrors": true,
+    "pythonTestLogSHA256": "b5489757b1865e20a1218bbe95987c1906c24dd46be7a4ea5dd3a5650f447ce0",
+    "realNodeInvocations": 3,
+    "records": [
+      {
+        "mode": "prepare",
+        "passed": true,
+        "inputSHA256": "7672a873e797e6ab46315f975894436c20c45175eae24e05aca509dea505a943",
+        "validatedOutputObjectSHA256": "7e1d60308cb8acbfa50c0604406a893d831ff2bfb868515fefb37937f9ad78c6",
+        "stderrBytes": 0
+      },
+      {
+        "mode": "review",
+        "passed": true,
+        "inputSHA256": "17332e30de072a0cef86538affd74f19e31b3949c5ad6a2528a9747decc6de01",
+        "validatedOutputObjectSHA256": "62caf02081470218d10f8cbd0f9411a3d52aeb0945d74a0f8ef43034a7778dc7",
+        "stderrBytes": 0
+      },
+      {
+        "mode": "prepare",
+        "case": "valid-output-wrong-external-plan",
+        "passed": true,
+        "failureCode": "SELECTED_RESERVE_RESULT_REFUSED",
+        "returnedOutput": false
+      }
+    ],
+    "matchesPriorLocalSyntheticOutputs": true,
+    "retainedBundleSHA256": "9091ca58a4767e40678fd069ae76712ad7d5eb5c6f140d41feb882bbb0a565c3",
+    "retainedBundleBytes": 688386,
+    "fixtureInputSHA256": "2e9e7e0885778e627c16aadc3a4a0f9ac5b503dfbd9e2c471e3f91f714b21060",
+    "selectedFilesRechecked": 9,
+    "driverSHA256": "cf482c408154edce1c91333b087de4503bc6976f0884795b64aadc4617b92143",
+    "privateResultSHA256": "bccb04c9305b7f86a2c4a073fc5cbb270a7adc9d3dd66a4399ed124d03b8b006",
+    "retainedVerificationSHA256": "3f01e52554d098f1c4b789a23fcdd891e06d86fd81c18f542517ea4e9bc2f9bd",
+    "attemptProcessesAfterCompletion": 0,
+    "privateValidatorProcessesBeforeAndAfter": 0
+  },
+  "retention": "New exclusive private worker directory; original bundle, source, synthetic fixture and every prior attempt preserved. Independent readback verified completed report, all nine selected files, Node bytes, test log and absence of attempt processes. No attempt replay.",
+  "limitations": [
+    "The worker Node version and executable bytes were observed and selected through existing authenticated access, then rechecked. This establishes the tested executable identity, not independent distribution provenance, a general trusted allowlist or a sandbox.",
+    "The unchanged bundle was built previously on the local development host. This run tests its actual Linux execution; it is not a fresh Linux bundle build or reproducible cross-platform build claim.",
+    "The fixture consists of two synthetic decoder-report accounts and selected plan expectations. Both output objects match the prior local invocation. A third valid adapter output is withheld against a deliberately wrong external plan. No decoder, genesis compiler, key generator, validator, RPC or chain operation ran.",
+    "Existing host limits remain unadmitted for the full-validator rehearsal. Successful offline compatibility does not waive CPU, memory, filesystem, file-descriptor or security requirements.",
+    "prepare-consensus.py remains unchanged and does not invoke this adapter. Reviewed runtime admission, fresh plan/report selection and preparer wiring, actual genesis compilation, two strict slot-zero replays, three-validator consensus, backing, custody, operators, monitoring fault delivery and security review remain open."
+  ],
+  "preparerIntegrated": false,
+  "hostAdmitted": false,
+  "canonicalNetworkChanged": false,
+  "validatorsStarted": 0,
+  "chainRPCRequests": 0,
+  "chainTransactionsSubmitted": 0,
+  "mainnetActivated": false,
+  "productionReady": false
+}
