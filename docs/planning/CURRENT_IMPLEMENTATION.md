@@ -1,6 +1,6 @@
 # Current implementation handoff
 
-## Current checkpoint — 18 October 2026, 03:38 UTC
+## Current checkpoint — 18 October 2026, 04:35 UTC
 
 This checkpoint supersedes the historical hold, branch names, pending-run
 statements and next-action instructions below. The founder resumed development.
@@ -43,6 +43,12 @@ intercepted; no wallet or transaction was created. Successful issuance
 completion and complete stored-content coverage remain open, so G3.05 and
 the 29-of-75 acceptance inventory are unchanged. The initial browser launch
 failure is retained separately.
+A fresh byte review finds mainnet RPC defaults in the frozen SDK's exported
+cluster lookup helper. The application's explicit experimental API binding
+remains separately verified, but the literal G3.06 bundle-absence condition
+is not satisfied. No mainnet request or key-import interface is inferred from
+those defaults. The candidate is preserved; remediation requires a reviewed
+bundle change and applicable candidate checks.
 
 Current independent preparation work binds final genesis policy and audited
 metadata to its budget probe. The current allocation decoder is now integrated

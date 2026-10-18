@@ -321,3 +321,21 @@ layout or accessibility acceptance is added. The standalone driver takes a
 selected asset cache and a new result directory, refuses existing attempts,
 and records screenshots and hashes. It is an explicit offline fixture, separate
 from the live end-to-end workflow and existing automatic review checks.
+
+## Bundled SDK destination finding
+
+A [current byte review](../../evidence/agave-source-sdk-destination-review.json)
+finds both HTTP and HTTPS mainnet-beta RPC defaults in the exact frozen SDK
+chunk, in the lookup table exported through `clusterApiUrl`. Its hash still
+matches the freeze. The literal G3.06 condition that the browser bundle contain
+no mainnet RPC destination is therefore not satisfied; G3.06 stays unreviewed
+in the inventory. This finding does not establish an application connection to
+mainnet: frozen wallet source constructs its connection from the explicit
+experimental API, as separately reviewed for G3.07. It also does not establish
+a private-key import interface or a real-funds exposure.
+
+No script, browser or chain operation was executed for this inspection.
+Resolving the literal bundle condition requires a reviewed dependency/bundle
+change and the applicable candidate checks. The current freeze and services
+remain unchanged; do not silently reinterpret the requirement as a pass because
+the configured application destination is correct.
