@@ -1,0 +1,88 @@
+{
+  "schemaVersion": 1,
+  "at": "2026-10-18T03:37:55.428Z",
+  "passed": true,
+  "scope": "Offline frozen frontend rendering with supplied hostile API data; no live transaction journey",
+  "freezeSHA256": "55b668e56a946ec94f0195b03530aba23593bd71d7fd52493d5403b21882757f",
+  "frontendFiles": {
+    "/": "448312a1f5170de0767b742309fad4861cc0e0a80e15d0a39d839fd1f2de2454",
+    "/assets/index-Dpv-W791.js": "6c42fffa784f160ed324ac16585e557828aca12f2d53ee1a6ee9d2c0f840f1aa",
+    "/assets/index-DXgWf3wS.css": "854b48b0499bd0f863296e157914bfd43b334ae7e82c4dfc7883d129442feca0",
+    "/assets/index.browser.esm-BKUeZO4T.js": "7c038d6f6a4b6b70762f8f685e278524630993ed2d2aa946b70d58a578119002",
+    "/assets/src-DkgziyfX.js": "701b0cb796501ced6fa2caef2081d4d0618818d6859711dcb6ce09c33a57b8ad"
+  },
+  "driverSHA256": "42d1f55844fed8d332320c434c8a94350c9389b20c72c3a14fc9e470e30b575c",
+  "browser": "Pinned Chromium; Browser plugin not available",
+  "liveAPIRequests": 0,
+  "walletCreations": 0,
+  "chainSubmissions": 0,
+  "releaseAccepted": false,
+  "mainnetAccepted": false,
+  "bridgeAccepted": false,
+  "candidate": {
+    "apiOrigin": "https://network-release-production.up.railway.app",
+    "frontendOrigin": "https://solana-classic-soc.vercel.app",
+    "frontendDeploymentId": "dpl_3aWWzKDohr4SrgijgrB8dWgHHS5r",
+    "frontendCommit": "35f0eaf1dede45452c9cdf9e6403669e966c427d",
+    "apiCommit": "119f25e225540be78b64b19bdb6cb300a1f47c10",
+    "networkConfigSha256": "0eea489e8cf0753b2b0cf0b91b6949566044e50c20bd4d02eea814490f64fe0e",
+    "dependencyManifestSha256": "e6da27717e6a84ca7b29d707ff63591b2ff0cfc38892d3b4667f8615bdf7bbc0"
+  },
+  "sourceReportSHA256": "e9a7054d1bbc4d909c19f89c7f1e1a465bc044913e8e36cb28786366ad890da2",
+  "assetManifestSHA256": "a396a7d7661230c63f4f6cc911b1967ab33d826e285115747795bfd14f8679e9",
+  "cases": [
+    {
+      "width": 1440,
+      "passed": true,
+      "executablePositiveControl": true,
+      "literalGalleryNames": 4,
+      "pagination": true,
+      "refreshedName": true,
+      "literalSymbolAndAlt": true,
+      "literalFormInputs": true,
+      "literalFailedTransactionLogsAndError": true,
+      "literalGalleryError": true,
+      "unexpectedRequests": 0,
+      "pageErrors": 0,
+      "expected503ResourceErrors": 1,
+      "screenshot": "gallery-1440.png",
+      "screenshotSHA256": "42604e3fb475e9bc212342fe60b72fdcd6dc1a9741e2c9b8255404ffec6e2560"
+    },
+    {
+      "width": 360,
+      "passed": true,
+      "executablePositiveControl": true,
+      "literalGalleryNames": 4,
+      "pagination": true,
+      "refreshedName": true,
+      "literalSymbolAndAlt": true,
+      "literalFormInputs": true,
+      "literalFailedTransactionLogsAndError": true,
+      "literalGalleryError": true,
+      "unexpectedRequests": 0,
+      "pageErrors": 0,
+      "expected503ResourceErrors": 1,
+      "screenshot": "gallery-360.png",
+      "screenshotSHA256": "7db80c003d28aeb98720ff99a2e588685032db0623c8c9e538a892b3ee3d4a74"
+    }
+  ],
+  "retainedFailedAttempts": [
+    {
+      "sourceReportSHA256": "1c499436fc1c5a990fdfe56b5b6b39748a879e52553d19c227a4b31fde295ac3",
+      "driverSHA256": "32d62051d51ce5dcd4ad38b275a5f5c44e07cfda04346eeb99cbb9d5193b94cf",
+      "stage": "Browser launch",
+      "reason": "The initial driver selected its browser directory after importing the browser library. No context or application interaction started. A new attempt sets the existing pinned directory before import."
+    }
+  ],
+  "frozenFilesUnchanged": 45,
+  "liveRuntimeStillMatchesFreeze": true,
+  "qaState": "completed",
+  "qaSoakAccepted": true,
+  "limitations": [
+    "Supplied API responses in isolated Chromium contexts using all five exact frozen frontend files and separately recorded stylesheet fonts. Browser requests are intercepted and never forwarded to a live API. This is not a remote stored-content or transaction journey.",
+    "Gallery names, symbol and alt text, pagination and owner refresh, creation form inputs, transaction logs and error fields, and gallery errors were exercised. Successful issuance completion and every other render path remain unreviewed; G3.05 stays unreviewed.",
+    "An executable SVG positive control confirms the browser would execute markup; tested application fields stayed literal and created no executable nodes. This is not an exhaustive injection, content-security-policy or browser-security audit.",
+    "The retained 360-pixel screenshot still shows the already known clipped navigation. These checks make no overall responsive-layout or accessibility acceptance claim.",
+    "One expected 503 resource error per profile accompanies the deliberately supplied gallery failure. No page exceptions or unexpected requests occurred."
+  ]
+}

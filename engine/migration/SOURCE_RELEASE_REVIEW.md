@@ -301,3 +301,23 @@ They use supplied ingress headers, a fixed clock, mocked chain methods and
 fixture-only maintenance admission. They do not establish how the live provider
 rewrites headers or protects direct backend access. G5.04 remains unreviewed;
 no canonical quota, grant, transaction or runtime changed.
+
+## Isolated hostile-text rendering
+
+The [frozen frontend text controls](../../evidence/agave-source-frontend-text-controls.json)
+exercise the exact five frontend files in isolated Chromium at 1440 and 360
+pixels. Supplied hostile names remain literal through gallery pagination and
+owner refresh; symbols, image alt text, form inputs, transaction logs and error
+fields also remain literal. An executable SVG positive control verifies the
+browser can execute markup, while the application fields create no executable
+nodes. All browser requests are intercepted; no live API request, wallet,
+signing or chain submission occurs. Both profiles pass. The initial browser-path
+launch failure is retained separately and did not start a browser context.
+
+This narrows G3.05's evidence gap but leaves it unreviewed: successful issuance
+completion, all other render paths and actual stored hostile content were not
+exercised. The known clipped mobile navigation remains visible; no general
+layout or accessibility acceptance is added. The standalone driver takes a
+selected asset cache and a new result directory, refuses existing attempts,
+and records screenshots and hashes. It is an explicit offline fixture, separate
+from the live end-to-end workflow and existing automatic review checks.

@@ -1,6 +1,6 @@
 # Current implementation handoff
 
-## Current checkpoint — 18 October 2026, 03:06 UTC
+## Current checkpoint — 18 October 2026, 03:38 UTC
 
 This checkpoint supersedes the historical hold, branch names, pending-run
 statements and next-action instructions below. The founder resumed development.
@@ -36,6 +36,13 @@ Three new isolated forwarding-attribution checks pass against the exact candidat
 and current source using real loopback HTTP. They separate client-limit denial
 from global exhaustion; deployed ingress behavior remains unverified and G5.04
 is still unreviewed. No canonical controls or counters changed.
+Two isolated frozen-frontend hostile-text profiles now pass at 1440 and 360
+pixels, covering gallery pagination/refresh, form fields and explorer/error
+text with a working executable positive control. All browser transport was
+intercepted; no wallet or transaction was created. Successful issuance
+completion and complete stored-content coverage remain open, so G3.05 and
+the 29-of-75 acceptance inventory are unchanged. The initial browser launch
+failure is retained separately.
 
 Current independent preparation work binds final genesis policy and audited
 metadata to its budget probe. The current allocation decoder is now integrated
