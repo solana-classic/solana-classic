@@ -784,3 +784,30 @@ fresh-genesis or replay results. See [the integration review](../evidence/mainne
 The current worker still fails the unchanged host profile. Real reserve
 compilation, strict replays, the three-validator rehearsal and production
 requirements remain open.
+
+
+## Actual adapter across the preparation flow
+
+A further local integration check now exercises the real bounded Node adapter
+through `reserve_preparation.py`, with independently computed source-planner
+expectations. Its ten-account synthetic fixture includes the three validator
+identity/vote/stake sets and reserve. The test builds the adapter twice with the
+pinned toolchain, requires identical bytes and rechecks the actual test Node and
+bundle fingerprints around each adapter call.
+
+Five actual adapter subprocesses cover three cases: complete prepare/review,
+wrong external plan refusal before the supplied compiler, and invalid proposed
+creation time refusal before the supplied replays. The latter is a real adapter
+failure propagated through the caller and preparer, not a thrown mock error.
+All baselines remain unchanged, and failed attempt results remain available
+through each disposable fixture's checks. The original Python package remains
+219 passed and one existing Linux-only skip out of 220.
+
+Host admission, compiler, decoder, replay and final bundle inspection responses
+are still supplied fixtures. Genesis payloads and private key files are test
+placeholders. Only the planner and adapter execute real Node code; the test's
+artifact selection is explicit and separate from the unchanged production Linux
+manifest. It proves that the languages and preparation stages exchange the
+expected contracts, not genuine compiled genesis or host acceptance. The check
+is included in the existing preparation workflow's bundle suite. See
+[the cross-language review](../evidence/mainnet-reserve-preparer-interop-local.json).

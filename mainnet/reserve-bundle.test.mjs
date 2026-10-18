@@ -92,3 +92,20 @@ test('syntax review distinguishes inert text, checks syntax and bounds exact byt
  assert.throws(()=>reviewReserveBundleSyntax(Buffer.from([0xff])),TypeError);
  assert.throws(()=>reviewReserveBundleSyntax(Buffer.from('import(')),/Bundle syntax refused/);
 });
+
+
+test('built adapter crosses the selected preparation boundary with genuine plan and refusal responses',()=>{
+ const driver=fileURLToPath(new URL('./reserve_preparation_interop_fixture.py',import.meta.url));
+ const result=spawnSync('python3',['-B',driver,process.execPath,artifact],{...options,timeout:45000});
+ assert.ifError(result.error);assert.equal(result.status,0,result.stderr);assert.equal(result.stderr,'');
+ const report=JSON.parse(result.stdout);
+ assert.equal(report.passed,true);assert.equal(report.realAdapterInvocations,5);assert.equal(report.plannerInvocations,3);
+ assert.deepEqual(report.cases.map(row=>row.result.state),['prepared','failed','failed']);
+ assert.deepEqual(report.cases.map(row=>row.result.compilerCalls),[1,0,1]);
+ assert.deepEqual(report.cases.map(row=>row.result.replayCalls),[4,0,0]);
+ assert.equal(report.artifacts.node.sha256,manifest.toolchain.node.sha256);
+ assert.equal(report.artifacts.bundle.sha256,manifest.artifact.sha256);
+ for(const field of ['actualGenesisCompiled','actualAccountBytesDecoded','actualSlotZeroReplayExecuted','hostAdmitted','productionReady'])assert.equal(report[field],false);
+ assert.equal(report.validatorsStarted,0);
+ assert.equal(hash(readFileSync(artifact)),manifest.artifact.sha256);
+});

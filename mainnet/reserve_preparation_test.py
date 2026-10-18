@@ -1,4 +1,7 @@
-"""Disposable orchestration fixtures; no real compiler, decoder or adapter."""
+"""Disposable orchestration fixtures; compiler and decoder responses are supplied.
+
+The optional integration callback exercises an actual offline adapter only.
+"""
 import bz2, copy, hashlib, io, json, os, sys, tarfile, tempfile, unittest
 from contextlib import redirect_stdout, redirect_stderr
 from contextlib import ExitStack
@@ -57,7 +60,7 @@ class ReservePreparation(unittest.TestCase):
             os.link(file, root/'link')
             with self.assertRaisesRegex(ValueError, 'OWNER_ONLY'): m.selection_file(file, sha(file.read_bytes()))
 
-    def exercise(self, failure=None, value=None):
+    def exercise(self, failure=None, value=None, integration=None):
         commands=[]; adapter_modes=[]; decoded_reports={}
         nodes=[{'identity':key(100+i*3), 'vote':key(101+i*3), 'stake':key(102+i*3)} for i in range(3)]
         rows=[]
@@ -66,8 +69,12 @@ class ReservePreparation(unittest.TestCase):
                 rows.append({'address':node[kind],'owner':owner,'lamports':'111','dataBytes':0,'executable':False})
         reserve_units=m.p.TOTAL-999
         rows.append({'address':key(500),'owner':SYSTEM,'lamports':str(reserve_units),'dataBytes':0,'executable':False})
-        audit={'genesis':key(600),'clusterType':'development','totalLamports':str(m.p.TOTAL),'accounts':rows,'accountCount':10,'inflation':{'initial':0,'terminal':0},'feeRateGovernor':{'burnPercent':0},'rent':{'burn_percent':0},'pohConfig':{'hashes_per_tick':12500},'epochSchedule':{'slotsPerEpoch':128,'warmup':True}}
-        proposed=copy.deepcopy(audit); proposed['genesis']=key(601); proposed['accounts'][-1]['address']=key(501)
+        audit={'genesis':key(600),'clusterType':'development','totalLamports':str(m.p.TOTAL),'accounts':rows,'accountCount':10,'inflation':{'initial':0,'terminal':0,'taper':0,'foundation':0,'foundationTerm':0,'unused':0},'feeRateGovernor':{'targetLamportsPerSignature':10000,'targetSignaturesPerSlot':20000,'minLamportsPerSignature':5000,'maxLamportsPerSignature':100000,'burnPercent':0},'rent':{'lamports_per_byte_year':3480,'exemption_threshold':2,'burn_percent':0},'pohConfig':{'hashes_per_tick':12500},'epochSchedule':{'slotsPerEpoch':128,'warmup':True}}
+        plan = integration['select'](audit) if integration else None
+        reserve_address = plan['prepareSelection']['reserveAddress'] if plan else key(501)
+        plan_sha = plan['prepareSelection']['planSHA256'] if plan else 'a'*64
+        if integration and failure=='prepare-refusal':plan_sha='f'*64
+        proposed=copy.deepcopy(audit); proposed['genesis']=key(601); proposed['accounts'][-1]['address']=reserve_address
         if failure=='proposed-genesis': proposed['genesis']=value
         if failure=='policy': proposed['rent']['burn_percent']=1
         def archive(data):
@@ -94,7 +101,8 @@ class ReservePreparation(unittest.TestCase):
             (baseline/'genesis/genesis.bin').write_bytes(b'baseline');(baseline/'genesis/genesis.tar.bz2').write_bytes(archive(b'baseline'))
             manifest={'schemaVersion':1,'scope':'fresh-private-consensus-rehearsal','runtimeSource':m.p.c.SOURCE,'genesis':audit['genesis'],'bankHash':key(700),'shredVersion':123,'genesisBinSHA256':sha(b'baseline'),'genesisArchiveSHA256':sha(archive(b'baseline')),'inventorySHA256':m.p.c.inventory_hash(rows),'totalNativeUnits':str(m.p.TOTAL),'validators':nodes}
             mf=baseline/'manifest.json';mf.write_bytes(m.encoded(manifest));mf.chmod(0o600)
-            selection={'schemaVersion':1,'scope':'isolated-reserve-preparation-v1','baselineBundleId':'baseline-001','baselineManifestSHA256':sha(mf.read_bytes()),'planningInput':{'genesisAudit':audit,'expectedGenesis':audit['genesis'],'reserveAddress':key(500)},'prepareSelection':{'planSHA256':'a'*64,'baselineGenesis':audit['genesis'],'totalNativeUnits':str(m.p.TOTAL),'baselineAccountCount':10,'reserveAddress':key(501),'reserveNativeUnits':str(reserve_units)},'node':'/selected/node','bundle':'/selected/bundle'}
+            selection={'schemaVersion':1,'scope':'isolated-reserve-preparation-v1','baselineBundleId':'baseline-001','baselineManifestSHA256':sha(mf.read_bytes()),'planningInput':{'genesisAudit':audit,'expectedGenesis':audit['genesis'],'reserveAddress':key(500)},'prepareSelection':{'planSHA256':plan_sha,'baselineGenesis':audit['genesis'],'totalNativeUnits':str(m.p.TOTAL),'baselineAccountCount':10,'reserveAddress':reserve_address,'reserveNativeUnits':str(reserve_units)},'node':'/selected/node','bundle':'/selected/bundle'}
+            if plan:selection['planningInput']=plan['planningInput']
             if failure=='baseline-audit':selection['planningInput']['genesisAudit']=dict(audit, extra=True)
             file=base/'selection.json';file.write_bytes(m.encoded(selection));file.chmod(0o600);digest=sha(file.read_bytes())
             baseline_saved={str(f.relative_to(baseline)):f.read_bytes() for f in baseline.rglob('*') if f.is_file()}
@@ -104,13 +112,14 @@ class ReservePreparation(unittest.TestCase):
                 if name=='classic-genesis-allocation-bytes':
                     selected=audit if kw['input_bytes']==b'baseline' else proposed
                     self.assertEqual(args[3],sha(kw['input_bytes']));d=decoded(selected);decoded_reports[selected['genesis']]=d
+                    if integration and failure=='review-refusal' and selected is proposed:d['creationTime']='0'
                     if failure=='fingerprint' and selected is proposed:d['accounts'][0]['accountSHA256']='c'*64
                     if failure=='decoder-input' and selected is proposed:(base/'preparations/selected-001/fresh-reserve-genesis/genesis.bin').write_bytes(b'changed')
                     return m.encoded(d)
                 if name=='solana-genesis':
                     self.assertEqual(args[args.index('--hashes-per-tick')+1],'12500');self.assertEqual(args.count('--bootstrap-validator'),3)
                     primordial=json.loads(Path(args[args.index('--primordial-accounts-file')+1]).read_text())
-                    self.assertEqual(primordial,{key(501):{'balance':reserve_units,'owner':SYSTEM,'data':'~','executable':False}})
+                    self.assertEqual(primordial,{reserve_address:{'balance':reserve_units,'owner':SYSTEM,'data':'~','executable':False}})
                     folder=Path(args[args.index('--ledger')+1]);folder.mkdir(mode=0o700)
                     (folder/'genesis.bin').write_bytes(b'proposed');(folder/'genesis.tar.bz2').write_bytes(archive(b'proposed'));return b''
                 if name=='agave-ledger-tool':
@@ -122,13 +131,14 @@ class ReservePreparation(unittest.TestCase):
             def fake_adapter(node,bundle,**kw):
                 mode=kw['mode'];adapter_modes.append(mode)
                 self.assertEqual(kw['input_sha256'],sha(kw['input_bytes']))
-                data=json.loads(kw['input_bytes']);self.assertEqual(data['expectedPlanSHA256'],'a'*64)
+                data=json.loads(kw['input_bytes']);self.assertEqual(data['expectedPlanSHA256'],plan_sha)
                 self.assertEqual(data['expectedBaselineDecodedSHA256'],sha(data['rawBaselineDecoded'].encode()))
+                if integration:return integration['run'](mode,kw)
                 if failure==mode+'-refusal':raise ValueError('SELECTED_RESERVE_RESULT_REFUSED')
                 if failure=='interrupt':raise KeyboardInterrupt()
                 selected=kw['selection'];v=m.adapter.reserve_adapter_result
                 result={**selected,**dict.fromkeys(v.FLAGS,False),**dict.fromkeys(v.TRUE_FIELDS[mode],True),'schemaVersion':1,'state':v.STATES[mode],'scope':v.SCOPES[mode],'unchangedAccountCount':9}
-                if mode=='prepare':result['primordialReserveJSON']=json.dumps({key(501):{'balance':reserve_units,'owner':SYSTEM,'data':'~','executable':False}})
+                if mode=='prepare':result['primordialReserveJSON']=json.dumps({reserve_address:{'balance':reserve_units,'owner':SYSTEM,'data':'~','executable':False}})
                 else:
                     self.assertEqual(data['expectedProposedDecodedSHA256'],sha(data['rawProposedDecoded'].encode()))
                     self.assertEqual(selected['proposedGenesis'],proposed['genesis']);self.assertTrue(selected['creationTimeChanged'])
@@ -165,3 +175,4 @@ class ReservePreparation(unittest.TestCase):
             if failure!='baseline-change':
                 with self.assertRaisesRegex(ValueError,'RETAINED'):m.run(Path('/tools'),'selected-001',file,digest,True)
             self.assertEqual((base/'preparations/selected-001/public-result.json').read_bytes(),retained)
+            return {'state':result['state'],'failureCode':result.get('failureCode'),'adapterModes':adapter_modes,'compilerCalls':sum(Path(x[0]).name=='solana-genesis' for x in commands),'replayCalls':sum(Path(x[0]).name=='agave-ledger-tool' for x in commands),'baselineUnchanged':{str(f.relative_to(baseline)):f.read_bytes() for f in baseline.rglob('*') if f.is_file()}==baseline_saved}

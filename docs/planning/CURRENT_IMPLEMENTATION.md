@@ -1,6 +1,6 @@
 # Current implementation handoff
 
-## Current checkpoint — 18 October 2026, 02:39 UTC
+## Current checkpoint — 18 October 2026, 03:06 UTC
 
 This checkpoint supersedes the historical hold, branch names, pending-run
 statements and next-action instructions below. The founder resumed development.
@@ -57,7 +57,11 @@ Its second-stage orchestration binds a reviewed baseline and plan, compares
 complete decoded bytes, preserves baseline identities and requires two strict
 slot-zero replays before success. Fifteen new supplied-response groups pass;
 the full local Python suite passes 219 of 220 checks with one existing Linux-only
-skip. This is source integration, not actual compiled reserve evidence. Fresh
+skip. A further cross-language fixture runs five actual adapter subprocesses:
+complete prepare/review, wrong-plan refusal and proposed-time refusal. Host,
+compiler, decoder and replay responses remain supplied; the production runtime
+manifest is unchanged. This is integration proof, not actual compiled reserve
+evidence. Fresh
 real reserve compilation, two strict slot-zero replays and the three-validator
 rehearsal remain open. No Linux host has passed rehearsal admission; preserve
 host and security checks.
