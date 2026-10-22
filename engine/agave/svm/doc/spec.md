@@ -240,7 +240,7 @@ Steps of `load_and_execute_sanitized_transactions`
    - For each `SVMTransaction` and `TransactionCheckResult`, we:
         - Calculate the number of signatures in transaction and its cost.
         - Call `load_transaction_accounts`
-            - The function is interwined with the struct `SVMInstruction`
+            - The function is intertwined with the struct `SVMInstruction`
             - Load accounts from accounts DB
             - Extract data from accounts
             - Verify if we've reached the maximum account data size
