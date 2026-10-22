@@ -128,7 +128,7 @@ proofs.
 - `VerifyGroupedCiphertextValidity`:
 
   - The grouped ciphertext validity proof certifies that a grouped ElGamal
-    cipehrtext is well-formed
+    ciphertext is well-formed
     - Mathematical description and proof of security:
       [[Notes]](https://github.com/anza-xyz/agave/blob/master/docs/src/runtime/zk-docs/ciphertext_validity.pdf)
 
